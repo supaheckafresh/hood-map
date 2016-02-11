@@ -26,15 +26,15 @@ gulp.task('js-deps', function () {
 });
 
 gulp.task('partials', function () {
-    gulp.src('./public/javascripts/**/*.html')
+    gulp.src('./public/js/**/*.html')
         .pipe(gulp.dest('./build/partials'))
         .pipe(livereload());
 });
 
 gulp.task('css-deps', function () {
     gulp.src([
-            "./public/bower_components/bootstrap/dist/css/bootstrap.min.css",
-            "./public/bower_components/font-awesome/css/font-awesome.min.css"
+            "./bower_components/bootstrap/dist/css/bootstrap.min.css",
+            "./bower_components/font-awesome/css/font-awesome.min.css"
         ])
         .pipe(concat('css-deps.css'))
         .pipe(gulp.dest('./build/css'));
