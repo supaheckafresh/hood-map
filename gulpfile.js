@@ -44,22 +44,17 @@ gulp.task('css-deps', function () {
 });
 
 gulp.task('js', function () {
-    var baseDir = __dirname + '/public/javascripts',
+    var baseDir = __dirname + '/dev/js',
         outputDir = __dirname + '/build/js',
         outputFilename = 'app.js';
 
-    gulp.src([
-            baseDir + "/*module.js",
-            baseDir + "/**/*module.js",
-            baseDir + "/**/*.js"
-        ])
+    gulp.src([baseDir + "/**/*.js"])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
-        //.pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(concat(outputFilename))
-        .pipe(ngAnnotate())
-        //.pipe(uglify())
-        //.pipe(sourcemaps.write())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(outputDir))
         .pipe(livereload());
 });
