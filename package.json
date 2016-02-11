@@ -1,0 +1,24 @@
+{
+  "name": "hood-map",
+  "version": "1.0.0",
+  "description": "Udacity Front-End Nanodegree Project 5 - Neighborhood Map",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/supaheckafresh/hood-map.git"
+  },
+  "author": "Neil Strain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supaheckafresh/hood-map/issues"
+  },
+  "homepage": "https://github.com/supaheckafresh/hood-map#readme",
+  "dependencies": {
+    "bower": "^1.7.7",
+    "gulp": "^3.9.1",
+    "knockout": "^3.4.0"
+  }
+}

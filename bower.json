@@ -1,0 +1,22 @@
+{
+  "name": "hood-map",
+  "description": "Udacity Front-End Nanodegree Project 5 - Neighborhood Map",
+  "main": "index.js",
+  "authors": [
+    "Neil Strain"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0"
+  }
+}
