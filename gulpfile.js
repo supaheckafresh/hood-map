@@ -70,8 +70,9 @@ gulp.task('less', function () {
         .pipe(livereload());
 });
 
+// TODO - not sure if I will need this
 gulp.task('data', function () {
-    gulp.src('./public/javascripts/data/movies.json')
+    gulp.src('./dev/js/data/data.json')
         .pipe(gulp.dest('./build/data/'));
 });
 
