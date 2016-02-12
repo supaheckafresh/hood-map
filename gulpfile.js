@@ -25,6 +25,7 @@ gulp.task('js-deps', function () {
         .pipe(gulp.dest('./build/js'));
 });
 
+// TODO: not sure if I will use partials
 gulp.task('partials', function () {
     gulp.src('./public/js/**/*.html')
         .pipe(gulp.dest('./build/partials'))
@@ -79,16 +80,16 @@ gulp.task('data', function () {
 gulp.task('serve', serve('.'));
 
 gulp.task('watch', function () {
-    livereload.listen({port: 35730});
-    watch(['./public/javascripts/*.js', './public/javascripts/**/*.js'], function () {
+    livereload.listen({port: 35736});
+    watch(['./dev/js/*.js', './dev/js/**/*.js'], function () {
         gulp.start('js');
     });
 
-    watch('./public/less/*.less', function () {
+    watch('./dev/less/*.less', function () {
         gulp.start('less');
     });
 
-    watch(['./public/javascripts/*.html', './public/javascripts/**/*.html'], function () {
+    watch(['./dev/js/*.html', './dev/js/**/*.html'], function () {
         gulp.start('partials');
     });
 });
