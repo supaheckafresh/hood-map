@@ -14,4 +14,20 @@ html {
 
 #map {
   height: 100vh;
+  transform: translate3d(0);
+  position: relative;
+}
+
+div:not(#map) {
+  transform: translateY(1px);
+
+  input {
+    height: 32px;
+  }
+}
+
+#search {
+  position: absolute;
+  top: 13px;
+  left: 120px;
 }
