@@ -101,16 +101,19 @@ var MapViewModel = function() {
     vm.addMarker = function (place) {
         console.log('Updating activities markers with: ' + place.name);
 
+        // TODO: getting `Uncaught TypeError: Cannot read property 'location' of undefined` even though adding markers seems to be working.
         var marker = new google.maps.Marker({
             map: map,
             title: place.name,
             position: place.geometry.location
         });
 
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(place.name);
-            infowindow.open(map, this);
-        });
+        (function (markerCopy) {
+            google.maps.event.addListener(markerCopy, 'click', function() {
+                infoWindow.setContent(place.name);
+                infoWindow.open(map, this);
+            });
+        })(marker);
 
         vm.markers.push(marker);
     };
