@@ -53,22 +53,21 @@ var MapViewModel = function(activitiesVm) {
         console.log('new search string: ' + loc);
         geocoder.geocode( { 'address': loc}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-
-                vm.currentLocation = {
-                    center: {
-                      lat: results[0].geometry.location.lat(),
-                      lng: results[0].geometry.location.lng()
-                    },
-                    zoom: 15
-                };
-
-                console.log(vm.currentLocation.center.lat);
-
                 vm.map.setCenter(results[0].geometry.location);
                 vm.markers.push(new google.maps.Marker({
                     map: vm.map,
                     position: results[0].geometry.location
                 }));
+
+                // Store the successfully geocoded location.
+                vm.currentLocation = {
+                    center: {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    },
+                    zoom: 15
+                };
+
             } else {
                 console.log("Geocoding was unsuccessful for the following reason: " + status);
             }
