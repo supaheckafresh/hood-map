@@ -46,8 +46,6 @@
                         map: map,
                         position: results[0].geometry.location
                     });
-
-                    console.log('lat: ' + map.center.lat() + ' lng: ' + map.center.lng());
                 } else {
                     console.log("Geocoding unsuccessful for the following reason: " + status);
                 }
