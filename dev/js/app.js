@@ -22,24 +22,25 @@
                     position: results[0].geometry.location
                 });
             } else {
-                console.log("Geocoding unsuccessful for the following reason: " + status)
+                console.log("Geocoding unsuccessful for the following reason: " + status);
             }
-        })
+        });
     }
 
     // make initMap() available in global scope
     window.initMap = initMap;
 
 
-    var ViewModel = function(locationSearchStr) {
-        this.location = ko.observable(locationSearchStr);
+    var ViewModel = function() {
+        this.location = ko.observable();
 
-        // Update map and marker when new location search is submitted
-        this.location.subscribe(function (newSearch) {
-            geo(newSearch);
+        // Update map and marker whenever a new location search is submitted
+        this.location.subscribe(function (searchStr) {
+            geo(searchStr);
         });
     };
 
-    ko.applyBindings(new ViewModel(''));
+    // make knockout bindings work:
+    ko.applyBindings(new ViewModel());
 
 }());
