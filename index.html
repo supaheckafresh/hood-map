@@ -12,64 +12,70 @@
 </head>
 <body>
 
-    <div id="mapView">
 
-        <!-- Google Map -->
-        <div id="map"></div>
+    <!-- Google Map -->
+    <div id="map"></div>
 
-        <div data-bind="with: MapViewModel" id="location-ui">
+
+    <div id="overlay-ui" class="container">
+
+        <!-- Search UI -->
+        <section id="search-view" class="row">
 
             <!-- Location search form -->
-            <section id="search-location" class="col-xs-6">
-                <form data-bind="submit: updateLocation">
-                    <fieldset class="form-group">
-                        <span class="col-xs-8">
-                            <input name="location" data-bind="value: location" class="form-control" type="text" placeholder="Hey, I need a location!"/>
-                            <small class="text-muted">Where do you want to go?</small>
-                        </span>
-                        <span class="col-xs-3">
-                            <button type="submit" class="btn btn-info">Go</button>
-                        </span>
-                    </fieldset>
+            <section data-bind="with: MapViewModel" id="search-location" class="col-xs-4 col-xs-offset-2">
+                <form data-bind="submit: updateLocation" class="form-inline">
+                    <div class="form-group">
+                        <input data-bind="value: location"
+                               class="form-control"
+                               type="text"
+                               placeholder="Hey, I need a location!"/>
+                        <div><small class="text-muted">Where do you want to go?</small></div>
+                        <button type="submit" class="btn btn-info btn-search">Go</button>
+                    </div>
                 </form>
-
-                <!-- Current location overview -->
-                <section id="location-overview">
-                    <h2>Explore <span data-bind="text: location"></span></h2>
-                </section>
-
             </section>
 
-        </div>
+            <!-- Activities search form -->
+            <section data-bind="with: ActivitiesViewModel" id="search-activities" class="col-xs-4">
+                <form data-bind="submit: addActivity" class="form-inline">
+                    <fieldset class="form-group">
+                        <input data-bind="value: newActivity"
+                               class="form-control"
+                               type="text"
+                               placeholder="Let's go out!"/>
+                        <div><small class="text-muted">What do you want to do?</small></div>
+                        <button type="submit" class="btn btn-success btn-search">Do</button>
+                    </fieldset>
+                </form>
+            </section>
 
-    </div>
+        </section>
 
 
-    <div data-bind="with: ActivitiesViewModel" id="activities-view">
+        <!-- Sidebar UI -->
+        <section id="sidebar" class="col-xs-4">
 
-        <!-- Activities search form -->
-        <section id="search-activities" class="col-xs-6">
-            <form data-bind="submit: addActivity">
-                <fieldset class="form-group">
-                    <span class="col-xs-8">
-                        <input data-bind="value: newActivity" class="form-control" type="text" placeholder="Let's go out!"/>
-                        <small class="text-muted">What do you want to do?</small>
-                     </span>
-                    <span class="col-xs-3">
-                        <button type="submit" class="btn btn-success">Do</button>
-                    </span>
-                </fieldset>
-            </form>
+            <!-- Location overview header -->
+            <div data-bind="with: MapViewModel" id="location-overview-view" class="row">
+                <section id="location-overview" class="col-xs-12">
+                    <h3>Explore <span data-bind="text: location"></span></h3>
+                </section>
+            </div>
 
-            <ul data-bind="foreach: activities">
-                <li data-bind="text: $data"></li>
-            </ul>
+            <!-- Activities list -->
+            <div data-bind="with: ActivitiesViewModel" id="activities-list-view">
+                <ul data-bind="foreach: activities">
+                    <li>
+                        <input type="checkbox" checked>
+                        <span data-bind="text: $data"></span>
+                    </li>
+                </ul>
+            </div>
+
         </section>
 
     </div>
-
-
-
 
 
 <script async defer

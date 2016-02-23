@@ -9,30 +9,24 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+
+  ul {
+    list-style: none;
+  }
 }
 
 
 #map {
   height: 100vh;
-  transform: translate3d(0);
   position: relative;
 }
 
-#search-location {
+#overlay-ui {
   position: absolute;
   top: 10px;
-  left: 120px;
 }
 
-
-
-#search-activities {
-  position: absolute;
-  top: 10px;
-  right: 120px;
-}
-
-div:not(#map) {
+#search-view {
 
   input {
     border-radius: 0;
@@ -41,6 +35,18 @@ div:not(#map) {
     border: none;
     box-shadow: inset 2px 2px 4px rgba(0, 0, 0, .3)
   }
+}
+
+#sidebar {
+  background-color: rgba(255, 64, 80, 0.38);
+  border-radius: 4px;
+}
+
+
+.btn-search {
+  position: relative;
+  right: -200px;
+  top: -52px;
 }
 
 .text-muted {
