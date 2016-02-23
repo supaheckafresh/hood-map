@@ -18,18 +18,27 @@ html {
   position: relative;
 }
 
+#app-ui {
+  position: absolute;
+  top: 10px;
+  left: 120px;
+}
+
 div:not(#map) {
 
   input {
+    border-radius: 0;
     padding: 8px;
     height: 31px;
     border: none;
     box-shadow: inset 2px 2px 4px rgba(0, 0, 0, .3)
   }
+
+  #search-activities {
+    padding-top: 8px;
+  }
 }
 
-#search {
-  position: absolute;
-  top: 10px;
-  left: 120px;
+.text-muted {
+  color: #ff29d5;
 }

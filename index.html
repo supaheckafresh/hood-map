@@ -14,9 +14,39 @@
 
     <div id="map"></div>
 
-    <div id="search">
-        <input data-bind="value: location" type="text" placeholder="Where do you want to go?"/>
-        <h2 data-bind="text: location"></h2>
+    <div id="app-ui">
+
+        <!-- Location search form -->
+        <div id="search-location" class="row">
+            <form>
+            <span class="col-xs-8">
+                <input data-bind="value: location" class="form-control" type="text" placeholder="Hey, I need a location!"/>
+                <small class="text-muted">Where do you want to go?</small>
+            </span>
+            <span class="col-xs-3">
+                <button type="submit" class="btn btn-info form-control">Go</button>
+            </span>
+            </form>
+        </div>
+
+        <!-- Activities search form -->
+        <div id="search-activities" class="row">
+            <form>
+            <span class="col-xs-8">
+                <input class="form-control" type="text" placeholder="Let's go out!"/>
+                <small class="text-muted">What do you want to do?</small>
+            </span>
+            <span class="col-xs-3">
+                <button type="submit" class="btn btn-success form-control">Do</button>
+            </span>
+            </form>
+        </div>
+
+        <!-- Current location overview -->
+        <div id="location-overview" class="row">
+            <h2>Explore <span data-bind="text: location"></span></h2>
+        </div>
+
     </div>
 
 
@@ -24,10 +54,6 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRiTb3Puay9dUb5VVxiOrlMQ8H-PkVXLw&signed_in=true&callback=initMap">
 </script>
 
-<!--<script async defer-->
-        <!--src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRiTb3Puay9dUb5VVxiOrlMQ8H-PkVXLw&callback&signed_in=true&callback=initMap">-->
-    <!---->
-<!--</script>-->
 <script src="build/js/deps.js" type="text/javascript"></script>
 <script src="build/js/app.js" type="text/javascript"></script>
 
