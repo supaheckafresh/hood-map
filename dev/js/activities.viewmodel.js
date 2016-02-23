@@ -1,20 +1,20 @@
 
-var ActivitiesViewModel = function () {
+var ActivitiesViewModel = function (mapVm) {
     'use strict';
 
     var vm = this;
 
     vm.defaultActivities = ['restaurants', 'museums', 'aquariums', 'parks', 'libraries'];
 
-    this.activities = ko.observableArray(vm.defaultActivities);
-    this.newActivity = ko.observable();
+    vm.activities = ko.observableArray(vm.defaultActivities);
+    vm.newActivity = ko.observable();
 
-    this.addActivity = function () {
+    vm.addActivity = function () {
 
         // TODO: validate input
 
         vm.activities.push(vm.newActivity());
-        console.log(vm.activities());
+        mapVm.addMarker(vm.newActivity());
 
         vm.newActivity('');
     };

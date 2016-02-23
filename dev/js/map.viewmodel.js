@@ -1,5 +1,5 @@
 
-var MapViewModel = function() {
+var MapViewModel = function(activitiesVm) {
     'use strict';
 
     var vm = this;
@@ -9,8 +9,14 @@ var MapViewModel = function() {
         center: {lat: 33.770, lng: -118.194}
     };
 
+    // initialize Map.
+    vm.map = {};
+
     // Initialize `location` observable with the default location text in search input.
     vm.location = ko.observable(defaultLocation.searchStr);
+
+    // Initialize an empty list to hold map markers for activities.
+    vm.markers = [];
 
     // Update the map and marker whenever a new location search is submitted.
     vm.updateLocation = function () {
@@ -22,12 +28,12 @@ var MapViewModel = function() {
     /***
      * Google Maps API calls
      */
-    var map;
+
     var geocoder;
     vm.initMap = function() {
         console.log('the Google Maps API has been called.');
         geocoder = new google.maps.Geocoder();
-        map = new google.maps.Map(document.getElementById('map'), {
+        vm.map = new google.maps.Map(document.getElementById('map'), {
 
             // hardcode downtown Long Beach, CA coordinates
             center: defaultLocation.center,
@@ -42,15 +48,29 @@ var MapViewModel = function() {
         console.log('new search string: ' + loc);
         geocoder.geocode( { 'address': loc}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                    map: map,
+                vm.map.setCenter(results[0].geometry.location);
+                vm.markers.push(new google.maps.Marker({
+                    map: vm.map,
                     position: results[0].geometry.location
-                });
+                }));
             } else {
-                console.log("Geocoding unsuccessful for the following reason: " + status);
+                console.log("Geocoding was unsuccessful for the following reason: " + status);
             }
         });
+    };
+
+    vm.addMarker = function (activity) {
+        console.log('Updating activities markers with: ' + activity);
+
+        var marker;
+
+        marker = new google.maps.Marker({
+            position: {lat: -25.363, lng: 131.044},
+            map: vm.map,
+            title: activity
+        });
+
+        vm.markers.push(marker);
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
