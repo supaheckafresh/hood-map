@@ -17,7 +17,7 @@
     <div id="app-ui">
 
         <!-- Location search form -->
-        <div id="search-location" class="row">
+        <section id="search-location" class="row">
             <form>
             <span class="col-xs-8">
                 <input data-bind="value: location" class="form-control" type="text" placeholder="Hey, I need a location!"/>
@@ -27,10 +27,10 @@
                 <button type="submit" class="btn btn-info form-control">Go</button>
             </span>
             </form>
-        </div>
+        </section>
 
         <!-- Activities search form -->
-        <div id="search-activities" class="row">
+        <section id="search-activities" class="row">
             <form>
             <span class="col-xs-8">
                 <input class="form-control" type="text" placeholder="Let's go out!"/>
@@ -40,12 +40,12 @@
                 <button type="submit" class="btn btn-success form-control">Do</button>
             </span>
             </form>
-        </div>
+        </section>
 
         <!-- Current location overview -->
-        <div id="location-overview" class="row">
+        <section id="location-overview" class="row">
             <h2>Explore <span data-bind="text: location"></span></h2>
-        </div>
+        </section>
 
     </div>
 
