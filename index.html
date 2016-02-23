@@ -44,14 +44,14 @@
     </div>
 
 
-    <div id="activitiesView">
+    <div id="activities-view">
 
         <!-- Activities search form -->
         <section id="search-activities" class="row">
-            <form>
+            <form data-bind="submit: addActivity">
                 <fieldset class="form-group">
                 <span class="col-xs-8">
-                    <input data-bind="value: newThing" class="form-control" type="text" placeholder="Let's go out!"/>
+                    <input data-bind="value: newActivity" class="form-control" type="text" placeholder="Let's go out!"/>
                     <small class="text-muted">What do you want to do?</small>
                  </span>
                 <span class="col-xs-3">
@@ -60,7 +60,7 @@
                 </fieldset>
             </form>
         </section>
-        
+
     </div>
 
 

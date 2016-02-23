@@ -2,21 +2,19 @@
 
     'use strict';
 
-    var activitiesView = document.getElementById('activitiesView');
+    var activitiesView = document.getElementById('activities-view');
 
     var ActivitiesViewModel = function () {
-        var that = this;
-        this.activities = ko.observableArray([]);
-        this.newThing = ko.observable();
+        var vm = this;
+        this.activities = ko.observableArray();
+        this.newActivity = ko.observable();
 
-        this.newThing.subscribe(function (entry) {
-            addActivity(entry);
-        });
+        this.addActivity = function () {
+            vm.activities.push(vm.newActivity());
+            console.log(vm.activities());
 
-        function addActivity(activity) {
-            that.activities.push(activity);
-            console.log(that.activities());
-        }
+            vm.newActivity('');
+        };
 
     };
 
