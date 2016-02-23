@@ -12,42 +12,59 @@
 </head>
 <body>
 
-    <div id="map"></div>
+    <div id="mapView">
 
-    <div id="app-ui">
+        <!-- Google Map -->
+        <div id="map"></div>
 
-        <!-- Location search form -->
-        <section id="search-location" class="row">
-            <form>
-            <span class="col-xs-8">
-                <input data-bind="value: location" class="form-control" type="text" placeholder="Hey, I need a location!"/>
-                <small class="text-muted">Where do you want to go?</small>
-            </span>
-            <span class="col-xs-3">
-                <button type="submit" class="btn btn-info form-control">Go</button>
-            </span>
-            </form>
-        </section>
+        <div id="location-ui">
+
+            <!-- Location search form -->
+            <section id="search-location" class="row">
+                <form data-bind="submit: updateLocation">
+                    <fieldset class="form-group">
+                <span class="col-xs-8">
+                    <input name="location" data-bind="value: location" class="form-control" type="text" placeholder="Hey, I need a location!"/>
+                    <small class="text-muted">Where do you want to go?</small>
+                </span>
+                <span class="col-xs-3">
+                    <button type="submit" class="btn btn-info">Go</button>
+                </span>
+                    </fieldset>
+                </form>
+            </section>
+
+            <!-- Current location overview -->
+            <section id="location-overview" class="row">
+                <h2>Explore <span data-bind="text: location"></span></h2>
+            </section>
+
+        </div>
+
+    </div>
+
+
+    <div id="activitiesView">
 
         <!-- Activities search form -->
         <section id="search-activities" class="row">
             <form>
-            <span class="col-xs-8">
-                <input class="form-control" type="text" placeholder="Let's go out!"/>
-                <small class="text-muted">What do you want to do?</small>
-            </span>
-            <span class="col-xs-3">
-                <button type="submit" class="btn btn-success form-control">Do</button>
-            </span>
+                <fieldset class="form-group">
+                <span class="col-xs-8">
+                    <input data-bind="value: newThing" class="form-control" type="text" placeholder="Let's go out!"/>
+                    <small class="text-muted">What do you want to do?</small>
+                 </span>
+                <span class="col-xs-3">
+                    <button type="submit" class="btn btn-success">Do</button>
+                </span>
+                </fieldset>
             </form>
         </section>
-
-        <!-- Current location overview -->
-        <section id="location-overview" class="row">
-            <h2>Explore <span data-bind="text: location"></span></h2>
-        </section>
-
+        
     </div>
+
+
+
 
 
 <script async defer

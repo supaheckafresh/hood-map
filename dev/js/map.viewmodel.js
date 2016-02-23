@@ -2,20 +2,23 @@
 
     'use strict';
 
-    var MapViewModel = function() {
+    var defaultLocation = {
+        searchStr: 'Long Beach, CA',
+        center: {lat: 33.770, lng: -118.194}
+    };
 
-        var defaultLocation = {
-            searchStr: 'Long Beach, CA',
-            center: {lat: 33.770, lng: -118.194}
-        };
+    var mapView = document.getElementById('mapView');
+
+    var MapViewModel = function() {
+        var vm = this;
 
         // Initialize `location` observable with the default location text in search input.
         this.location = ko.observable(defaultLocation.searchStr);
 
         // Update the map and marker whenever a new location search is submitted.
-        this.location.subscribe(function (searchStr) {
-            geo(searchStr);
-        });
+        this.updateLocation = function () {
+            geo(vm.location());
+        };
 
 
         /***
@@ -58,6 +61,6 @@
     };
 
     // make knockout bindings work:
-    ko.applyBindings(new MapViewModel());
+    ko.applyBindings(new MapViewModel(), mapView);
 
 }());
