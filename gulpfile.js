@@ -71,12 +71,6 @@ gulp.task('less', function () {
         .pipe(livereload());
 });
 
-// TODO - not sure if I will need this
-gulp.task('data', function () {
-    gulp.src('./dev/js/data/data.json')
-        .pipe(gulp.dest('./build/data/'));
-});
-
 gulp.task('serve', serve('.'));
 
 gulp.task('watch', function () {
@@ -94,4 +88,4 @@ gulp.task('watch', function () {
     });
 });
 
-gulp.task('default', ['js-deps', 'partials', 'data', 'css-deps', 'js', 'less', 'watch', 'serve']);
+gulp.task('default', ['js-deps', 'partials', 'css-deps', 'js', 'less', 'watch', 'serve']);
