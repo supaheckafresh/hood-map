@@ -5,6 +5,7 @@
     var map;
     var geocoder;
     function initMap() {
+        console.log('the Google Maps API has been called.');
         geocoder = new google.maps.Geocoder();
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
@@ -27,7 +28,7 @@
         });
     }
 
-    // make initMap() available in global scope
+    // make initMap() available in the global scope
     window.initMap = initMap;
 
 
