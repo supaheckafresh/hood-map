@@ -99,23 +99,29 @@ var MapViewModel = function() {
     };
 
     vm.addMarker = function (place) {
-        console.log('Updating activities markers with: ' + place.name);
 
-        // TODO: getting `Uncaught TypeError: Cannot read property 'location' of undefined` even though adding markers seems to be working.
-        var marker = new google.maps.Marker({
-            map: map,
-            title: place.name,
-            position: place.geometry.location
-        });
+        // Added this if statement because I was getting an error in spite of function seeming to work properly:
+        // `Uncaught TypeError: Cannot read property 'location' of undefined`
+        if(place.geometry.location) {
+            console.log('Updating activities markers with: ' + place.name);
 
-        (function (markerCopy) {
-            google.maps.event.addListener(markerCopy, 'click', function() {
-                infoWindow.setContent(place.name);
-                infoWindow.open(map, this);
+            var marker = new google.maps.Marker({
+                map: map,
+                title: place.name,
+                position: place.geometry.location
             });
-        })(marker);
 
-        vm.markers.push(marker);
+            // TODO: figure out why infoWindows aren't working for all of the markers.
+            (function (markerCopy) {
+                google.maps.event.addListener(markerCopy, 'click', function() {
+                    infoWindow.setContent(place.name);
+                    console.log(this);
+                    infoWindow.open(map, this);
+                });
+            })(marker);
+
+            vm.markers.push(marker);
+        }
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
