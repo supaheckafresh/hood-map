@@ -26,7 +26,7 @@
             <section data-bind="with: MapViewModel" id="search-location" class="col-xs-4 col-xs-offset-2">
                 <form data-bind="submit: updateLocation" class="form-inline">
                     <div class="form-group">
-                        <input data-bind="value: location"
+                        <input data-bind="value: locationName"
                                class="form-control"
                                type="text"
                                placeholder="Hey, I need a location!"/>
@@ -59,7 +59,7 @@
             <!-- Location overview header -->
             <div data-bind="with: MapViewModel" id="location-overview-view" class="row">
                 <section id="location-overview" class="col-xs-12">
-                    <h3>Explore <span data-bind="text: location"></span></h3>
+                    <h3>Explore <span data-bind="text: locationName"></span></h3>
                 </section>
             </div>
 

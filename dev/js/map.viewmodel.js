@@ -14,7 +14,7 @@ var MapViewModel = function(activitiesVm) {
     vm.infoWindow = {};
 
     // Initialize `location` observable with the default location text in search input.
-    vm.location = ko.observable(defaultLocation.searchStr);
+    vm.locationName = ko.observable(defaultLocation.searchStr);
 
     // Initialize an empty list to hold map markers for activities.
     vm.markers = [];
@@ -22,7 +22,7 @@ var MapViewModel = function(activitiesVm) {
     // Update the map and marker whenever a new location search is submitted.
     vm.updateLocation = function () {
         // TODO: Validate input
-        vm.geo(vm.location());
+        vm.geo(vm.locationName());
     };
 
 
@@ -47,7 +47,7 @@ var MapViewModel = function(activitiesVm) {
         // Invoke geo() in order to display marker on pageload.
         vm.geo(defaultLocation.searchStr);
     };
-    
+
 
     vm.geo = function (loc) {
         console.log('new search string: ' + loc);
