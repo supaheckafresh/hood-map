@@ -3,7 +3,10 @@ var ActivitiesViewModel = function () {
     'use strict';
 
     var vm = this;
-    this.activities = ko.observableArray();
+
+    vm.defaultActivities = ['restaurants', 'museums', 'aquariums', 'parks', 'libraries'];
+
+    this.activities = ko.observableArray(vm.defaultActivities);
     this.newActivity = ko.observable();
 
     this.addActivity = function () {
