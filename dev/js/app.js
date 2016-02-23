@@ -9,7 +9,6 @@
             center: {lat: 33.770, lng: -118.194}
         };
 
-
         // Initialize `location` observable with the default location text in search input.
         this.location = ko.observable(defaultLocation.searchStr);
 
@@ -19,6 +18,9 @@
         });
 
 
+        /***
+         * Google Maps API calls
+         */
         var map;
         var geocoder;
         function initMap() {
@@ -59,7 +61,5 @@
 
     // make knockout bindings work:
     ko.applyBindings(new MapViewModel());
-
-
 
 }());
