@@ -59,6 +59,10 @@
                 </span>
                 </fieldset>
             </form>
+
+            <ul data-bind="foreach: activities">
+                <li data-bind="text: $data"></li>
+            </ul>
         </section>
 
     </div>
