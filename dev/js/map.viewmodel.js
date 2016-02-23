@@ -9,8 +9,9 @@ var MapViewModel = function(activitiesVm) {
         center: {lat: 33.770, lng: -118.194}
     };
 
-    // initialize Map.
+    // initialize Map and InfoWindow.
     vm.map = {};
+    vm.infoWindow = {};
 
     // Initialize `location` observable with the default location text in search input.
     vm.location = ko.observable(defaultLocation.searchStr);
@@ -35,14 +36,18 @@ var MapViewModel = function(activitiesVm) {
         geocoder = new google.maps.Geocoder();
         vm.map = new google.maps.Map(document.getElementById('map'), {
 
-            // hardcode downtown Long Beach, CA coordinates
+            // Hard code downtown Long Beach, CA coordinates.
             center: defaultLocation.center,
             zoom: 15
         });
 
-        // invoke geo() in order to display marker on pageload.
+        // Initialize infoWindow
+        vm.infoWindow = new google.maps.InfoWindow();
+
+        // Invoke geo() in order to display marker on pageload.
         vm.geo(defaultLocation.searchStr);
     };
+    
 
     vm.geo = function (loc) {
         console.log('new search string: ' + loc);
