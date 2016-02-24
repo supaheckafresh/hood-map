@@ -4,7 +4,7 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
     var vm = this;
 
-    vm.defaultActivities = ['restaurants', 'museums', 'aquariums', 'parks', 'libraries'];
+    vm.defaultActivities = ['portfolio', 'art museum', 'aquarium', 'queen mary', 'lola\'s'];
 
     vm.activities = ko.observableArray(vm.defaultActivities);
     vm.newActivity = ko.observable();
