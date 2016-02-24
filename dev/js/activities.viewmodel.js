@@ -11,7 +11,7 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
     vm.addActivity = function () {
 
-        // TODO: validate input
+        // TODO: Validate input and handle duplicates (also what do do after map is resized).
 
         vm.activities.push(vm.newActivity());
         locationsVm.searchActivityLocations(vm.newActivity());
