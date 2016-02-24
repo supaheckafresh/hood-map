@@ -15,7 +15,6 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
         vm.activities.push(vm.newActivity());
         locationsVm.searchActivityLocations(vm.newActivity());
-        mapVm.addMarker(vm.newActivity());
 
         vm.newActivity('');
     };
