@@ -12,8 +12,7 @@ var LocationsViewModel = function (mapVm) {
     vm.searchActivityLocations = function (activity) {
 
         mapVm.placesService.textSearch({
-            location: mapVm.currentLocation.center,
-            radius: '12',
+            bounds: mapVm.map.getBounds(),
             query: activity
         }, callback);
 

@@ -10,7 +10,7 @@ var MapViewModel = function() {
     };
 
     // initialize Map and InfoWindow
-    var map;
+    vm.map = {};
     var infoWindow;
 
     // Initialize `location` observable with the default location text in searchActivityLocations input.
@@ -37,7 +37,7 @@ var MapViewModel = function() {
     vm.initMap = function() {
         console.log('the Google Maps API has been called.');
         geocoder = new google.maps.Geocoder();
-        map = new google.maps.Map(document.getElementById('map'), {
+        vm.map = new google.maps.Map(document.getElementById('map'), {
 
             // Hard code downtown Long Beach, CA coordinates.
             center: defaultLocation.center,
@@ -64,9 +64,9 @@ var MapViewModel = function() {
         console.log('new searchActivityLocations string: ' + loc);
         geocoder.geocode( { 'address': loc}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
+                vm.map.setCenter(results[0].geometry.location);
                 vm.markers.push(new google.maps.Marker({
-                    map: map,
+                    map: vm.map,
                     position: results[0].geometry.location
                 }));
 
@@ -91,10 +91,9 @@ var MapViewModel = function() {
         // Added this if statement because I was getting an error in spite of function seeming to work properly:
         // `Uncaught TypeError: Cannot read property 'location' of undefined`
         if(place.geometry) {
-            console.log('Updating activities markers with: ' + place.name);
 
             var marker = new google.maps.Marker({
-                map: map,
+                map: vm.map,
                 title: place.name,
                 position: place.geometry.location
             });
@@ -103,8 +102,7 @@ var MapViewModel = function() {
             (function (markerCopy) {
                 google.maps.event.addListener(markerCopy, 'click', function() {
                     infoWindow.setContent(place.name);
-                    console.log(this);
-                    infoWindow.open(map, this);
+                    infoWindow.open(vm.map, this);
                 });
             })(marker);
 
