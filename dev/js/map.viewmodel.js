@@ -88,10 +88,10 @@ var MapViewModel = function() {
 
     vm.searchActivityLocations = function (activity) {
 
-        placesService.nearbySearch({
+        placesService.textSearch({
             location: vm.currentLocation.center,
-            radius: 3000,
-            type: activity
+            radius: 1000,
+            query: activity
         }, callback);
 
         function callback(results, status) {
