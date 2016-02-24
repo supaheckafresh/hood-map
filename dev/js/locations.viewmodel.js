@@ -21,25 +21,30 @@ var LocationsViewModel = function (mapVm) {
 
         function callback(results, status) {
 
-            if (results.length > 0) {
+            if (status === google.maps.places.PlacesServiceStatus.OK &&
+                results.length > 0) {
 
                 var filteredResults = suppressOutOfBoundsLocations(results);
 
-                // Transform the resulting list from Google Places to an object and push to `locationGroups`.
-                vm.locationGroups.push({
-                    activity: activity,
-                    results: filteredResults
-                });
-            } else {
-                alert('Sorry, there were no results for that activity.');
-            }
+                if (filteredResults.length > 0) {
 
-            // Add location markers for resulting places.
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0, len = filteredResults.length; i < len; i++) {
+                    // Transform the resulting list from Google Places to an object and push to `locationGroups`.
+                    vm.locationGroups.push({
+                        activity: activity,
+                        results: filteredResults
+                    });
 
-                    mapVm.addMarker(filteredResults[i]);
+                    // Add location markers for resulting places.
+                    for (var i = 0, len = filteredResults.length; i < len; i++) {
+                        mapVm.addMarker(filteredResults[i]);
+                    }
+
+                } else {
+                    alert('Sorry, there are no locations for that activity in the current map bounds.');
                 }
+
+            } else {
+                alert('Sorry, there was a problem retreiving results for the following reason: ' + status);
             }
         }
 
