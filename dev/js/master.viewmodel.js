@@ -3,10 +3,11 @@
     'use strict';
 
     var MasterViewModel = function () {
+        var vm = this;
 
-        this.MapViewModel = new MapViewModel();
-        this.LocationsViewModel = new LocationsViewModel(this.MapViewModel);
-        this.ActivitiesViewModel = new ActivitiesViewModel(this.MapViewModel, this.LocationsViewModel);
+        vm.MapViewModel = new MapViewModel();
+        vm.LocationsViewModel = new LocationsViewModel(vm.MapViewModel);
+        vm.ActivitiesViewModel = new ActivitiesViewModel(vm.MapViewModel, vm.LocationsViewModel);
     };
 
     ko.applyBindings(new MasterViewModel());
