@@ -90,7 +90,7 @@ var MapViewModel = function() {
 
         placesService.textSearch({
             location: vm.currentLocation.center,
-            radius: 1000,
+            radius: '500',
             query: activity
         }, callback);
 
