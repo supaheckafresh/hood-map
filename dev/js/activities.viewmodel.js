@@ -1,5 +1,5 @@
 
-var ActivitiesViewModel = function (mapVm) {
+var ActivitiesViewModel = function (mapVm, locationsVm) {
     'use strict';
 
     var vm = this;
@@ -13,8 +13,11 @@ var ActivitiesViewModel = function (mapVm) {
 
         // TODO: validate input
 
+        console.log(mapVm);
+        console.log(locationsVm);
+
         vm.activities.push(vm.newActivity());
-        mapVm.searchActivityLocations(vm.newActivity());
+        locationsVm.searchActivityLocations(vm.newActivity());
         mapVm.addMarker(vm.newActivity());
 
         vm.newActivity('');

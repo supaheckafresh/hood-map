@@ -9,10 +9,9 @@ var MapViewModel = function() {
         center: {lat: 33.770, lng: -118.194}
     };
 
-    // initialize Map, InfoWindow, and currentLocation.
+    // initialize Map and InfoWindow
     var map;
     var infoWindow;
-    var placesService;
 
     // Initialize `location` observable with the default location text in searchActivityLocations input.
     vm.locationName = ko.observable(defaultLocation.searchStr);
@@ -52,8 +51,8 @@ var MapViewModel = function() {
         infoWindow = new google.maps.InfoWindow();
 
         // Initialize Places searchActivityLocations.
-        placesService = new google.maps.places.PlacesService(map);
-        if (placesService) {
+        vm.placesService = new google.maps.places.PlacesService(map);
+        if (vm.placesService) {
             console.log('Google Places service has been initialized.');
         } else {
             console.log('There was an error initializing Google Places service.');
@@ -86,22 +85,6 @@ var MapViewModel = function() {
         });
     };
 
-    vm.searchActivityLocations = function (activity) {
-
-        placesService.textSearch({
-            location: vm.currentLocation.center,
-            radius: '500',
-            query: activity
-        }, callback);
-
-        function callback(results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0, len = results.length; i < len; i++) {
-                    vm.addMarker(results[i]);
-                }
-            }
-        }
-    };
 
     vm.addMarker = function (place) {
 
