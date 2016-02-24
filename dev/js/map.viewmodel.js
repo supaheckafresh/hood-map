@@ -53,7 +53,11 @@ var MapViewModel = function() {
 
         // Initialize Places searchActivityLocations.
         placesService = new google.maps.places.PlacesService(map);
-        console.log('Google Places service initialized: ' + placesService);
+        if (placesService) {
+            console.log('Google Places service has been initialized.');
+        } else {
+            console.log('There was an error initializing Google Places service.');
+        }
     };
 
 
@@ -83,10 +87,11 @@ var MapViewModel = function() {
     };
 
     vm.searchActivityLocations = function (activity) {
+
         placesService.nearbySearch({
             location: vm.currentLocation.center,
-            radius: 1000,
-            types: [activity]
+            radius: 3000,
+            type: activity
         }, callback);
 
         function callback(results, status) {
@@ -102,7 +107,7 @@ var MapViewModel = function() {
 
         // Added this if statement because I was getting an error in spite of function seeming to work properly:
         // `Uncaught TypeError: Cannot read property 'location' of undefined`
-        if(place.geometry.location) {
+        if(place.geometry) {
             console.log('Updating activities markers with: ' + place.name);
 
             var marker = new google.maps.Marker({
