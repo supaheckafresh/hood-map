@@ -13,9 +13,6 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
         // TODO: validate input
 
-        console.log(mapVm);
-        console.log(locationsVm);
-
         vm.activities.push(vm.newActivity());
         locationsVm.searchActivityLocations(vm.newActivity());
         mapVm.addMarker(vm.newActivity());

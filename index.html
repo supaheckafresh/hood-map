@@ -74,9 +74,13 @@
             </div>
 
             <div data-bind="with: LocationsViewModel" id="activity-locations-results-list">
-                <div data-bind="foreach: location-groups">
-                    <ul>
-
+                <div data-bind="foreach: { data: locationGroups, as: 'activityLocations' }">
+                    <h2 data-bind="text: activity"></h2>
+                    <ul data-bind="foreach: { data: results, as: 'location' }">
+                        <li>
+                            <span data-bind="text: location.name"></span>
+                            <span data-bind="text: location.formatted_address"></span>
+                        </li>
                     </ul>
                 </div>
 
