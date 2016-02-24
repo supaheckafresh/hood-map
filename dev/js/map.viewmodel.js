@@ -99,10 +99,6 @@ var MapViewModel = function() {
 
     vm.addMarker = function (place) {
 
-        // Added this if statement because I was getting an error in spite of function seeming to work properly:
-        // `Uncaught TypeError: Cannot read property 'location' of undefined`
-        if(place.geometry) {
-
             var marker = new google.maps.Marker({
                 map: map,
                 title: place.name,
@@ -118,7 +114,6 @@ var MapViewModel = function() {
             })(marker);
 
             vm.markers.push(marker);
-        }
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
