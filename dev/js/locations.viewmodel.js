@@ -8,11 +8,12 @@ var LocationsViewModel = function (mapVm) {
     // Initialize `locationGroups` which will hold other lists of activity search results (list-of-lists)
     vm.locationGroups = ko.observableArray();
 
+    // TODO: Give search results only for current map boundaries.
     vm.searchActivityLocations = function (activity) {
 
         mapVm.placesService.textSearch({
             location: mapVm.currentLocation.center,
-            radius: '500',
+            radius: '12',
             query: activity
         }, callback);
 
