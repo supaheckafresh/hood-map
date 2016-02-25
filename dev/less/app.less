@@ -61,14 +61,33 @@ html {
     }
 
     #activity-locations-results-list {
-      padding: 0 6px 0 20px;
+      padding: 0 8px;
       max-height: 60vh;
       overflow: auto;
       direction: rtl;
       text-align: left;
 
-      .location-group {
+      .location-groups {
         direction: ltr;
+
+        .location-title {
+          margin: 0;
+          padding: 6px 4px 0 6px;
+        }
+
+        .location-group:nth-child(even) {
+          background-color: rgba(115, 226, 144, 0.32);
+          border-radius: 4px;
+        }
+
+        .location-group:nth-child(odd) {
+          background-color: rgba(67, 63, 226, 0.32);
+          border-radius: 4px;
+        }
+
+        .locations {
+          padding: 8px;
+        }
       }
     }
   }

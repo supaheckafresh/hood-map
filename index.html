@@ -65,7 +65,8 @@
 
             <!-- Activities list -->
             <div data-bind="with: ActivitiesViewModel" id="activities-list-view">
-                <ul data-bind="foreach: activities">
+                <!-- Reverse a copy of the array to display the newest activity search term at the top -->
+                <ul data-bind="foreach: activities.slice().reverse()">
                     <li>
                         <input type="checkbox" checked>
                         <span data-bind="text: $data"></span>
@@ -74,16 +75,20 @@
             </div>
 
             <div data-bind="with: LocationsViewModel" id="activity-locations-results-list">
-                <div data-bind="foreach: { data: locationGroups, as: 'activityLocations' }" class="location-group">
-                    <h2 data-bind="text: activity"></h2>
-                    <ul data-bind="foreach: { data: results, as: 'location' }">
-                        <li>
-                            <span data-bind="text: location.name"></span>
-                            <span data-bind="text: location.formatted_address"></span>
-                        </li>
-                    </ul>
+                <!-- Reverse a copy of the observable array display the newest activity locations a the top -->
+                <div data-bind="foreach: { data: locationGroups.slice().reverse(), as: 'activityLocations' }"
+                     class="location-groups">
+                    <div class="location-group">
+                        <h4 data-bind="text: activity" class="location-title"></h4>
+                        <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
+                            <li>
+                                <span data-bind="text: ($index() + 1) + '. '"></span>
+                                <a href="#"><span data-bind="text: location.name"></span></a>
+                                <small data-bind="text: location.formatted_address" class="text-muted"></small>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
             </div>
         </section>
     </div>
