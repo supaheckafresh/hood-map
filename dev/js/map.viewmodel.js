@@ -6,6 +6,7 @@ var MapViewModel = function() {
 
     vm.readyState = ko.observable(false);
 
+    // Default location
     var longBeachCA = {
         searchStr: 'Long Beach, CA',
         center: {lat: 33.770, lng: -118.194}

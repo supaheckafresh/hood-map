@@ -63,6 +63,18 @@
                 </section>
             </div>
 
+            <!-- Filter results -->
+            <div id="filter">
+                <form class="form-inline">
+                    <fieldset class="form-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="Filter results"/>
+                        <button type="submit" class="btn btn-info btn-search">Filter Results</button>
+                    </fieldset>
+                </form>
+            </div>
+
             <!-- Activities list -->
             <div data-bind="with: ActivitiesViewModel" id="activities-list-view">
                 <!-- Reverse a copy of the array to display the newest activity search term at the top -->
