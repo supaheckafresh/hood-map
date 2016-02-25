@@ -65,5 +65,5 @@ var LocationsViewModel = function (mapVm) {
 
             return inBoundResults;
         }
-    }
+    };
 };
