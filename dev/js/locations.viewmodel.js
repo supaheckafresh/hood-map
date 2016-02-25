@@ -91,8 +91,6 @@ var LocationsViewModel = function (mapVm) {
             vm.filteredResults = ko.observableArray(vm.locationGroups());
 
             console.log('**********filterQuery being called*************');
-            console.log('filtered results below');
-            console.log(vm.filteredResults());
 
             _.each(vm.filteredResults(), function (activity) {
 
@@ -106,24 +104,14 @@ var LocationsViewModel = function (mapVm) {
 
                 });
 
-                //if (matches.length > 0) {
-                //    vm.filteredResults.push(returnActivity(activity, matches));
-                //}
-
-                console.log('===============================================');
-                console.log('Matches found in: ' + activity.activity);
+                if (activity.results.length > 0) {
+                    console.log('Matches found in: ' + activity.activity);
+                }
 
             });
 
             console.log('filtered results below');
             console.log(vm.filteredResults());
-        }
-
-        function returnActivity(activity, matches) {
-            return {
-                activity: activity.activity,
-                results: matches
-            };
         }
     });
 
