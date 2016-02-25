@@ -96,7 +96,7 @@
                             <li>
                                 <span data-bind="text: ($index() + 1) + '. '"></span>
                                 <a href="#"><span data-bind="text: location.name"></span></a>
-                                <small data-bind="text: location.formatted_address" class="text-muted"></small>
+                                <small data-bind="text: location.formatted_address.short()" class="text-muted"></small>
                             </li>
                         </ul>
                     </div>

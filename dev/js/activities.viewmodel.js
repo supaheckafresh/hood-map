@@ -5,11 +5,11 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     var vm = this;
 
     vm.defaultActivities = [
-        'Portfolio Coffee House',
-        'The Long Beach Museum of Art',
-        'Aquarium of the Pacific',
-        'The Pike',
-        'Lola\'s Mexican Cuisine'];
+        'Coffee',
+        'Vegetarian',
+        'Park',
+        'Mexican',
+        'Art Gallery'];
 
     vm.activities = ko.observableArray(vm.defaultActivities);
     vm.newActivity = ko.observable();
