@@ -9,7 +9,7 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
         'The Long Beach Museum of Art',
         'Aquarium of the Pacific',
         'The Pike',
-        'lola\'s Mexican Cuisine'];
+        'Lola\'s Mexican Cuisine'];
 
     vm.activities = ko.observableArray(vm.defaultActivities);
     vm.newActivity = ko.observable();
