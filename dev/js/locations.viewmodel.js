@@ -9,6 +9,10 @@ var LocationsViewModel = function (mapVm) {
     // the resulting locations from each `activity` search.
     vm.locationGroups = ko.observableArray();
 
+    // Initialize `filterQuery` to bind to user input in the locations filter form.
+    vm.filterQuery = ko.observable('');
+
+
     // TODO: Give search results only for current map boundaries.
     vm.searchActivityLocations = function (activity) {
 
@@ -65,5 +69,49 @@ var LocationsViewModel = function (mapVm) {
 
             return inBoundResults;
         }
+    };
+
+
+    vm.filterQuery.subscribe(function filterResults() {
+        var locationGroupsCopy = ko.observableArray(vm.locationGroups());
+        vm.filteredResults = ko.observableArray();
+        var matches;
+
+        console.log(locationGroupsCopy());
+
+        _.each(locationGroupsCopy(), function (activity) {
+
+            _.each(activity, function (locations) {
+
+                matches = _.remove(locations, function (location) {
+                    if (location.name) {
+                        return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) > -1;
+                    }
+                });
+
+            });
+
+            if (matches.length > 0) {
+                vm.filteredResults.push(returnActivity(activity, matches));
+            }
+
+            console.log('===============================================');
+            console.log('Matches found in: ' + activity.activity);
+            console.log(matches);
+
+        });
+
+        function returnActivity(activity, matches) {
+            return {
+                activity: activity.activity,
+                results: matches
+            };
+        }
+        console.log('filtered results below')
+        console.log(vm.filteredResults());
+    });
+
+    // Hack to prevent form submission on the filter input.
+    vm.preventDefault = function () {
     };
 };
