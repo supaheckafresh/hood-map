@@ -28,32 +28,45 @@ html {
   position: absolute;
   top: 8px;
   left: 108px;
+
+  #search-view {
+
+    input {
+      border-radius: 0;
+      padding: 8px;
+      height: 31px;
+      border: none;
+      box-shadow: inset 2px 2px 4px rgba(0, 0, 0, .3)
+    }
+
+    .text-muted {
+      color: #ff29d5;
+    }
+  }
 }
 
-.text-muted {
-  color: #ff29d5;
-}
 
 .overlay-sidebar {
   position: absolute;
   top: 100px;
-}
 
-#search-view {
+  #sidebar {
+    background-color: rgba(255, 64, 80, 0.38);
+    border-radius: 4px;
 
-  input {
-    border-radius: 0;
-    padding: 8px;
-    height: 31px;
-    border: none;
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, .3)
+    #activity-locations-results-list {
+      max-height: 60vh;
+      overflow: auto;
+      direction: rtl;
+      text-align: left;
+
+      .location-group {
+        direction: ltr;
+      }
+    }
   }
 }
 
-#sidebar {
-  background-color: rgba(255, 64, 80, 0.38);
-  border-radius: 4px;
-}
 
 @media screen and (min-width: 800px) {
   .overlay-sidebar {
