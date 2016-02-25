@@ -4,6 +4,8 @@ var MapViewModel = function() {
 
     var vm = this;
 
+    vm.readyState = ko.observable(false);
+
     var longBeachCA = {
         searchStr: 'Long Beach, CA',
         center: {lat: 33.770, lng: -118.194}
@@ -47,7 +49,7 @@ var MapViewModel = function() {
             zoom: 15
         });
 
-        console.log('the Google Maps API has been called.');
+        console.log('Google Maps API has been called.');
 
         // Invoke geo() in order to display marker on pageload.
         vm.geo(longBeachCA.searchStr);
@@ -64,15 +66,21 @@ var MapViewModel = function() {
             console.log('There was an error initializing Google Places service.');
         }
 
+        google.maps.event.addListenerOnce(map, 'idle', function () {
+            vm.readyState(true);
+            console.log('Google Maps has loaded successfully.');
+        });
+
+
         // For some reason, setting the `Map()` object to `vm.map` doesn't work well as the map fails to display
         // sometimes (without providing any errors). Store the `map` into `vm.mapCopy` property so that other
         // ViewModels can access the map properties when needed.
         vm.mapCopy = map;
+
     };
 
 
     vm.geo = function (loc) {
-        console.log('new searchActivityLocations string: ' + loc);
         geocoder.geocode( { 'address': loc}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
@@ -89,6 +97,8 @@ var MapViewModel = function() {
                     },
                     zoom: 15
                 };
+
+                console.log('Location has been set to: ' + loc);
 
             } else {
                 alert("Geocoding was unsuccessful for the following reason: " + status);
