@@ -4,10 +4,30 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
     var vm = this;
 
-    vm.defaultActivities = ['portfolio', 'art museum', 'aquarium', 'queen mary', 'lola\'s'];
+    vm.defaultActivities = [
+        'Portfolio Coffee House',
+        'The Long Beach Museum of Art',
+        'Aquarium of the Pacific',
+        'The Pike',
+        'lola\'s Mexican Cuisine'];
 
     vm.activities = ko.observableArray(vm.defaultActivities);
     vm.newActivity = ko.observable();
+
+    // Search for (and display) locations for the default activities once the map has fully loaded and
+    // Google Places Service is ready to receive queries.
+    mapVm.readyState.subscribe(function () {
+        if (mapVm.readyState() === true) {
+            vm.displayDefaultActivities();
+        }
+    });
+
+    vm.displayDefaultActivities = function () {
+        _.each(vm.activities(), function (activity) {
+            locationsVm.searchActivityLocations(activity);
+        });
+    };
+
 
     vm.addActivity = function () {
 
@@ -24,6 +44,6 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
         locationsVm.searchActivityLocations(vm.newActivity());
 
         vm.newActivity('');
-    }
+    };
 
 };
