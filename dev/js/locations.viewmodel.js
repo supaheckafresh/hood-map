@@ -12,6 +12,9 @@ var LocationsViewModel = function (mapVm) {
     // Initialize `filterQuery` to bind to user input in the locations filter form.
     vm.filterQuery = ko.observable('');
 
+    // Initialize an empty observable array to hold locations whose names contain the filter query.
+    vm.filteredResults = ko.observableArray();
+
 
     // TODO: Give search results only for current map boundaries.
     vm.searchActivityLocations = function (activity) {
@@ -72,34 +75,49 @@ var LocationsViewModel = function (mapVm) {
     };
 
 
+
+
+
     vm.filterQuery.subscribe(function filterResults() {
-        var locationGroupsCopy = ko.observableArray(vm.locationGroups());
-        vm.filteredResults = ko.observableArray();
-        var matches;
 
-        console.log(locationGroupsCopy());
+        if (vm.filterQuery().trim() === '') {
 
-        _.each(locationGroupsCopy(), function (activity) {
+            // If there is only whitespace in the filter input, set `filteredResults()` to a falsy value.
+            vm.filteredResults(null);
+            console.log('filtered results: ' + vm.filteredResults());
 
-            _.each(activity, function (locations) {
+        } else {
 
-                matches = _.remove(locations, function (location) {
-                    if (location.name) {
-                        return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) > -1;
-                    }
+            vm.filteredResults = ko.observableArray(vm.locationGroups());
+
+            console.log('**********filterQuery being called*************');
+            console.log('filtered results below');
+            console.log(vm.filteredResults());
+
+            _.each(vm.filteredResults(), function (activity) {
+
+                _.each(activity, function (locations) {
+
+                    _.remove(locations, function (location) {
+                        if (location.name) {
+                            return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1;
+                        }
+                    });
+
                 });
+
+                //if (matches.length > 0) {
+                //    vm.filteredResults.push(returnActivity(activity, matches));
+                //}
+
+                console.log('===============================================');
+                console.log('Matches found in: ' + activity.activity);
 
             });
 
-            if (matches.length > 0) {
-                vm.filteredResults.push(returnActivity(activity, matches));
-            }
-
-            console.log('===============================================');
-            console.log('Matches found in: ' + activity.activity);
-            console.log(matches);
-
-        });
+            console.log('filtered results below');
+            console.log(vm.filteredResults());
+        }
 
         function returnActivity(activity, matches) {
             return {
@@ -107,11 +125,10 @@ var LocationsViewModel = function (mapVm) {
                 results: matches
             };
         }
-        console.log('filtered results below')
-        console.log(vm.filteredResults());
     });
 
     // Hack to prevent form submission on the filter input.
     vm.preventDefault = function () {
     };
+
 };
