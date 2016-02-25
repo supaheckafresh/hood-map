@@ -22,9 +22,14 @@ html {
   tranform: translateZ(0);
 }
 
-#overlay-ui {
+.overlay-search {
   position: absolute;
   top: 10px;
+}
+
+.overlay-sidebar {
+  position: absolute;
+  top: 100px;
 }
 
 #search-view {
@@ -52,4 +57,10 @@ html {
 
 .text-muted {
   color: #ff29d5;
+}
+
+@media screen and (min-width: 800px) {
+  .overlay-sidebar {
+    width: 400px;
+  }
 }

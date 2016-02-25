@@ -16,10 +16,8 @@
     <!-- Google Map -->
     <div id="map"></div>
 
-
-    <div id="overlay-ui" class="container">
-
-        <!-- Search UI -->
+    <!-- Search UI -->
+    <div class="overlay-search container">
         <section id="search-view" class="row">
 
             <!-- Location searchActivityLocations form -->
@@ -49,12 +47,14 @@
                     </fieldset>
                 </form>
             </section>
-
         </section>
 
+    </div>
 
-        <!-- Sidebar UI -->
-        <section id="sidebar" class="col-xs-4">
+
+    <!-- Sidebar UI -->
+    <div class="overlay-sidebar container">
+        <section id="sidebar" class="col-xs-12">
 
             <!-- Location overview header -->
             <div data-bind="with: MapViewModel" id="location-overview-view" class="row">
@@ -85,9 +85,7 @@
                 </div>
 
             </div>
-
         </section>
-
     </div>
 
 
