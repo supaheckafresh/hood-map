@@ -114,7 +114,8 @@ var MapViewModel = function() {
             var marker = new google.maps.Marker({
                 map: map,
                 title: place.name,
-                position: place.geometry.location
+                position: place.geometry.location,
+                id: place.id
             });
 
             // TODO: figure out why infoWindows aren't working for all of the markers.
@@ -128,10 +129,12 @@ var MapViewModel = function() {
             vm.markers.push(marker);
     };
 
-    vm.hideMarkers = function () {
-        for (var i = 0, len = vm.markers.length; i < len; i++) {
-            vm.markers[i].setMap(null);
-        }
+    vm.removeMarker = function (place) {
+        _.each(vm.markers, function (marker) {
+            if (marker.id === place.id) {
+                marker.setMap(null);
+            }
+        });
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).

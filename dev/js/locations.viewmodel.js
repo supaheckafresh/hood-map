@@ -91,6 +91,7 @@ var LocationsViewModel = function (mapVm) {
         } else {
 
             vm.applyFilter(true);
+            var removedLocations;
 
             // I used this JSON hack to prevent the filteredResults from mutating the same underlying array that
             // locationGroups has a reference to (which contains all of the original search results).
@@ -100,31 +101,25 @@ var LocationsViewModel = function (mapVm) {
 
                 _.each(activity, function (locations) {
 
-                    _.remove(locations, function (location) {
+                    removedLocations =_.remove(locations, function (location) {
                         if (location.name) {
 
-                            if (location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1){
-
-                                // Hide markers so that only markers for desired locations will display (below).
-                                mapVm.hideMarkers();
-                                return true;
-                            }
+                            return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1;
                         }
                     });
+
+                    // Remove markers for locations not in filter results.
+                    if (removedLocations) {
+                        _.each(removedLocations, function (location) {
+                            mapVm.removeMarker(location);
+                        });
+                    }
                 });
             });
 
             // Set `filteredResults` to the new array so that the UI gets updated.
             vm.filteredResults(copy);
 
-            // Display markers for selected locations.
-            _.each(vm.filteredResults(), function (activity) {
-                if (activity.results.length > 0) {
-                    _.each(activity.results, function (location) {
-                        mapVm.addMarker(location);
-                    });
-                }
-            });
         }
     });
 
