@@ -129,11 +129,25 @@ var MapViewModel = function() {
             vm.markers.push(marker);
     };
 
-    vm.removeMarker = function (place) {
+    vm.showAllMarkers = function () {
+        _.each(vm.markers, function (marker) {
+            marker.setMap(map);
+        });
+    };
+
+    vm.hideMarker = function (place) {
         _.each(vm.markers, function (marker) {
             if (marker.id === place.id) {
                 marker.setMap(null);
             }
+        });
+    };
+
+    vm.showMarker = function (place) {
+        _.each(vm.markers, function (marker) {
+           if (marker.id === place.id && marker.map != map) {
+               marker.setMap(map);
+           }
         });
     };
 

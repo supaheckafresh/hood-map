@@ -88,6 +88,8 @@ var LocationsViewModel = function (mapVm) {
             vm.applyFilter(false);
             vm.filteredResults([]);
 
+            mapVm.showAllMarkers();
+
         } else {
 
             vm.applyFilter(true);
@@ -111,7 +113,7 @@ var LocationsViewModel = function (mapVm) {
                     // Remove markers for locations not in filter results.
                     if (removedLocations) {
                         _.each(removedLocations, function (location) {
-                            mapVm.removeMarker(location);
+                            mapVm.hideMarker(location);
                         });
                     }
                 });
@@ -120,6 +122,13 @@ var LocationsViewModel = function (mapVm) {
             // Set `filteredResults` to the new array so that the UI gets updated.
             vm.filteredResults(copy);
 
+            // Update results when `backspace` is pressed or input is altered some other way which causes previously
+            // filtered-out locations to appear back in the list.
+            _.each(vm.filteredResults(), function (activity) {
+                _.each(activity.results, function (location) {
+                            mapVm.showMarker(location);
+                })
+            });
         }
     });
 
