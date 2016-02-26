@@ -2,8 +2,21 @@
 var MapViewModel = function() {
     'use strict';
 
+    /**
+     * Top-level variables for `MapViewModel()`
+     */
+
     var vm = this;
 
+    // Initialize `map`, `infoWindow`, and `geocoder` variables which are needed in our `initMap()` callback function.
+    var map;
+    var geocoder;
+    var infoWindow;
+
+    // `readyState` is set to `true` inside the `initMap()` function only when the map is in `idle` state (indicating
+    // that it has successfully loaded), and also once Google Places Service is initialized. `ActivitiesViewModel`
+    // listens for a change to `readyState` in order to execute the default activities Google Places query (otherwise
+    // the search executes before the map and Places Service are fully initialized & we'll see errors).
     vm.readyState = ko.observable(false);
 
     // Default location
@@ -12,11 +25,7 @@ var MapViewModel = function() {
         center: {lat: 33.770, lng: -118.194}
     };
 
-    // initialize map and infoWindow variables.
-    var map;
-    var infoWindow;
-
-    // Initialize `location` observable with a default location text to appear in the `searchActivityLocations` input.
+    // Initialize `locationName` observable with a default location text to appear in the location search input.
     vm.locationName = ko.observable(longBeachCA.searchStr);
 
     // Initialize an empty object to store the current location.
@@ -25,23 +34,19 @@ var MapViewModel = function() {
     // Initialize an empty list to hold map markers for activity locations.
     vm.markers = [];
 
-    // Update the map and center marker when a new location query in `searchActivityLocations` is performed
-    // successfully.
-    vm.updateLocation = function () {
-        // TODO: Validate input
-        vm.geo(vm.locationName());
-    };
-
 
     /***
      * Google Maps API calls
      */
 
-    var geocoder;
+    // Update the map when a new location query is performed successfully.
+    vm.updateLocation = function () {
+        // TODO: Validate input
+        vm.geo(vm.locationName());
+    };
+
+    // Initialize our map. This is the callback function parameter in our Google Maps API request in 'index.html'.
     vm.initMap = function() {
-        
-        // Initialize the `geocoder`.
-        geocoder = new google.maps.Geocoder();
         
         // Initialize the `map`.
         map = new google.maps.Map(document.getElementById('map'), {
@@ -54,50 +59,57 @@ var MapViewModel = function() {
 
         console.log('Google Maps API has been called.');
 
-        // Invoke geo() in order to display marker on pageload.
-        vm.geo(longBeachCA.searchStr);
+        // Initialize the `geocoder`.
+        geocoder = new google.maps.Geocoder();
 
         // Initialize infoWindow.
         infoWindow = new google.maps.InfoWindow();
 
-        // Initialize Places searchActivityLocations.
+        // Initialize Places Service.
         vm.placesService = new google.maps.places.PlacesService(map);
 
         if (vm.placesService) {
             console.log('Google Places service has been initialized.');
+
+            // Set `readyState` property to `true` once Places Service is available and the map has loaded successfully.
+            google.maps.event.addListenerOnce(map, 'idle', function () {
+                if (map.center) {
+                    vm.readyState(true);
+                    console.log('Google Maps has loaded successfully.');
+                } else {
+                    alert('There was a problem loading the map.');
+                }
+            });
+
         } else {
-            console.log('There was an error initializing Google Places service.');
+            alert('There was an error initializing Google Places service.');
         }
 
-        google.maps.event.addListenerOnce(map, 'idle', function () {
-            vm.readyState(true);
-            console.log('Google Maps has loaded successfully.');
-        });
-
-
-        // For some reason, setting the `Map()` object to `vm.map` doesn't work well as the map fails to display
-        // sometimes (without providing any errors). Store the `map` into `vm.mapCopy` property so that other
-        // ViewModels can access the map properties when needed.
+        // Setting the `map` object to `vm.map` doesn't work well as the map fails to display occasionally (without
+        // providing any errors). Store the `map` into `vm.mapCopy` property so that other ViewModels can access the
+        // map properties when needed.
         vm.mapCopy = map;
 
     };
 
 
-    vm.geo = function (loc) {
-        geocoder.geocode( { 'address': loc}, function(results, status) {
+    vm.geo = function (locationName) {
+        geocoder.geocode( { 'address': locationName }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
 
-                // Store the successfully geocoded location.
+                // Update mapCopy.
+                vm.mapCopy = map;
+
+                // Store the successfully geocoded coordinates.
                 vm.currentLocation = {
                     center: {
                         lat: results[0].geometry.location.lat(),
                         lng: results[0].geometry.location.lng()
-                    },
-                    zoom: 15
+                    }
                 };
 
-                console.log('Location has been set to: ' + loc);
+                console.log('Location has been set to: ' + locationName);
 
             } else {
                 alert("Geocoding was unsuccessful for the following reason: " + status);
@@ -106,13 +118,14 @@ var MapViewModel = function() {
     };
 
 
-    vm.addMarker = function (place) {
+
+    vm.addMarker = function (location) {
 
         var marker = new google.maps.Marker({
             map: map,
-            title: place.name,
-            position: place.geometry.location,
-            id: place.place_id,
+            title: location.name,
+            position: location.geometry.location,
+            id: location.place_id,
             animation: google.maps.Animation.DROP
         });
 
@@ -124,13 +137,12 @@ var MapViewModel = function() {
                 thatMarker = this;
 
                 attachInfoWindow();
-
                 toggleAnimation();
             });
         })(marker);
 
         function attachInfoWindow() {
-            infoWindow.setContent(place.name);
+            infoWindow.setContent(location.name);
             infoWindow.open(map, thatMarker);
         }
 
@@ -157,20 +169,20 @@ var MapViewModel = function() {
         });
     };
 
-    vm.hideMarker = function (place) {
+    vm.hideMarker = function (location) {
         _.each(vm.markers, function (marker) {
-            if (marker.id === place.place_id) {
+            if (marker.id === location.place_id) {
                 marker.setMap(null);
             }
         });
     };
 
-    vm.showMarker = function (place) {
+    vm.showMarker = function (location) {
         _.each(vm.markers, function (marker) {
 
             // The second conditional checks if the marker is not already present on the map (without this the markers
             // appear to blink/refresh in response to filter input).
-           if (marker.id === place.place_id && marker.map != map) {
+           if (marker.id === location.place_id && marker.map != map) {
                vm.dropAnimateMarker(marker);
            }
         });

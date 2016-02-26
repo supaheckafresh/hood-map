@@ -128,7 +128,7 @@ var LocationsViewModel = function (mapVm) {
             _.each(vm.filteredResults(), function (activity) {
                 _.each(activity.results, function (location) {
                     mapVm.showMarker(location);
-                })
+                });
             });
         }
     });
