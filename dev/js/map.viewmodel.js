@@ -138,6 +138,10 @@ var MapViewModel = function() {
                 thatMarker.setAnimation(null);
             } else {
                 thatMarker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function () {
+                    // Turn off animation after short time.
+                    toggleAnimation();
+                }, 2125);
             }
         }
 
