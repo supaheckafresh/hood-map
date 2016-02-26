@@ -150,7 +150,10 @@ var MapViewModel = function() {
 
     vm.showAllMarkers = function () {
         _.each(vm.markers, function (marker) {
-            marker.setMap(map);
+            if (marker.map != map) {
+                marker.setMap(map);
+                marker.setAnimation(google.maps.Animation.DROP);
+            }
         });
     };
 
@@ -169,6 +172,7 @@ var MapViewModel = function() {
             // appear to blink/refresh in response to filter input).
            if (marker.id === place.place_id && marker.map != map) {
                marker.setMap(map);
+               marker.setAnimation(google.maps.Animation.DROP);
            }
         });
     };
