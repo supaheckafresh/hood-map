@@ -123,12 +123,22 @@ var MapViewModel = function() {
                 thatMarker = this;
 
                 attachInfoWindow();
+
+                toggleAnimation();
             });
         })(marker);
 
         function attachInfoWindow() {
             infoWindow.setContent(place.name);
             infoWindow.open(map, thatMarker);
+        }
+
+        function toggleAnimation() {
+            if (thatMarker.getAnimation() !== null) {
+                thatMarker.setAnimation(null);
+            } else {
+                thatMarker.setAnimation(google.maps.Animation.BOUNCE);
+            }
         }
 
         vm.markers.push(marker);
