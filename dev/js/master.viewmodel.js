@@ -1,3 +1,4 @@
+
 (function () {
 
     'use strict';
@@ -13,4 +14,5 @@
     ko.applyBindings(new MasterViewModel());
 
 }());
+
 

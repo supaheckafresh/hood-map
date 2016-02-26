@@ -148,4 +148,20 @@ var LocationsViewModel = function (mapVm) {
         // (do nothing.)
     };
 
+
+    /**
+     *  Selected location functions
+     */
+    vm.selectLocation = function (location) {
+
+        _.each(mapVm.markers, function (marker) {
+            if (location.place_id === marker.id) {
+
+                mapVm.showInfoWindow(location, marker);
+                mapVm.bounceAnimate(marker);
+            }
+        });
+    };
+
+
 };

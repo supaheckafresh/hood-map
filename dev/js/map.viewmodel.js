@@ -137,35 +137,23 @@ var MapViewModel = function() {
 
                 thatMarker = this;
 
-                attachInfoWindow();
-                toggleAnimation();
+                vm.showInfoWindow(location, thatMarker);
+                vm.bounceAnimate(thatMarker);
             });
         })(marker);
 
-        function attachInfoWindow() {
-            infoWindow.setContent(location.name);
-            infoWindow.open(map, thatMarker);
-        }
-
-        function toggleAnimation() {
-            if (thatMarker.getAnimation() !== null) {
-                thatMarker.setAnimation(null);
-            } else {
-                thatMarker.setAnimation(google.maps.Animation.BOUNCE);
-                setTimeout(function () {
-                    // Turn off animation after short time.
-                    toggleAnimation();
-                }, 2125);
-            }
-        }
-
         vm.markers.push(marker);
+    };
+
+    vm.showInfoWindow = function (location, marker) {
+        infoWindow.setContent(location.name);
+        infoWindow.open(map, marker);
     };
 
     vm.showAllMarkers = function () {
         _.each(vm.markers, function (marker) {
             if (marker.map != map) {
-                vm.dropAnimateMarker(marker);
+                vm.dropAnimate(marker);
             }
         });
     };
@@ -184,12 +172,12 @@ var MapViewModel = function() {
             // The second conditional checks if the marker is not already present on the map (without this the markers
             // appear to blink/refresh in response to filter input).
            if (marker.id === location.place_id && marker.map != map) {
-               vm.dropAnimateMarker(marker);
+               vm.dropAnimate(marker);
            }
         });
     };
 
-    vm.dropAnimateMarker = function (marker) {
+    vm.dropAnimate = function (marker) {
 
         // Marker visibility set to hidden temporarily in an effort to improve the appearance of the drop animation.
         marker.setVisible(false);
@@ -198,6 +186,15 @@ var MapViewModel = function() {
             marker.setVisible(true);
             marker.setAnimation(google.maps.Animation.DROP);
         }, 100);
+    };
+
+    vm.bounceAnimate = function (marker) {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+
+        // Turn off animation after short time.
+        setTimeout(function () {
+            marker.setAnimation(null);
+        }, 2125);
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to

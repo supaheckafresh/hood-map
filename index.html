@@ -101,7 +101,9 @@
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
                                 <li>
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
-                                    <a href="#"><span data-bind="text: location.name"></span></a>
+                                    <a data-bind="click: function () { $parents[1].selectLocation($data) }" href="#">
+                                        <span data-bind="text: location.name"></span>
+                                    </a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>
                                 </li>
                             </ul>
