@@ -86,10 +86,6 @@ var MapViewModel = function() {
         geocoder.geocode( { 'address': loc}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
-                vm.markers.push(new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location
-                }));
 
                 // Store the successfully geocoded location.
                 vm.currentLocation = {
