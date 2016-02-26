@@ -107,23 +107,31 @@ var MapViewModel = function() {
 
     vm.addMarker = function (place) {
 
-            var marker = new google.maps.Marker({
-                map: map,
-                title: place.name,
-                position: place.geometry.location,
-                id: place.place_id,
-                animation: google.maps.Animation.DROP
+        var marker = new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location,
+            id: place.place_id,
+            animation: google.maps.Animation.DROP
+        });
+
+        var thatMarker;
+        // TODO: figure out why infoWindows aren't working for all of the markers.
+        (function (markerCopy) {
+            google.maps.event.addListener(markerCopy, 'click', function() {
+
+                thatMarker = this;
+
+                attachInfoWindow();
             });
+        })(marker);
 
-            // TODO: figure out why infoWindows aren't working for all of the markers.
-            (function (markerCopy) {
-                google.maps.event.addListener(markerCopy, 'click', function() {
-                    infoWindow.setContent(place.name);
-                    infoWindow.open(map, this);
-                });
-            })(marker);
+        function attachInfoWindow() {
+            infoWindow.setContent(place.name);
+            infoWindow.open(map, thatMarker);
+        }
 
-            vm.markers.push(marker);
+        vm.markers.push(marker);
     };
 
     vm.showAllMarkers = function () {
