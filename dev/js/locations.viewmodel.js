@@ -89,7 +89,6 @@ var LocationsViewModel = function (mapVm) {
             vm.filteredResults([]);
 
         } else {
-            console.log('**********filterQuery being called*************');
 
             vm.applyFilter(true);
 
@@ -105,19 +104,27 @@ var LocationsViewModel = function (mapVm) {
                         if (location.name) {
 
                             if (location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1){
-                                mapVm.removeMarker(location);
+
+                                // Hide markers so that only markers for desired locations will display (below).
+                                mapVm.hideMarkers();
                                 return true;
                             }
                         }
                     });
                 });
-
-                if (activity.results.length > 0) {
-                    console.log('Matches found in: ' + activity.activity);
-                }
             });
+
             // Set `filteredResults` to the new array so that the UI gets updated.
             vm.filteredResults(copy);
+
+            // Display markers for selected locations.
+            _.each(vm.filteredResults(), function (activity) {
+                if (activity.results.length > 0) {
+                    _.each(activity.results, function (location) {
+                        mapVm.addMarker(location);
+                    });
+                }
+            });
         }
     });
 

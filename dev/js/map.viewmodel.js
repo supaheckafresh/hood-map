@@ -128,8 +128,10 @@ var MapViewModel = function() {
             vm.markers.push(marker);
     };
 
-    vm.removeMarker = function (place) {
-        vm.markers = [];
+    vm.hideMarkers = function () {
+        for (var i = 0, len = vm.markers.length; i < len; i++) {
+            vm.markers[i].setMap(null);
+        }
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
