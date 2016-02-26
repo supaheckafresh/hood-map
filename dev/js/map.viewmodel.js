@@ -111,7 +111,7 @@ var MapViewModel = function() {
                 map: map,
                 title: place.name,
                 position: place.geometry.location,
-                id: place.id
+                id: place.place_id
             });
 
             // TODO: figure out why infoWindows aren't working for all of the markers.
@@ -133,7 +133,7 @@ var MapViewModel = function() {
 
     vm.hideMarker = function (place) {
         _.each(vm.markers, function (marker) {
-            if (marker.id === place.id) {
+            if (marker.id === place.place_id) {
                 marker.setMap(null);
             }
         });
@@ -144,7 +144,7 @@ var MapViewModel = function() {
 
             // The second conditional checks if the marker is not already present on the map (without this the markers
             // appear to blink/refresh in response to filter input).
-           if (marker.id === place.id && marker.map != map) {
+           if (marker.id === place.place_id && marker.map != map) {
                marker.setMap(map);
            }
         });
