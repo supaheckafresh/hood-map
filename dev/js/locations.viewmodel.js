@@ -103,7 +103,11 @@ var LocationsViewModel = function (mapVm) {
 
                     _.remove(locations, function (location) {
                         if (location.name) {
-                            return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1;
+
+                            if (location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1){
+                                mapVm.removeMarker(location);
+                                return true;
+                            }
                         }
                     });
                 });
