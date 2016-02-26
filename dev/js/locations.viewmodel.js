@@ -88,19 +88,14 @@ var LocationsViewModel = function (mapVm) {
             vm.applyFilter(false);
             vm.filteredResults([]);
 
-            console.log('location groups', vm.locationGroups());
-            console.log('filtered results', vm.filteredResults());
-
         } else {
+            console.log('**********filterQuery being called*************');
 
             vm.applyFilter(true);
 
             // I used this JSON hack to prevent the filteredResults from mutating the same underlying array that
-            // locationGroups has a reference to.
+            // locationGroups has a reference to (which contains all of the original search results).
             var copy = JSON.parse(ko.toJSON(vm.locationGroups()));
-
-            console.log('**********filterQuery being called*************');
-            console.log(vm.filteredResults());
 
             _.each(copy, function (activity) {
 
@@ -111,28 +106,21 @@ var LocationsViewModel = function (mapVm) {
                             return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1;
                         }
                     });
-
                 });
 
                 if (activity.results.length > 0) {
                     console.log('Matches found in: ' + activity.activity);
                 }
-
             });
-
-            //vm.filteredResults([]);
+            // Set `filteredResults` to the new array so that the UI gets updated.
             vm.filteredResults(copy);
-
-            console.log('filtered results below');
-            console.log(vm.filteredResults());
-            console.log('location groups below');
-            console.log(vm.locationGroups());
         }
     });
 
 
     // Hack to prevent form submission on the filter input.
     vm.preventDefault = function () {
+        // (do nothing.)
     };
 
 };
