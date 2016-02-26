@@ -2,6 +2,9 @@
 var ActivitiesViewModel = function (mapVm, locationsVm) {
     'use strict';
 
+    /**
+     * Top-level variables for `ActivitiesViewModel()`
+     */
     var vm = this;
 
     vm.defaultActivities = [
@@ -14,8 +17,8 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     vm.activities = ko.observableArray(vm.defaultActivities);
     vm.newActivity = ko.observable();
 
-    // Search for (and display) locations for the default activities once the map has fully loaded and
-    // Google Places Service is ready to receive queries.
+    // Search for (and display) locations for the default activities once the map has fully loaded and Google Places
+    // Service is ready to receive queries.
     mapVm.readyState.subscribe(function () {
         if (mapVm.readyState() === true) {
             vm.displayDefaultActivities();

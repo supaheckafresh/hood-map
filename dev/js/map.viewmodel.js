@@ -5,7 +5,6 @@ var MapViewModel = function() {
     /**
      * Top-level variables for `MapViewModel()`
      */
-
     var vm = this;
 
     // Initialize `map`, `infoWindow`, and `geocoder` variables which are needed in our `initMap()` callback function.
@@ -118,7 +117,9 @@ var MapViewModel = function() {
     };
 
 
-
+    /**
+     *  Map marker methods
+     */
     vm.addMarker = function (location) {
 
         var marker = new google.maps.Marker({

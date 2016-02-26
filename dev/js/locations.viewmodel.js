@@ -3,23 +3,29 @@ var LocationsViewModel = function (mapVm) {
 
     'use strict';
 
+    /**
+     *  Top-level variables for `LocationsViewModel()`
+     */
     var vm = this;
 
-    // Initialize the `locationGroups` observable array which will hold objects containing
-    // the resulting locations from each `activity` search.
+    // Initialize the `locationGroups` observable array which will hold objects containing the resulting locations from
+    // each `activity` search.
     vm.locationGroups = ko.observableArray();
 
-    // Initialize `filterQuery` to bind to user input in the locations filter form.
+    // Initialize `filterQuery` observable to bind to user input in the locations filter form.
     vm.filterQuery = ko.observable('');
 
     // Initialize an empty observable array to hold locations whose names contain the filter query.
     vm.filteredResults = ko.observableArray();
+
+    // Initialize an observable to store the `applyFilter` state which will be used to to toggle the css `display`
+    // property ("visible" or "hidden") of the "all-location-results" and "filtered-location-results" divs.
     vm.applyFilter = ko.observable(false);
 
 
-
-
-    // TODO: Give search results only for current map boundaries.
+    /**
+     *  Activity locations search function
+     */
     vm.searchActivityLocations = function (activity) {
 
         var mapBounds = mapVm.mapCopy.getBounds();
@@ -54,7 +60,7 @@ var LocationsViewModel = function (mapVm) {
                 }
 
             } else {
-                alert('Sorry, there was a problem retreiving results for the following reason: ' + status);
+                alert('Sorry, there was a problem retrieving results for the following reason: ' + status);
             }
         }
 
@@ -78,9 +84,9 @@ var LocationsViewModel = function (mapVm) {
     };
 
 
-
-
-
+    /**
+     *  Locations filter function
+     */
     vm.filterQuery.subscribe(function filterResults() {
 
         // If there is no filter input, set the `applyFilter` state to false & display all of the markers again.
@@ -92,26 +98,30 @@ var LocationsViewModel = function (mapVm) {
             mapVm.showAllMarkers();
 
         } else {
-
             vm.applyFilter(true);
+
             var removedLocations;
 
-            // I used this JSON hack to prevent the filteredResults from mutating the same underlying array that
-            // locationGroups has a reference to (which contains all of the original search results).
+            // I use this JSON hack to prevent the `filteredResults` from mutating the same underlying array that
+            // `locationGroups` has a reference to (the array which contains all of the original search results).
             var copy = JSON.parse(ko.toJSON(vm.locationGroups()));
 
             _.each(copy, function (activity) {
 
                 _.each(activity, function (locations) {
 
+                    // lodash `_.remove()` removes items from each activity's `locations` array ("results" property)
+                    // for which the callback function returns `true`, and also returns an array containing the
+                    // removed items.
                     removedLocations =_.remove(locations, function (location) {
                         if (location.name) {
 
+                            // Remove the locations that do not contain the filter query substring.
                             return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1;
                         }
                     });
 
-                    // Remove markers for locations not in filter results.
+                    // Remove map markers for filtered-out locations.
                     if (removedLocations) {
                         _.each(removedLocations, function (location) {
                             mapVm.hideMarker(location);
@@ -120,7 +130,7 @@ var LocationsViewModel = function (mapVm) {
                 });
             });
 
-            // Set `filteredResults` to the new array so that the UI gets updated.
+            // Set `filteredResults` observableArray to the new array so that the UI gets updated.
             vm.filteredResults(copy);
 
             // Re-display markers when `backspace` is pressed or input is altered some other way which causes previously

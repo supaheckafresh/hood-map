@@ -59,14 +59,14 @@
         <section id="sidebar" class="col-xs-12">
 
             <!-- Location overview header -->
-            <div data-bind="with: MapViewModel" id="location-overview-view" class="row">
+            <section data-bind="with: MapViewModel" id="location-overview-view" class="row">
                 <section id="location-overview" class="col-xs-12">
                     <h3>Explore <span data-bind="text: locationName"></span></h3>
                 </section>
-            </div>
+            </section>
 
             <!-- Filter results -->
-            <div id="filter" data-bind="with: LocationsViewModel">
+            <section id="filter" data-bind="with: LocationsViewModel">
                 <form data-bind="submit: preventDefault" class="form-inline">
                     <fieldset class="form-group" data-bind="if: (locationGroups().length > 0)">
                         <input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"
@@ -75,10 +75,10 @@
                                placeholder="Filter results"/>
                     </fieldset>
                 </form>
-            </div>
+            </section>
 
             <!-- Activities list -->
-            <div data-bind="with: ActivitiesViewModel" id="activities-list-view">
+            <section data-bind="with: ActivitiesViewModel" id="activities-list-view">
                 <!-- Reverse a copy of the array to display the newest activity search term at the top -->
                 <ul data-bind="foreach: activities.slice().reverse()">
                     <li>
@@ -86,13 +86,13 @@
                         <span data-bind="text: $data"></span>
                     </li>
                 </ul>
-            </div>
+            </section>
 
 
-            <div data-bind="with: LocationsViewModel" id="activity-locations-results-list">
+            <section data-bind="with: LocationsViewModel" id="activity-locations-results-list">
 
                 <!-- If the filter input is empty, display all of the results -->
-                <div data-bind="visible: !applyFilter()">
+                <div data-bind="visible: !applyFilter()" id="all-location-results">
                 <!-- Reverse a copy of the observable array display the newest activity locations a the top -->
                     <div data-bind="foreach: { data: locationGroups.slice().reverse(), as: 'activityLocations' }"
                          class="location-groups">
@@ -110,7 +110,7 @@
                 </div>
 
                 <!-- If the filter input contains text, display only the filtered results -->
-                <div data-bind="visible: applyFilter">
+                <div data-bind="visible: applyFilter" id="filtered-location-results">
                     <div data-bind="foreach: filteredResults().slice().reverse()" class="location-groups">
                         <div class="location-group" data-bind="visible: (results.length > 0)">
                             <h4 data-bind="text: activity" class="location-title"></h4>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
 
-            </div>
+            </section>
 
         </section>
     </div>
