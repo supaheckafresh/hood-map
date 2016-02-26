@@ -111,7 +111,8 @@ var MapViewModel = function() {
                 map: map,
                 title: place.name,
                 position: place.geometry.location,
-                id: place.place_id
+                id: place.place_id,
+                animation: google.maps.Animation.DROP
             });
 
             // TODO: figure out why infoWindows aren't working for all of the markers.
