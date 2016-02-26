@@ -99,11 +99,10 @@
                         <div class="location-group">
                             <h4 data-bind="text: activity" class="location-title"></h4>
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                                <li data-bind="click: function () { $parents[1].highlight(event) }" class="location">
+                                <li data-bind="click: function () { $parents[1].selectLocation($data, event) }"
+                                    class="location">
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
-                                    <a data-bind="click: function () { $parents[1].selectLocation($data) }" href="#">
-                                        <span data-bind="text: location.name"></span>
-                                    </a>
+                                    <a href="#"><span data-bind="text: location.name"></span></a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>
                                 </li>
                             </ul>
@@ -117,11 +116,10 @@
                         <div class="location-group" data-bind="visible: (results.length > 0)">
                             <h4 data-bind="text: activity" class="location-title"></h4>
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                                <li>
+                                <li data-bind="click: function () { $parents[1].selectLocation($data, event) }"
+                                    class="location">
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
-                                    <a data-bind="click: function () { $parents[1].selectLocation($data) }" href="#">
-                                        <span data-bind="text: location.name"></span>
-                                    </a>
+                                    <a href="#"><span data-bind="text: location.name"></span></a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>
                                 </li>
                             </ul>

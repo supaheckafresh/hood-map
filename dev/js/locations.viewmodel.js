@@ -152,7 +152,7 @@ var LocationsViewModel = function (mapVm) {
     /**
      *  Selected location functions
      */
-    vm.selectLocation = function (location) {
+    vm.selectLocation = function (location, mouseEvent) {
 
         _.each(mapVm.markers, function (marker) {
             if (location.place_id === marker.id) {
@@ -161,6 +161,8 @@ var LocationsViewModel = function (mapVm) {
                 mapVm.bounceAnimate(marker);
             }
         });
+
+        vm.highlight(mouseEvent);
     };
 
     // Use jQuery to change the background-color of location selected in the sidebar, as I've chosen not to make every
@@ -173,6 +175,4 @@ var LocationsViewModel = function (mapVm) {
         $(event.target).closest('li')
             .addClass('selected');
     };
-
-
 };
