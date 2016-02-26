@@ -22,9 +22,6 @@ var MapViewModel = function() {
     // Initialize an empty object to store the current location.
     vm.currentLocation = {};
 
-    // Initialize an empty list to hold map markers for activity locations.
-    vm.markers = [];
-
     // Update the map and center marker when a new location query in `searchActivityLocations` is performed successfully.
     vm.updateLocation = function () {
         // TODO: Validate input
@@ -85,10 +82,10 @@ var MapViewModel = function() {
         geocoder.geocode( { 'address': loc}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
-                vm.markers.push(new google.maps.Marker({
+                var marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location
-                }));
+                });
 
                 // Store the successfully geocoded location.
                 vm.currentLocation = {
@@ -123,8 +120,6 @@ var MapViewModel = function() {
                     infoWindow.open(map, this);
                 });
             })(marker);
-
-            vm.markers.push(marker);
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
