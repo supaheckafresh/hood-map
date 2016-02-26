@@ -25,7 +25,8 @@ var MapViewModel = function() {
     // Initialize an empty list to hold map markers for activity locations.
     vm.markers = [];
 
-    // Update the map and center marker when a new location query in `searchActivityLocations` is performed successfully.
+    // Update the map and center marker when a new location query in `searchActivityLocations` is performed
+    // successfully.
     vm.updateLocation = function () {
         // TODO: Validate input
         vm.geo(vm.locationName());
@@ -151,8 +152,7 @@ var MapViewModel = function() {
     vm.showAllMarkers = function () {
         _.each(vm.markers, function (marker) {
             if (marker.map != map) {
-                marker.setMap(map);
-                marker.setAnimation(google.maps.Animation.DROP);
+                vm.dropAnimateMarker(marker);
             }
         });
     };
@@ -171,13 +171,24 @@ var MapViewModel = function() {
             // The second conditional checks if the marker is not already present on the map (without this the markers
             // appear to blink/refresh in response to filter input).
            if (marker.id === place.place_id && marker.map != map) {
-               marker.setMap(map);
-               marker.setAnimation(google.maps.Animation.DROP);
+               vm.dropAnimateMarker(marker);
            }
         });
     };
 
-    // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
+    vm.dropAnimateMarker = function (marker) {
+
+        // Marker visibility set to hidden temporarily in an effort to improve the appearance of the drop animation.
+        marker.setVisible(false);
+        marker.setMap(map);
+        setTimeout(function () {
+            marker.setVisible(true);
+            marker.setAnimation(google.maps.Animation.DROP);
+        }, 100);
+    };
+
+    // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to
+    // `MasterViewModel()`).
     window.initMap = vm.initMap;
 
 };
