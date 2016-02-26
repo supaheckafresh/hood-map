@@ -14,6 +14,9 @@ var LocationsViewModel = function (mapVm) {
 
     // Initialize an empty observable array to hold locations whose names contain the filter query.
     vm.filteredResults = ko.observableArray();
+    vm.applyFilter = ko.observable(false);
+
+
 
 
     // TODO: Give search results only for current map boundaries.
@@ -31,19 +34,19 @@ var LocationsViewModel = function (mapVm) {
             if (status === google.maps.places.PlacesServiceStatus.OK &&
                 results.length > 0) {
 
-                var filteredResults = suppressOutOfBoundsLocations(results);
+                var visibleLocations = suppressOutOfBoundsLocations(results);
 
-                if (filteredResults.length > 0) {
+                if (visibleLocations.length > 0) {
 
                     // Transform the resulting list from Google Places to an object and push to `locationGroups`.
                     vm.locationGroups.push({
                         activity: activity,
-                        results: filteredResults
+                        results: visibleLocations
                     });
 
                     // Add location markers for resulting places.
-                    for (var i = 0, len = filteredResults.length; i < len; i++) {
-                        mapVm.addMarker(filteredResults[i]);
+                    for (var i = 0, len = visibleLocations.length; i < len; i++) {
+                        mapVm.addMarker(visibleLocations[i]);
                     }
 
                 } else {
@@ -82,17 +85,24 @@ var LocationsViewModel = function (mapVm) {
 
         if (vm.filterQuery().trim() === '') {
 
-            // If there is only whitespace in the filter input, set `filteredResults()` to a falsy value.
-            vm.filteredResults(null);
-            console.log('filtered results: ' + vm.filteredResults());
+            vm.applyFilter(false);
+            vm.filteredResults([]);
+
+            console.log('location groups', vm.locationGroups());
+            console.log('filtered results', vm.filteredResults());
 
         } else {
 
-            vm.filteredResults = ko.observableArray(vm.locationGroups());
+            vm.applyFilter(true);
+
+            // I used this JSON hack to prevent the filteredResults from mutating the same underlying array that
+            // locationGroups has a reference to.
+            var copy = JSON.parse(ko.toJSON(vm.locationGroups()));
 
             console.log('**********filterQuery being called*************');
+            console.log(vm.filteredResults());
 
-            _.each(vm.filteredResults(), function (activity) {
+            _.each(copy, function (activity) {
 
                 _.each(activity, function (locations) {
 
@@ -110,10 +120,16 @@ var LocationsViewModel = function (mapVm) {
 
             });
 
+            //vm.filteredResults([]);
+            vm.filteredResults(copy);
+
             console.log('filtered results below');
             console.log(vm.filteredResults());
+            console.log('location groups below');
+            console.log(vm.locationGroups());
         }
     });
+
 
     // Hack to prevent form submission on the filter input.
     vm.preventDefault = function () {

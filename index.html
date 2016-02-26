@@ -68,7 +68,7 @@
             <!-- Filter results -->
             <div id="filter" data-bind="with: LocationsViewModel">
                 <form data-bind="submit: preventDefault" class="form-inline">
-                    <fieldset class="form-group">
+                    <fieldset class="form-group" data-bind="if: (locationGroups().length > 0)">
                         <input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"
                                class="form-control"
                                type="text"
@@ -88,22 +88,56 @@
                 </ul>
             </div>
 
+
             <div data-bind="with: LocationsViewModel" id="activity-locations-results-list">
+                <div data-bind="visible: !applyFilter()">
                 <!-- Reverse a copy of the observable array display the newest activity locations a the top -->
-                <div data-bind="foreach: { data: locationGroups.slice().reverse(), as: 'activityLocations' }"
-                     class="location-groups">
-                    <div class="location-group">
-                        <h4 data-bind="text: activity" class="location-title"></h4>
-                        <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                            <li>
-                                <span data-bind="text: ($index() + 1) + '. '"></span>
-                                <a href="#"><span data-bind="text: location.name"></span></a>
-                                <small data-bind="text: location.formatted_address" class="text-muted"></small>
-                            </li>
-                        </ul>
+                    <div data-bind="foreach: { data: locationGroups.slice().reverse(), as: 'activityLocations' }"
+                         class="location-groups">
+                        <div class="location-group">
+                            <h4 data-bind="text: activity" class="location-title"></h4>
+                            <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
+                                <li>
+                                    <span data-bind="text: ($index() + 1) + '. '"></span>
+                                    <a href="#"><span data-bind="text: location.name"></span></a>
+                                    <small data-bind="text: location.formatted_address" class="text-muted"></small>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
+                <div data-bind="visible: applyFilter">
+                    <div data-bind="foreach: filteredResults().slice().reverse()" class="location-groups">
+                        <div class="location-group" data-bind="visible: (results.length > 0)">
+                            <h4 data-bind="text: activity" class="location-title"></h4>
+                            <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
+                                <li>
+                                    <span data-bind="text: ($index() + 1) + '. '"></span>
+                                    <a href="#"><span data-bind="text: location.name"></span></a>
+                                    <small data-bind="text: location.formatted_address" class="text-muted"></small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div data-bind="visible: applyFilter">-->
+                    <!--<div data-bind="foreach: filteredResults()" class="location-groups">-->
+                        <!--<div class="location-group">-->
+                            <!--<h4 data-bind="text: activity" class="location-title"></h4>-->
+                            <!--<ul data-bind="foreach: { data: results, as: 'location' }" class="locations">-->
+                                <!--<li>-->
+                                    <!--<span data-bind="text: ($index() + 1) + '. '"></span>-->
+                                    <!--<a href="#"><span data-bind="text: location.name"></span></a>-->
+                                    <!--<small data-bind="text: location.formatted_address" class="text-muted"></small>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
+
         </section>
     </div>
 
