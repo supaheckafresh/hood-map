@@ -122,11 +122,11 @@ var LocationsViewModel = function (mapVm) {
             // Set `filteredResults` to the new array so that the UI gets updated.
             vm.filteredResults(copy);
 
-            // Update results when `backspace` is pressed or input is altered some other way which causes previously
+            // Re-display markers when `backspace` is pressed or input is altered some other way which causes previously
             // filtered-out locations to appear back in the list.
             _.each(vm.filteredResults(), function (activity) {
                 _.each(activity.results, function (location) {
-                            mapVm.showMarker(location);
+                    mapVm.showMarker(location);
                 })
             });
         }
