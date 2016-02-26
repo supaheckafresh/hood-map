@@ -4,7 +4,7 @@ var LocationsViewModel = function (mapVm) {
     'use strict';
 
     /**
-     *  Top-level variables for `LocationsViewModel()`
+     *  Top-level variables and properties for `LocationsViewModel()`
      */
     var vm = this;
 
@@ -130,7 +130,7 @@ var LocationsViewModel = function (mapVm) {
                 });
             });
 
-            // Set `filteredResults` observableArray to the new array so that the UI gets updated.
+            // Set `filteredResults` observable array to the filtered locations array so that the UI gets updated.
             vm.filteredResults(copy);
 
             // Re-display markers when `backspace` is pressed or input is altered some other way which causes previously
@@ -143,8 +143,7 @@ var LocationsViewModel = function (mapVm) {
         }
     });
 
-
-    // Hack to prevent form submission on the filter input.
+    // Hack to prevent page reload on the filter form submission.
     vm.preventDefault = function () {
         // (do nothing.)
     };

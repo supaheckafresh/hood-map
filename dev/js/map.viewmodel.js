@@ -3,7 +3,7 @@ var MapViewModel = function() {
     'use strict';
 
     /**
-     * Top-level variables for `MapViewModel()`
+     * Top-level variables and properties for `MapViewModel()`
      */
     var vm = this;
 

@@ -3,7 +3,7 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     'use strict';
 
     /**
-     * Top-level variables for `ActivitiesViewModel()`
+     *  Top-level variables and properties for `ActivitiesViewModel()`
      */
     var vm = this;
 
@@ -16,6 +16,11 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
     vm.activities = ko.observableArray(vm.defaultActivities);
     vm.newActivity = ko.observable();
+
+
+    /**
+     *  Display locations for default activities
+     */
 
     // Search for (and display) locations for the default activities once the map has fully loaded and Google Places
     // Service is ready to receive queries.
@@ -32,12 +37,14 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     };
 
 
+    /**
+     *  New activity functions
+     */
+
+    // TODO: Validate input and handle duplicates (also what do do after map is resized).
+    // TODO: Decide whether to display the desired activity in the UI even if there are no location results
+    // (todo cont...) at the current map zoom.
     vm.addActivity = function () {
-
-        // TODO: Validate input and handle duplicates (also what do do after map is resized).
-        // TODO: Decide whether to display the desired activity in the UI even if there are no location results
-        // (todo cont...) in the current map.
-
         vm.activities.push(vm.newActivity());
 
         vm.displayActivityLocations();
@@ -45,7 +52,6 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
 
     vm.displayActivityLocations = function () {
         locationsVm.searchActivityLocations(vm.newActivity());
-
         vm.newActivity('');
     };
 
