@@ -83,6 +83,7 @@ var LocationsViewModel = function (mapVm) {
 
     vm.filterQuery.subscribe(function filterResults() {
 
+        // If there is no filter input, set the `applyFilter` state to false & display all of the markers again.
         if (vm.filterQuery().trim() === '') {
 
             vm.applyFilter(false);
