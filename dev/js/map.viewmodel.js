@@ -47,7 +47,8 @@ var MapViewModel = function() {
 
             // Hard code downtown Long Beach, CA coordinates.
             center: longBeachCA.center,
-            zoom: 15
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
         });
 
         console.log('Google Maps API has been called.');
@@ -128,7 +129,7 @@ var MapViewModel = function() {
     };
 
     vm.removeMarker = function (place) {
-        console.log('removeMarker() called');
+        vm.markers = [];
     };
 
     // make `initMap()` and `MapViewModel` available in the `global` scope (and `MapViewModel()` available to `MasterViewModel()`).
