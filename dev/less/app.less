@@ -79,25 +79,33 @@ html {
         .location-title {
           margin: 0;
           font-weight: bold;
-          padding: 6px 4px 0 6px;
+          padding: 6px;
         }
 
         .location-group:nth-child(even) {
           background-color: rgba(115, 226, 144, 0.32);
           border-radius: 4px;
+
+          .selected {
+            background-color: rgba(115, 226, 144, 0.76);
+          }
         }
 
         .location-group:nth-child(odd) {
           background-color: rgba(67, 63, 226, 0.32);
           border-radius: 4px;
+
+          .selected {
+            background-color: rgba(227, 175, 255, 0.87);
+          }
         }
 
         .locations {
-          padding: 8px;
+          padding: 0px;
         }
 
-        .selected {
-          background-color: red;
+        .location {
+          padding: 0 8px;
         }
       }
     }

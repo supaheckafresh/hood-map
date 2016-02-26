@@ -163,5 +163,16 @@ var LocationsViewModel = function (mapVm) {
         });
     };
 
+    // Use jQuery to change the background-color of location selected in the sidebar, as I've chosen not to make every
+    // location a ko.observable (for now).
+    vm.highlight = function (event) {
+
+        // un-highlight any previously selected location
+        $('.location').removeClass('selected');
+
+        $(event.target).closest('li')
+            .addClass('selected');
+    };
+
 
 };
