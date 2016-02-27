@@ -1,4 +1,12 @@
 
+function Activity(activityQuery) {
+    var self = this;
+
+    self.title = activityQuery;
+    self.results = ko.observableArray();
+}
+
+
 var ActivitiesViewModel = function (mapVm, locationsVm) {
     'use strict';
 
@@ -14,8 +22,8 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
         'Mexican',
         'Art Gallery'];
 
-    vm.activities = ko.observableArray(vm.defaultActivities);
-    vm.newActivity = ko.observable();
+    vm.activities = ko.observableArray();
+    vm.activityQuery = ko.observable();
 
 
     /**
@@ -31,8 +39,10 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     });
 
     vm.displayDefaultActivities = function () {
-        _.each(vm.activities(), function (activity) {
-            locationsVm.searchActivityLocations(activity);
+        _.each(vm.defaultActivities, function (activityName) {
+            var activity = ko.observable(new Activity(activityName));
+            vm.activities.push(activity);
+            locationsVm.searchLocations(activity);
         });
     };
 
@@ -45,14 +55,10 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     // TODO: Decide whether to display the desired activity in the UI even if there are no location results
     // (todo cont...) at the current map zoom.
     vm.addActivity = function () {
-        vm.activities.push(vm.newActivity());
-
-        vm.displayActivityLocations();
-    };
-
-    vm.displayActivityLocations = function () {
-        locationsVm.searchActivityLocations(vm.newActivity());
-        vm.newActivity('');
+        var activity = ko.observable(new Activity(vm.activityQuery()));
+        vm.activities.push(activity);
+        locationsVm.searchLocations(activity);
+        vm.activityQuery('');
     };
 
 };

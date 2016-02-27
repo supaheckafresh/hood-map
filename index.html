@@ -40,7 +40,7 @@
             <section data-bind="with: ActivitiesViewModel" id="search-activities" class="col-xs-3">
                 <form data-bind="submit: addActivity" class="form-inline">
                     <fieldset class="form-group">
-                        <input data-bind="value: newActivity"
+                        <input data-bind="value: activityQuery"
                                class="form-control"
                                type="text"
                                placeholder="Let's go out!"/>
@@ -99,8 +99,10 @@
                         <div class="location-group">
                             <h4 data-bind="text: activity" class="location-title"></h4>
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                                <li data-bind="click: function () { $parents[1].selectLocation($data, event) }"
-                                    class="location">
+                                <li data-bind="click: function () { $parents[1].selectLocation($data) },
+                                                css: { 'selected': $parent.getSelectedStatus() },
+                                                clickBubble: false"
+                                   class="location">
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
                                     <a href="#"><span data-bind="text: location.name"></span></a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>

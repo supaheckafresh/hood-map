@@ -1,4 +1,13 @@
 
+function Location(data) {
+    var self = this;
+    self.name = ko.observable(data.name);
+    self.place_id = ko.observable(data.place_id);
+    self.formatted_address = ko.observable(data.formatted_address);
+    self.geometry = ko.observable(data.geometry);
+    self.marker = ko.observable();
+}
+
 var LocationsViewModel = function (mapVm) {
 
     'use strict';
@@ -7,10 +16,6 @@ var LocationsViewModel = function (mapVm) {
      *  Top-level variables and properties for `LocationsViewModel()`
      */
     var vm = this;
-
-    // Initialize the `locationGroups` observable array which will hold objects containing the resulting locations from
-    // each `activity` search.
-    vm.locationGroups = ko.observableArray();
 
     // Initialize `filterQuery` observable to bind to user input in the locations filter form.
     vm.filterQuery = ko.observable('');
@@ -22,17 +27,16 @@ var LocationsViewModel = function (mapVm) {
     // property ("visible" or "hidden") of the "all-location-results" and "filtered-location-results" divs.
     vm.applyFilter = ko.observable(false);
 
-
     /**
      *  Activity locations search function
      */
-    vm.searchActivityLocations = function (activity) {
+    vm.searchLocations = function (activity) {
 
         var mapBounds = mapVm.mapCopy.getBounds();
 
         mapVm.placesService.textSearch({
             bounds: mapBounds,
-            query: activity
+            query: activity().title
         }, callback);
 
         function callback(results, status) {
@@ -40,20 +44,16 @@ var LocationsViewModel = function (mapVm) {
             if (status === google.maps.places.PlacesServiceStatus.OK &&
                 results.length > 0) {
 
-                var visibleLocations = suppressOutOfBoundsLocations(results);
+                var inBoundLocations = suppressOutOfBoundsLocations(results);
 
-                if (visibleLocations.length > 0) {
+                if (inBoundLocations.length > 0) {
 
-                    // Transform the resulting list from Google Places to an object and push to `locationGroups`.
-                    vm.locationGroups.push({
-                        activity: activity,
-                        results: visibleLocations
+                    // Construct `Locations` with markers and push to `activity().results`.
+                    _.each(inBoundLocations, function (locationData) {
+                        var loc = new Location(locationData);
+                        loc.marker(mapVm.addMarker(locationData));
+                        activity().results.push(loc);
                     });
-
-                    // Add location markers for resulting places.
-                    for (var i = 0, len = visibleLocations.length; i < len; i++) {
-                        mapVm.addMarker(visibleLocations[i]);
-                    }
 
                 } else {
                     alert('Sorry, there are no locations for that activity in the current map bounds.');
@@ -64,10 +64,10 @@ var LocationsViewModel = function (mapVm) {
             }
         }
 
-        function suppressOutOfBoundsLocations(results) {
+        function suppressOutOfBoundsLocations(locations) {
             var locLat, locLng;
-            var inBoundResults = [];
-            _.each(results, function (location) {
+            var inBoundLocations = [];
+            _.each(locations, function (location) {
                 locLat = location.geometry.location.lat();
                 locLng = location.geometry.location.lng();
 
@@ -75,11 +75,11 @@ var LocationsViewModel = function (mapVm) {
                 if (mapBounds.R.R < locLat && locLat < mapBounds.R.j &&
                     mapBounds.j.R > locLng && locLng > mapBounds.j.j) {
 
-                    inBoundResults.push(location);
+                    inBoundLocations.push(location);
                 }
             });
 
-            return inBoundResults;
+            return inBoundLocations;
         }
     };
 
@@ -152,7 +152,9 @@ var LocationsViewModel = function (mapVm) {
     /**
      *  Selected location functions
      */
-    vm.selectLocation = function (location, mouseEvent) {
+
+    vm.selectLocation = function (location) {
+        console.log('selectLocation invoked');
 
         _.each(mapVm.markers, function (marker) {
             if (location.place_id === marker.id) {
@@ -162,17 +164,7 @@ var LocationsViewModel = function (mapVm) {
             }
         });
 
-        vm.highlight(mouseEvent);
+
     };
 
-    // Use jQuery to change the background-color of location selected in the sidebar, as I've chosen not to make every
-    // location a ko.observable (for now).
-    vm.highlight = function (event) {
-
-        // un-highlight any previously selected location
-        $('.location').removeClass('selected');
-
-        $(event.target).closest('li')
-            .addClass('selected');
-    };
 };
