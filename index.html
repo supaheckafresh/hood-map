@@ -66,43 +66,45 @@
             </section>
 
             <!-- Filter results -->
-            <section id="filter" data-bind="with: LocationsViewModel">
-                <form data-bind="submit: preventDefault" class="form-inline">
-                    <fieldset class="form-group" data-bind="if: (locationGroups().length > 0)">
-                        <input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"
-                               class="form-control"
-                               type="text"
-                               placeholder="Filter results"/>
-                    </fieldset>
-                </form>
-            </section>
+            <!--<section id="filter" data-bind="with: LocationsViewModel">-->
+                <!--<form data-bind="submit: preventDefault" class="form-inline">-->
+                    <!--<fieldset class="form-group" data-bind="if: (locationGroups().length > 0)">-->
+                        <!--<input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"-->
+                               <!--class="form-control"-->
+                               <!--type="text"-->
+                               <!--placeholder="Filter results"/>-->
+                    <!--</fieldset>-->
+                <!--</form>-->
+            <!--</section>-->
 
             <!-- Activities list -->
             <section data-bind="with: ActivitiesViewModel" id="activities-list-view">
                 <!-- Reverse a copy of the array to display the newest activity search term at the top -->
-                <ul data-bind="foreach: activities.slice().reverse()">
+                <ul data-bind="foreach: { data: activities().slice().reverse(), as: 'activity' }">
                     <li>
                         <input type="checkbox" checked>
-                        <span data-bind="text: $data"></span>
+                        <span data-bind="text: activity.title"></span>
                     </li>
                 </ul>
             </section>
 
 
-            <section data-bind="with: LocationsViewModel" id="activity-locations-results-list">
+            <section data-bind="with: ActivitiesViewModel" id="activity-location-results">
 
                 <!-- If the filter input is empty, display all of the results -->
-                <div data-bind="visible: !applyFilter()" id="all-location-results">
+                <!--<div data-bind="visible: !applyFilter()" id="all-location-results">-->
+                <div id="all-location-results">
                 <!-- Reverse a copy of the observable array display the newest activity locations a the top -->
-                    <div data-bind="foreach: { data: locationGroups.slice().reverse(), as: 'activityLocations' }"
+                    <div data-bind="foreach: { data: activities.slice().reverse(), as: 'activity' }"
                          class="location-groups">
                         <div class="location-group">
-                            <h4 data-bind="text: activity" class="location-title"></h4>
+                            <h4 data-bind="text: activity.title" class="activity-title"></h4>
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                                <li data-bind="click: function () { $parents[1].selectLocation($data) },
-                                                css: { 'selected': $parent.getSelectedStatus() },
-                                                clickBubble: false"
-                                   class="location">
+                                <!--<li data-bind="click: function () { $parents[1].selectLocation($data) },-->
+                                                <!--css: { 'selected': $parent.getSelectedStatus() },-->
+                                                <!--clickBubble: false"-->
+                                                <!--class="location">-->
+                                <li class="location">
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
                                     <a href="#"><span data-bind="text: location.name"></span></a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>
@@ -112,24 +114,24 @@
                     </div>
                 </div>
 
-                <!-- If the filter input contains text, display only the filtered results -->
-                <div data-bind="visible: applyFilter" id="filtered-location-results">
-                    <div data-bind="foreach: filteredResults().slice().reverse()" class="location-groups">
-                        <div class="location-group" data-bind="visible: (results.length > 0)">
-                            <h4 data-bind="text: activity" class="location-title"></h4>
-                            <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                                <li data-bind="click: function () { $parents[1].selectLocation($data, event) }"
-                                    class="location">
-                                    <span data-bind="text: ($index() + 1) + '. '"></span>
-                                    <a href="#"><span data-bind="text: location.name"></span></a>
-                                    <small data-bind="text: location.formatted_address" class="text-muted"></small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <!--&lt;!&ndash; If the filter input contains text, display only the filtered results &ndash;&gt;-->
+                <!--<div data-bind="visible: applyFilter" id="filtered-location-results">-->
+                    <!--<div data-bind="foreach: filteredResults().slice().reverse()" class="location-groups">-->
+                        <!--<div class="location-group" data-bind="visible: (results.length > 0)">-->
+                            <!--<h4 data-bind="text: activity" class="location-title"></h4>-->
+                            <!--<ul data-bind="foreach: { data: results, as: 'location' }" class="locations">-->
+                                <!--<li data-bind="click: function () { $parents[1].selectLocation($data, event) }"-->
+                                    <!--class="location">-->
+                                    <!--<span data-bind="text: ($index() + 1) + '. '"></span>-->
+                                    <!--<a href="#"><span data-bind="text: location.name"></span></a>-->
+                                    <!--<small data-bind="text: location.formatted_address" class="text-muted"></small>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </section>
+            <!--</section>-->
 
         </section>
     </div>
