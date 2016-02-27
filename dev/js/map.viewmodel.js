@@ -149,7 +149,7 @@ var MapViewModel = function() {
     vm.showAllMarkers = function (activities) {
         _.each(activities(), function(activity) {
             _.each(activity().results(), function(location) {
-                location().marker.setMap(map);
+                vm.showMarker(location);
             });
         });
     };
@@ -159,7 +159,12 @@ var MapViewModel = function() {
     };
 
     vm.showMarker = function (location) {
-        location().marker.setMap(map);
+        var marker = location().marker;
+
+        // Only display the marker if it is not already visible.
+        if (marker.getMap() != map) {
+            vm.dropAnimate(marker);
+        }
     };
 
     vm.dropAnimate = function (marker) {

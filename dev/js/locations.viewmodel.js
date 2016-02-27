@@ -107,18 +107,14 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
                     if(location().name().toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1) {
                         location().visible(false);
                         mapVm.hideMarker(location);
+                    } else {
+
+                        // Re-display previously hidden markers (when `backspace` is pressed, for instance).
+                        location().visible(true);
+                        mapVm.showMarker(location);
                     }
                 });
             });
-
-
-            // Re-display markers when `backspace` is pressed or input is altered some other way which causes previously
-            // filtered-out locations to appear back in the list.
-            //_.each(vm.filteredResults(), function (activity) {
-            //    _.each(activity.results, function (location) {
-            //        mapVm.showMarker(location);
-            //    });
-            //});
         }
     });
 
