@@ -168,14 +168,8 @@ var MapViewModel = function() {
     };
 
     vm.dropAnimate = function (marker) {
-
-        // Marker visibility set to hidden temporarily in an effort to improve the appearance of the drop animation.
-        marker.setVisible(false);
         marker.setMap(map);
-        setTimeout(function () {
-            marker.setVisible(true);
-            marker.setAnimation(google.maps.Animation.DROP);
-        }, 100);
+        marker.setAnimation(google.maps.Animation.DROP);
     };
 
     vm.bounceAnimate = function (marker) {

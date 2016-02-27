@@ -104,7 +104,7 @@
                                                 <!--css: { 'selected': $parent.getSelectedStatus() },-->
                                                 <!--clickBubble: false"-->
                                                 <!--class="location">-->
-                                <li class="location">
+                                <li class="location" data-bind="visible: location.visible">
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
                                     <a href="#"><span data-bind="text: location.name"></span></a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>
