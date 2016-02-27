@@ -2,10 +2,13 @@
 function Location(data) {
     var self = this;
     self.name = ko.observable(data.name);
+    self.visible = ko.observable(true);
     self.place_id = ko.observable(data.place_id);
     self.formatted_address = ko.observable(data.formatted_address);
     self.geometry = ko.observable(data.geometry);
-    self.marker = ko.observable();
+    // TODO: filter types
+    self.types = ko.observableArray(data.types);
+    self.marker = null;
 }
 
 var LocationsViewModel = function (mapVm, activitiesVm) {
@@ -19,9 +22,6 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
 
     // Initialize `filterQuery` observable to bind to user input in the locations filter form.
     vm.filterQuery = ko.observable('');
-
-    // Initialize an empty observable array to hold locations whose names contain the filter query.
-    vm.filteredResults = ko.observableArray();
 
     // Initialize an observable to store the `applyFilter` state which will be used to to toggle the css `display`
     // property ("visible" or "hidden") of the "all-location-results" and "filtered-location-results" divs.
@@ -48,10 +48,10 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
 
                 if (inBoundLocations.length > 0) {
 
-                    // Construct `Locations` with markers and push to `activity().results`.
+                    // Construct `Location` observables and push to `activity().results`.
                     _.each(inBoundLocations, function (locationData) {
-                        var loc = new Location(locationData);
-                        loc.marker(mapVm.addMarker(locationData));
+                        var loc = ko.observable(new Location(locationData));
+                        loc().marker = mapVm.addMarker(locationData);
                         activity().results.push(loc);
                     });
 
@@ -93,53 +93,32 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
         if (vm.filterQuery().trim() === '') {
 
             vm.applyFilter(false);
-            vm.filteredResults([]);
 
-            mapVm.showAllMarkers();
+            mapVm.showAllMarkers(vm.activities);
 
         } else {
             vm.applyFilter(true);
 
-            var removedLocations;
+            _.each(vm.activities(), function (activity) {
 
-            // I use this JSON hack to prevent the `filteredResults` from mutating the same underlying array that
-            // `locationGroups` has a reference to (the array which contains all of the original search results).
-            var copy = JSON.parse(ko.toJSON(ActivitiesViewModel.activities()));
 
-            _.each(copy, function (activity) {
-
-                _.each(activity, function (locations) {
-
-                    // lodash `_.remove()` removes items from each activity's `locations` array ("results" property)
-                    // for which the callback function returns `true`, and also returns an array containing the
-                    // removed items.
-                    removedLocations =_.remove(locations, function (location) {
-                        if (location.name) {
-
-                            // Remove the locations that do not contain the filter query substring.
-                            return location.name.toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1;
-                        }
-                    });
-
-                    // Remove map markers for filtered-out locations.
-                    if (removedLocations) {
-                        _.each(removedLocations, function (location) {
-                            mapVm.hideMarker(location);
-                        });
+                // Hide location the list items and map markers for filtered-out locations.
+                _.each(activity().results(), function (location) {
+                    if(location().name().toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1) {
+                        location().visible(false);
+                        mapVm.hideMarker(location);
                     }
                 });
             });
 
-            // Set `filteredResults` observable array to the filtered locations array so that the UI gets updated.
-            vm.filteredResults(copy);
 
             // Re-display markers when `backspace` is pressed or input is altered some other way which causes previously
             // filtered-out locations to appear back in the list.
-            _.each(vm.filteredResults(), function (activity) {
-                _.each(activity.results, function (location) {
-                    mapVm.showMarker(location);
-                });
-            });
+            //_.each(vm.filteredResults(), function (activity) {
+            //    _.each(activity.results, function (location) {
+            //        mapVm.showMarker(location);
+            //    });
+            //});
         }
     });
 
@@ -163,8 +142,9 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
                 mapVm.bounceAnimate(marker);
             }
         });
-
-
     };
 
+    vm.getReferenceToActivitiesObject = function (activities) {
+        vm.activities = activities;
+    };
 };

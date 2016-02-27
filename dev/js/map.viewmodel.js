@@ -30,9 +30,6 @@ var MapViewModel = function() {
     // Initialize an empty object to store the current location.
     vm.currentLocation = {};
 
-    // Initialize an empty list to hold map markers for activity locations.
-    vm.markers = [];
-
 
     /***
      * Google Maps API calls
@@ -123,12 +120,11 @@ var MapViewModel = function() {
     vm.addMarker = function (location) {
 
         var marker = new google.maps.Marker({
-            map: map,
-            title: location.name,
-            position: location.geometry.location,
-            id: location.place_id,
-            animation: google.maps.Animation.DROP
-        });
+                                map: map,
+                                title: location.name,
+                                position: location.geometry.location,
+                                id: location.place_id,
+                                animation: google.maps.Animation.DROP});
 
         var thatMarker;
         // TODO: figure out why infoWindows aren't working for all of the markers.
@@ -142,7 +138,7 @@ var MapViewModel = function() {
             });
         })(marker);
 
-        vm.markers.push(marker);
+        return marker;
     };
 
     vm.showInfoWindow = function (location, marker) {
@@ -150,31 +146,20 @@ var MapViewModel = function() {
         infoWindow.open(map, marker);
     };
 
-    vm.showAllMarkers = function () {
-        _.each(vm.markers, function (marker) {
-            if (marker.map != map) {
-                vm.dropAnimate(marker);
-            }
+    vm.showAllMarkers = function (activities) {
+        _.each(activities(), function(activity) {
+            _.each(activity().results(), function(location) {
+                location().marker.setMap(map);
+            });
         });
     };
 
     vm.hideMarker = function (location) {
-        _.each(vm.markers, function (marker) {
-            if (marker.id === location.place_id) {
-                marker.setMap(null);
-            }
-        });
+        location().marker.setMap(null);
     };
 
     vm.showMarker = function (location) {
-        _.each(vm.markers, function (marker) {
-
-            // The second conditional checks if the marker is not already present on the map (without this the markers
-            // appear to blink/refresh in response to filter input).
-           if (marker.id === location.place_id && marker.map != map) {
-               vm.dropAnimate(marker);
-           }
-        });
+        location().marker.setMap(map);
     };
 
     vm.dropAnimate = function (marker) {

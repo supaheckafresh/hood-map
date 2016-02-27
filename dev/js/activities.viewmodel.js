@@ -61,4 +61,14 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
         vm.activityQuery('');
     };
 
+    vm.activities.subscribe(function () {
+        vm.passReferenceToLocationsVm();
+    });
+
+    vm.passReferenceToLocationsVm = function () {
+        locationsVm.getReferenceToActivitiesObject(vm.activities);
+    };
+
+
+
 };
