@@ -46,7 +46,7 @@ var MapViewModel = function() {
 
     // Initialize our map. This is the callback function parameter in our Google Maps API request in 'index.html'.
     vm.initMap = function() {
-        
+
         // Initialize the `map`.
         map = new google.maps.Map(document.getElementById('map'), {
 

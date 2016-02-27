@@ -66,16 +66,16 @@
             </section>
 
             <!-- Filter results -->
-            <!--<section id="filter" data-bind="with: LocationsViewModel">-->
-                <!--<form data-bind="submit: preventDefault" class="form-inline">-->
-                    <!--<fieldset class="form-group" data-bind="if: (locationGroups().length > 0)">-->
-                        <!--<input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"-->
-                               <!--class="form-control"-->
-                               <!--type="text"-->
-                               <!--placeholder="Filter results"/>-->
-                    <!--</fieldset>-->
-                <!--</form>-->
-            <!--</section>-->
+            <section id="filter" data-bind="with: LocationsViewModel">
+                <form data-bind="submit: preventDefault" class="form-inline">
+                    <fieldset class="form-group" data-bind="if: ( $root.ActivitiesViewModel.activities().length > 0 )">
+                        <input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"
+                               class="form-control"
+                               type="text"
+                               placeholder="Filter results"/>
+                    </fieldset>
+                </form>
+            </section>
 
             <!-- Activities list -->
             <section data-bind="with: ActivitiesViewModel" id="activities-list-view">

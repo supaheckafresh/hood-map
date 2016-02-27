@@ -8,7 +8,7 @@ function Location(data) {
     self.marker = ko.observable();
 }
 
-var LocationsViewModel = function (mapVm) {
+var LocationsViewModel = function (mapVm, activitiesVm) {
 
     'use strict';
 
@@ -104,7 +104,7 @@ var LocationsViewModel = function (mapVm) {
 
             // I use this JSON hack to prevent the `filteredResults` from mutating the same underlying array that
             // `locationGroups` has a reference to (the array which contains all of the original search results).
-            var copy = JSON.parse(ko.toJSON(vm.locationGroups()));
+            var copy = JSON.parse(ko.toJSON(ActivitiesViewModel.activities()));
 
             _.each(copy, function (activity) {
 
