@@ -3,6 +3,7 @@ function Location(data) {
     var self = this;
     self.name = ko.observable(data.name);
     self.visible = ko.observable(true);
+    self.selected = ko.observable(false);
     self.place_id = ko.observable(data.place_id);
     self.formatted_address = ko.observable(data.formatted_address);
     self.geometry = ko.observable(data.geometry);
@@ -132,7 +133,6 @@ var LocationsViewModel = function (mapVm) {
                     }
                 });
 
-
                 activity().visible(activityVis);
             });
         }
@@ -149,8 +149,22 @@ var LocationsViewModel = function (mapVm) {
      */
 
     vm.selectLocation = function (location) {
+
+        // Un-select all locations so that only one location appears selected at a time.
+        vm.clearCurrentSelections();
+
+        // The `selected()` observable property is used to control the css `background-color` of the location element.
+        location.selected(true);
         mapVm.showInfoWindow(location);
         mapVm.bounceAnimate(location.marker);
+    };
+
+    vm.clearCurrentSelections = function () {
+        _.each(vm.activities(), function (activity) {
+            _.each(activity().results(), function (location) {
+                location().selected(false);
+            });
+        });
     };
 
     vm.getReferenceToActivitiesObject = function (activities) {

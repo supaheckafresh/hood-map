@@ -110,7 +110,8 @@
                                                 <!--class="location">-->
                                 <li class="location"
                                     data-bind="visible: location.visible,
-                                    click: function () { return $root.LocationsViewModel.selectLocation($data) }">
+                                    click: function () { return $root.LocationsViewModel.selectLocation($data) },
+                                    css: { 'selected': location.selected }">
 
                                     <span data-bind="text: ($index() + 1) + '. '"></span>
                                     <a href="#"><span data-bind="text: location.name"></span></a>
