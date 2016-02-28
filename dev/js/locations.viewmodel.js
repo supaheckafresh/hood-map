@@ -11,6 +11,7 @@ function Location(data) {
     self.marker = null;
 }
 
+
 var LocationsViewModel = function (mapVm) {
 
     'use strict';
@@ -103,11 +104,11 @@ var LocationsViewModel = function (mapVm) {
         } else {
             vm.applyFilter(true);
 
-            _.each(vm.activities(), function (activity) {
+            // We use `activityVis` to track whether or not to hide the `#activity-location-group` div. The element
+            // should be hidden if all of the member locations are filtered-out by the query.
+            var activityVis;
 
-                // We use `activityVisible` to track if an activity should be hidden if all of it's locations get
-                // filtered-out.
-                var activityVisible = true;
+            _.each(vm.activities(), function (activity) {
 
                 // Hide location the list items and map markers for filtered-out locations.
                 _.each(activity().results(), function (location) {
@@ -115,20 +116,24 @@ var LocationsViewModel = function (mapVm) {
                         location().visible(false);
                         mapVm.hideMarker(location);
 
-                        // `activityVisible` will only be false at the end of the `_.each` loop if all of the activity
-                        // locations are filtered out.
-                        activityVisible = false;
+                        activityVis = false;
                     } else {
 
                         // Re-display previously hidden markers (when `backspace` is pressed, for instance).
                         location().visible(true);
                         mapVm.showMarker(location);
-                        activityVisible = true;
                     }
                 });
 
-                activity().visible(activityVisible);
+                // Check if any activity locations have become visible again, and if so set `activityVis` to true.
+                _.some(activity().results(), function (location) {
+                    if (location().visible()) {
+                        activityVis = true;
+                    }
+                });
 
+
+                activity().visible(activityVis);
             });
         }
     });

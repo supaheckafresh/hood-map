@@ -99,9 +99,9 @@
                     <div data-bind="foreach: { data: activities.slice().reverse(), as: 'activity' }"
                          class="location-groups">
                         <!--<div data-bind="visible: function () { return $parent.hasVisibleMembers($data) }" class="location-group">-->
-                        <div data-bind="visible: visible" class="location-group">
+                        <div data-bind="visible: visible" class="activity-location-group">
 
-                        <h4 data-bind="text: activity.title" class="activity-title"></h4>
+                            <h4 data-bind="text: activity.title" class="activity-title"></h4>
 
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
                                 <!--<li data-bind="click: function () { $parents[1].selectLocation($data) },-->
