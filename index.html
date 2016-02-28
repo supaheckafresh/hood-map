@@ -23,21 +23,21 @@
         <section id="search-view" class="row">
 
             <!-- Location searchActivityLocations form -->
-            <section data-bind="with: MapViewModel" id="search-location" class="col-xs-3">
+            <section data-bind="with: MapViewModel" id="search-location" class="col-xs-6">
                 <form data-bind="submit: updateLocation" class="form-inline">
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <input data-bind="value: locationName"
                                class="form-control"
                                type="text"
                                placeholder="Hey, I need a location!"/>
                         <button type="submit" class="btn btn-info search-form">Go</button>
                         <div><small class="text-muted search-form">Where do you want to go?</small></div>
-                    </div>
+                    </fieldset>
                 </form>
             </section>
 
             <!-- Activities searchActivityLocations form -->
-            <section data-bind="with: ActivitiesViewModel" id="search-activities" class="col-xs-3">
+            <section data-bind="with: ActivitiesViewModel" id="search-activities" class="col-xs-6">
                 <form data-bind="submit: addActivity" class="form-inline">
                     <fieldset class="form-group">
                         <input data-bind="value: activityQuery"
