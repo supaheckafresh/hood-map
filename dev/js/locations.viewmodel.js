@@ -61,6 +61,8 @@ var LocationsViewModel = function (mapVm) {
                         activity().results.push(loc);
                     });
 
+                    vm.activities.push(activity);
+
                 } else {
                     alert('Sorry, there are no locations for that activity in the current map bounds.');
                 }

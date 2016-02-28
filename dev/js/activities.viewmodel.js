@@ -57,7 +57,6 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     // (todo cont...) at the current map zoom.
     vm.addActivity = function () {
         var activity = ko.observable(new Activity(vm.activityQuery()));
-        vm.activities.push(activity);
         locationsVm.searchLocations(activity);
         vm.activityQuery('');
     };

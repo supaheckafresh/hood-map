@@ -92,22 +92,16 @@
             <section data-bind="with: ActivitiesViewModel" id="activity-location-results">
 
                 <!-- If the filter input is empty, display all of the results -->
-                <!--<div data-bind="visible: !applyFilter()" id="all-location-results">-->
                 <div id="all-location-results">
 
                 <!-- Reverse a copy of the observable array display the newest activity locations a the top -->
                     <div data-bind="foreach: { data: activities.slice().reverse(), as: 'activity' }"
                          class="location-groups">
-                        <!--<div data-bind="visible: function () { return $parent.hasVisibleMembers($data) }" class="location-group">-->
-                        <div data-bind="visible: visible" class="activity-location-group">
 
+                        <div data-bind="if: visible" class="activity-location-group">
                             <h4 data-bind="text: activity.title" class="activity-title"></h4>
-
                             <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
-                                <!--<li data-bind="click: function () { $parents[1].selectLocation($data) },-->
-                                                <!--css: { 'selected': $parent.getSelectedStatus() },-->
-                                                <!--clickBubble: false"-->
-                                                <!--class="location">-->
+
                                 <li class="location"
                                     data-bind="visible: location.visible,
                                     click: function () { return $root.LocationsViewModel.selectLocation($data) },
@@ -117,8 +111,10 @@
                                     <a href="#"><span data-bind="text: location.name"></span></a>
                                     <small data-bind="text: location.formatted_address" class="text-muted"></small>
                                 </li>
+
                             </ul>
                         </div>
+
                     </div>
                 </div>
             </section>
