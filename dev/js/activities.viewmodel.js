@@ -40,9 +40,11 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
     });
 
     vm.displayDefaultActivities = function () {
+
+        vm.passReferenceToLocationsVm();
+        
         _.each(vm.defaultActivities, function (activityName) {
             var activity = ko.observable(new Activity(activityName));
-            vm.activities.push(activity);
             locationsVm.searchLocations(activity);
         });
     };
