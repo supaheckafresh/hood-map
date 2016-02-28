@@ -149,15 +149,8 @@ var LocationsViewModel = function (mapVm) {
      */
 
     vm.selectLocation = function (location) {
-        console.log('selectLocation invoked');
-
-        _.each(mapVm.markers, function (marker) {
-            if (location.place_id === marker.id) {
-
-                mapVm.showInfoWindow(location, marker);
-                mapVm.bounceAnimate(marker);
-            }
-        });
+        mapVm.showInfoWindow(location);
+        mapVm.bounceAnimate(location.marker);
     };
 
     vm.getReferenceToActivitiesObject = function (activities) {

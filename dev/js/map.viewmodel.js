@@ -141,9 +141,9 @@ var MapViewModel = function() {
         return marker;
     };
 
-    vm.showInfoWindow = function (location, marker) {
-        infoWindow.setContent(location.name);
-        infoWindow.open(map, marker);
+    vm.showInfoWindow = function (location) {
+        infoWindow.setContent(location.name());
+        infoWindow.open(map, location.marker);
     };
 
     vm.showAllMarkers = function (activities) {
