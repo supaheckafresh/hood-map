@@ -11,7 +11,7 @@ function Location(data) {
     self.marker = null;
 }
 
-var LocationsViewModel = function (mapVm, activitiesVm) {
+var LocationsViewModel = function (mapVm) {
 
     'use strict';
 
@@ -26,6 +26,7 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
     // Initialize an observable to store the `applyFilter` state which will be used to to toggle the css `display`
     // property ("visible" or "hidden") of the "all-location-results" and "filtered-location-results" divs.
     vm.applyFilter = ko.observable(false);
+
 
     /**
      *  Activity locations search function
@@ -46,7 +47,10 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
 
                 var inBoundLocations = suppressOutOfBoundsLocations(results);
 
+                // Check if locations are found inside of visible map boundaries.
                 if (inBoundLocations.length > 0) {
+
+                    activity().visible(true);
 
                     // Construct `Location` observables and push to `activity().results`.
                     _.each(inBoundLocations, function (locationData) {
@@ -101,19 +105,30 @@ var LocationsViewModel = function (mapVm, activitiesVm) {
 
             _.each(vm.activities(), function (activity) {
 
+                // We use `activityVisible` to track if an activity should be hidden if all of it's locations get
+                // filtered-out.
+                var activityVisible = true;
 
                 // Hide location the list items and map markers for filtered-out locations.
                 _.each(activity().results(), function (location) {
                     if(location().name().toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1) {
                         location().visible(false);
                         mapVm.hideMarker(location);
+
+                        // `activityVisible` will only be false at the end of the `_.each` loop if all of the activity
+                        // locations are filtered out.
+                        activityVisible = false;
                     } else {
 
                         // Re-display previously hidden markers (when `backspace` is pressed, for instance).
                         location().visible(true);
                         mapVm.showMarker(location);
+                        activityVisible = true;
                     }
                 });
+
+                activity().visible(activityVisible);
+
             });
         }
     });
