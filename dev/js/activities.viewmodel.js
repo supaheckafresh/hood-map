@@ -63,11 +63,26 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
         vm.activityQuery('');
     };
 
+    //vm.toggleVisible = function (activity) {
+    //    console.log('toggleVisible called');
+    //    if (activity.visible() === true) {
+    //        activity.visible(false);
+    //    }
+    //    return true;
+    //};
+
     vm.toggleVisible = function (activity) {
         console.log('toggleVisible called');
-        if (activity.visible() === true) {
-            activity.visible(false);
+        var newState;
+        switch (activity.visible()) {
+            case true:
+                newState = false;
+                break;
+            case false:
+                newState = true;
+                break;
         }
+        activity.visible(newState);
         return true;
     };
 
