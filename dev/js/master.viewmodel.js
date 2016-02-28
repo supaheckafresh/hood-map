@@ -13,6 +13,12 @@
 
     ko.applyBindings(new MasterViewModel());
 
+    $(document.ready(
+        function() {
+            $('#overlay-search').draggable();
+            $('#overlay-sidebar').draggable();
+        }));
+
 }());
 
 

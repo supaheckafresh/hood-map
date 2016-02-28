@@ -17,7 +17,8 @@ gulp.task('js-deps', function () {
             './bower_components/knockout/dist/knockout.js',
             './bower_components/pagerjs/pager.js',
             './bower_components/knockout-bootstrap/src/knockout-bootstrap.js',
-            './bower_components/typeahead.js/dist/typeahead.bundle.js'
+            './bower_components/typeahead.js/dist/typeahead.bundle.js',
+            './bower_components/jquery-ui/jquery-ui.js'
         ])
         .pipe(concat('deps.js'))
         .pipe(uglify())
@@ -25,7 +26,7 @@ gulp.task('js-deps', function () {
         .pipe(gulp.dest('./build/js'));
 });
 
-// TODO: not sure if I will use partials
+// TODO: implement partials.
 gulp.task('partials', function () {
     gulp.src('./public/js/**/*.html')
         .pipe(gulp.dest('./build/partials'))
