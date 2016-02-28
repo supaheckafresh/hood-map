@@ -63,6 +63,14 @@ var ActivitiesViewModel = function (mapVm, locationsVm) {
         vm.activityQuery('');
     };
 
+    vm.toggleVisible = function (activity) {
+        console.log('toggleVisible called');
+        if (activity.visible() === true) {
+            activity.visible(false);
+        }
+        return true;
+    };
+
     vm.passReferenceToLocationsVm = function () {
         locationsVm.getReferenceToActivitiesObject(vm.activities);
     };

@@ -82,7 +82,8 @@
                 <!-- Reverse a copy of the array to display the newest activity search term at the top -->
                 <ul data-bind="foreach: { data: activities().slice().reverse(), as: 'activity' }">
                     <li>
-                        <input type="checkbox" checked>
+                        <input type="checkbox" data-bind="checked: visible,
+                               click: function () { $parent.toggleVisible($data); return true; }">
                         <span data-bind="text: activity.title"></span>
                     </li>
                 </ul>

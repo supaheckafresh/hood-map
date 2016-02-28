@@ -52,7 +52,7 @@ var LocationsViewModel = function (mapVm) {
                 // Check if locations are found inside of visible map boundaries.
                 if (inBoundLocations.length > 0) {
 
-                    activity().visible(true);
+
 
                     // Construct `Location` observables and push to `activity().results`.
                     _.each(inBoundLocations, function (locationData) {
@@ -61,6 +61,7 @@ var LocationsViewModel = function (mapVm) {
                         activity().results.push(loc);
                     });
 
+                    activity().visible(true);
                     vm.activities.push(activity);
 
                 } else {
