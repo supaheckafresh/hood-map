@@ -133,12 +133,17 @@ var MapViewModel = function() {
 
                 thatMarker = this;
 
-                vm.showInfoWindow(location, thatMarker);
+                vm.addInfoWindow(location, markerCopy);
                 vm.bounceAnimate(thatMarker);
             });
         })(marker);
 
         return marker;
+    };
+
+    vm.addInfoWindow = function (location, marker) {
+        infoWindow.setContent(location.name);
+        infoWindow.open(map, marker);
     };
 
     vm.showInfoWindow = function (location) {
