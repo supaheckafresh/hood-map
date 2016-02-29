@@ -12,6 +12,18 @@ function Location(data) {
     self.marker = null;
 }
 
+Location.prototype = {
+
+    contains: function(str, caseSensitive) {
+        if (caseSensitive === true) {
+            return this.name().includes(str);
+        } else {
+            return this.name().toLowerCase().indexOf(str.toLowerCase()) > -1;
+        }
+    }
+
+};
+
 
 var LocationsViewModel = function (mapVm) {
 
@@ -116,7 +128,8 @@ var LocationsViewModel = function (mapVm) {
 
                 // Hide location the list items and map markers for filtered-out locations.
                 _.each(activity().results(), function (location) {
-                    if(location().name().toLowerCase().indexOf(vm.filterQuery().toLowerCase()) === -1) {
+
+                    if( !(location().contains(vm.filterQuery())) ) {
                         location().visible(false);
                         mapVm.hideMarker(location);
 
