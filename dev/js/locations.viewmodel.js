@@ -64,8 +64,6 @@ var LocationsViewModel = function (mapVm) {
                 // Check if locations are found inside of visible map boundaries.
                 if (inBoundLocations.length > 0) {
 
-
-
                     // Construct `Location` observables and push to `activity().results`.
                     _.each(inBoundLocations, function (locationData) {
                         var loc = ko.observable(new Location(locationData));
