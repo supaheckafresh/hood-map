@@ -50,7 +50,14 @@ gulp.task('js', function () {
         outputDir = __dirname + '/build/js',
         outputFilename = 'app.js';
 
-    gulp.src([baseDir + "/**/*.js"])
+    gulp.src([
+        baseDir + "/**/*constructor.js",
+        baseDir + "/map/*.js",
+        baseDir + "/locations/*.js",
+        baseDir + "/activities/*.js",
+        baseDir + "/**/*.js",
+        baseDir + "/master.viewmodel.js"
+    ])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(sourcemaps.init())
