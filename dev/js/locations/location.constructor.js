@@ -1,15 +1,16 @@
 
-var Location = function (data) {
-    var self = this;
-    self.name = ko.observable(data.name);
-    self.visible = ko.observable(true);
-    self.selected = ko.observable(false);
-    self.place_id = ko.observable(data.place_id);
-    self.formatted_address = ko.observable(data.formatted_address);
-    self.geometry = ko.observable(data.geometry);
+var Location = function Location(data) {
+
+    this.name = ko.observable(data.name);
+    this.visible = ko.observable(true);
+    this.selected = ko.observable(false);
+    this.place_id = ko.observable(data.place_id);
+    this.formatted_address = ko.observable(data.formatted_address);
+    this.geometry = ko.observable(data.geometry);
+
     // TODO: filter types
-    self.types = ko.observableArray(data.types);
-    self.marker = null;
+    this.types = ko.observableArray(data.types);
+    this.marker = null;
 };
 
 // TODO: Also search for `str` within `Location.types`.
