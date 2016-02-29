@@ -14,6 +14,7 @@ function Location(data) {
 
 Location.prototype = {
 
+    // TODO: Also search for `str` within `Location.types`.
     contains: function(str, caseSensitive) {
         if (caseSensitive === true) {
             return this.name().includes(str);
