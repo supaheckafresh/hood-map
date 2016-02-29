@@ -3,7 +3,7 @@
 
     'use strict';
 
-    var MasterViewModel = function () {
+    var AppViewModel = function () {
         var vm = this;
 
         vm.MapViewModel = new MapViewModel();
@@ -11,8 +11,9 @@
         vm.ActivitiesViewModel = new ActivitiesViewModel(vm.MapViewModel, vm.LocationsViewModel);
     };
 
-    ko.applyBindings(new MasterViewModel());
+    ko.applyBindings(new AppViewModel());
 
+    // Use jQuery-UI to make the search and sidebar UIs draggable.
     $(document).ready(
         function() {
             $('#overlay-search').draggable();

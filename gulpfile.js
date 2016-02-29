@@ -56,7 +56,7 @@ gulp.task('js', function () {
         baseDir + "/locations/*.js",
         baseDir + "/activities/*.js",
         baseDir + "/**/*.js",
-        baseDir + "/master.viewmodel.js"
+        baseDir + "/app.viewmodel.js"
     ])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
