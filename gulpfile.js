@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     serve = require('gulp-serve');
 
+
 gulp.task('js-deps', function () {
     gulp.src([
             './bower_components/jquery/dist/jquery.js',
@@ -26,12 +27,13 @@ gulp.task('js-deps', function () {
         .pipe(gulp.dest('./build/js'));
 });
 
-// TODO: implement components.
+
 gulp.task('components', function () {
     gulp.src('./dev/js/components/**/*.html')
         .pipe(gulp.dest('./build/components'))
         .pipe(livereload());
 });
+
 
 gulp.task('css-deps', function () {
     gulp.src([
@@ -45,6 +47,7 @@ gulp.task('css-deps', function () {
         .pipe(gulp.dest('./build/fonts'));
 });
 
+
 gulp.task('js', function () {
     var baseDir = __dirname + '/dev/js',
         outputDir = __dirname + '/build/js',
@@ -55,8 +58,8 @@ gulp.task('js', function () {
         baseDir + '/map/*.js',
         baseDir + '/locations/*.js',
         baseDir + '/activities/*.js',
-        baseDir + '/**/*.js',
-        baseDir + '/app.viewmodel.js'
+        baseDir + '/app.viewmodel.js',
+        baseDir + '/app.init.js'
     ])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -67,6 +70,7 @@ gulp.task('js', function () {
         .pipe(gulp.dest(outputDir))
         .pipe(livereload());
 });
+
 
 gulp.task('less', function () {
     gulp.src([
@@ -79,7 +83,9 @@ gulp.task('less', function () {
         .pipe(livereload());
 });
 
+
 gulp.task('serve', serve('.'));
+
 
 gulp.task('watch', function () {
     livereload.listen({port: 35736});
@@ -95,5 +101,6 @@ gulp.task('watch', function () {
         gulp.start('components');
     });
 });
+
 
 gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'watch', 'serve']);
