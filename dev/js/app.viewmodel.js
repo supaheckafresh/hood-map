@@ -11,38 +11,37 @@
         vm.LocationsViewModel = new LocationsViewModel(vm.MapViewModel);
         vm.ActivitiesViewModel = new ActivitiesViewModel(vm.MapViewModel, vm.LocationsViewModel);
 
-
-        //ko.components.register('searchbar', {
-        //    template: vm.searchUI().prop('outerHTML')
-        //});
     };
 
     var app = new AppViewModel();
 
-    var $searchbar = $('<div>');
-    $searchbar.load('./build/components/searchbar/searchbar.html #searchbar', function() {
-        var searchbar = $(this).prop('outerHTML');
+    function displayComponents(components) {
 
-        $('#overlay-search').append(searchbar);
+        var $component, templateUrl, id, html;
+        _.each(components, function (component) {
 
-        ko.applyBindings(app, document.getElementById('searchbar'));
-    });
+            var container = '#overlay-' + component;
+            $component = $('<div>');
+            templateUrl = './build/components/' + component + '/' + component + '.html';
+            id = '#' + component;
 
-    var $sidebar = $('<div>');
-    $sidebar.load('./build/components/sidebar/sidebar.html #sidebar', function () {
-        var sidebar = $(this).prop('outerHTML');
+            $component.load(templateUrl, id, function () {
+                html = $(this).prop('outerHTML');
+                $(container).append(html);
 
-        $('#overlay-sidebar').append(sidebar);
+                ko.applyBindings(app, document.getElementById(component));
+            });
+        });
+    }
 
-        ko.applyBindings(app, document.getElementById('sidebar'));
-    });
+    displayComponents(['searchbar', 'sidebar']);
 
 
     // Use jQuery-UI to make the search and sidebar UIs draggable.
     $(document).ready(
         function() {
 
-            $('#overlay-search').draggable();
+            $('#overlay-searchbar').draggable();
             $('#overlay-sidebar').draggable();
         });
 
