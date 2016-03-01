@@ -23,13 +23,13 @@
     $searchbar.load('./build/components/searchbar/searchbar.html #search-view', function(){
         var searchbar = $(this).prop('outerHTML');
 
-        $('#new-search').append(searchbar);
+        $('#overlay-search').append(searchbar);
 
         ko.applyBindings(app, document.getElementById('search-view'));
     });
 
-    var $sidebar = $('<div>');
-    $sidebar.load('./')
+    //var $sidebar = $('<div>');
+    //$sidebar.load('./build/components/sidebar/sidebar.html')
 
 
     // Use jQuery-UI to make the search and sidebar UIs draggable.
