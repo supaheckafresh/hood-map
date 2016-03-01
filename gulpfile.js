@@ -28,7 +28,7 @@ gulp.task('js-deps', function () {
 
 // TODO: implement components.
 gulp.task('components', function () {
-    gulp.src('./dev/js/**/*.html')
+    gulp.src('./dev/js/components/**/*.html')
         .pipe(gulp.dest('./build/components'))
         .pipe(livereload());
 });
