@@ -26,22 +26,22 @@ gulp.task('js-deps', function () {
         .pipe(gulp.dest('./build/js'));
 });
 
-// TODO: implement partials.
-gulp.task('partials', function () {
-    gulp.src('./public/js/**/*.html')
-        .pipe(gulp.dest('./build/partials'))
+// TODO: implement components.
+gulp.task('components', function () {
+    gulp.src('./dev/js/**/*.html')
+        .pipe(gulp.dest('./build/components'))
         .pipe(livereload());
 });
 
 gulp.task('css-deps', function () {
     gulp.src([
-            "./bower_components/bootstrap/dist/css/bootstrap.min.css",
-            "./bower_components/font-awesome/css/font-awesome.min.css"
+            './bower_components/bootstrap/dist/css/bootstrap.min.css',
+            './bower_components/font-awesome/css/font-awesome.min.css'
         ])
         .pipe(concat('css-deps.css'))
         .pipe(gulp.dest('./build/css'));
 
-    gulp.src('./public/bower_components/font-awesome/fonts/*')
+    gulp.src('./dev/bower_components/font-awesome/fonts/*')
         .pipe(gulp.dest('./build/fonts'));
 });
 
@@ -51,12 +51,12 @@ gulp.task('js', function () {
         outputFilename = 'app.js';
 
     gulp.src([
-        baseDir + "/**/*constructor.js",
-        baseDir + "/map/*.js",
-        baseDir + "/locations/*.js",
-        baseDir + "/activities/*.js",
-        baseDir + "/**/*.js",
-        baseDir + "/app.viewmodel.js"
+        baseDir + '/**/*constructor.js',
+        baseDir + '/map/*.js',
+        baseDir + '/locations/*.js',
+        baseDir + '/activities/*.js',
+        baseDir + '/**/*.js',
+        baseDir + '/app.viewmodel.js'
     ])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -92,8 +92,8 @@ gulp.task('watch', function () {
     });
 
     watch(['./dev/js/*.html', './dev/js/**/*.html'], function () {
-        gulp.start('partials');
+        gulp.start('components');
     });
 });
 
-gulp.task('default', ['js-deps', 'partials', 'css-deps', 'js', 'less', 'watch', 'serve']);
+gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'watch', 'serve']);
