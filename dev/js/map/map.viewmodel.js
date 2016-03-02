@@ -33,6 +33,9 @@
         // Initialize an empty object to store the current location.
         vm.currentLocation = {};
 
+        // Initialize an empty object to store multiple `Geolocations`.
+        vm.geolocations = ko.observableArray();
+
 
         /***
          * Google Maps API calls
@@ -75,6 +78,7 @@
                     if (map.center) {
                         vm.readyState(true);
                         console.log('Google Maps has loaded successfully.');
+
                     } else {
                         alert('There was a problem loading the map.');
                     }
@@ -88,6 +92,9 @@
             // providing any errors). Store the `map` into `vm.mapCopy` property so that other ViewModels can access the
             // map properties when needed.
             vm.mapCopy = map;
+
+            var geoData = { locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true };
+            console.log(geoData);
 
         };
 
