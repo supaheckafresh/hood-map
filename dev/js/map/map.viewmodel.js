@@ -78,8 +78,7 @@
 
                         // Push default geographic location to `GeolocationsViewModel.geolocations` so that activities
                         // and zoom (and perhaps other states/info to be added later) can be stored and recalled.
-                        var geoData = {locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true};
-                        geolocationsVm.geolocations.push(new Geolocation(geoData));
+                        vm.storeCurrentGeolocation();
 
                     } else {
                         alert('There was a problem loading the map.');
@@ -115,10 +114,21 @@
 
                     console.log('Location has been set to: ' + locationName);
 
+                    vm.storeCurrentGeolocation();
+                    console.log(geolocationsVm.geolocations())
+
                 } else {
                     alert("Geocoding was unsuccessful for the following reason: " + status);
                 }
             });
+        };
+
+        /**
+         *  Geolocation methods
+         */
+        vm.storeCurrentGeolocation = function () {
+            var geoData = {locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true};
+            geolocationsVm.geolocations.push(new Geolocation(geoData));
         };
 
 
