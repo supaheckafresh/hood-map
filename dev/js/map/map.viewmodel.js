@@ -3,7 +3,7 @@
 
     'use strict';
 
-    var MapViewModel = function() {
+    var MapViewModel = function(geolocationsVm) {
 
         /**
          * Top-level variables and properties for `MapViewModel()`
@@ -32,9 +32,6 @@
 
         // Initialize an empty object to store the current location.
         vm.currentLocation = {};
-
-        // Initialize an empty object to store multiple `Geolocations`.
-        vm.geolocations = ko.observableArray();
 
 
         /***
@@ -93,8 +90,8 @@
             // map properties when needed.
             vm.mapCopy = map;
 
-            var geoData = { locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true };
-            console.log(geoData);
+            //var geoData = { locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true };
+            //console.log(geoData);
 
         };
 
