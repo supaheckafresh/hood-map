@@ -73,12 +73,14 @@
                 // Set `readyState` property to `true` once Places Service is available and the map has loaded successfully.
                 google.maps.event.addListenerOnce(map, 'idle', function () {
                     if (map.center) {
-                        vm.readyState(true);
-                        console.log('Google Maps has loaded successfully.');
 
                         // Push default geographic location to `GeolocationsViewModel.geolocations` so that activities
                         // and zoom (and perhaps other states/info to be added later) can be stored and recalled.
                         vm.storeCurrentGeolocation();
+                        console.log(ko.toJSON(geolocationsVm.geolocations()));
+
+                        vm.readyState(true);
+                        console.log('Google Maps has loaded successfully.');
 
                     } else {
                         alert('There was a problem loading the map.');
@@ -115,7 +117,7 @@
                     console.log('Location has been set to: ' + locationName);
 
                     vm.storeCurrentGeolocation();
-                    console.log(geolocationsVm.geolocations())
+                    console.log(geolocationsVm.geolocations());
 
                 } else {
                     alert("Geocoding was unsuccessful for the following reason: " + status);
@@ -128,7 +130,15 @@
          */
         vm.storeCurrentGeolocation = function () {
             var geoData = {locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true};
-            geolocationsVm.geolocations.push(new Geolocation(geoData));
+            var geo = ko.observable( new Geolocation(geoData) );
+
+            if (geo()){
+                geolocationsVm.currentGeolocation(geo());
+                geolocationsVm.geolocations.push(geo());
+
+            } else {
+                console.log('There was an error storing the new geolocation');
+            }
         };
 
 

@@ -12,7 +12,7 @@
         vm.GeolocationsViewModel = new GeolocationsViewModel();
         vm.MapViewModel = new MapViewModel(vm.GeolocationsViewModel);
         vm.LocationsViewModel = new LocationsViewModel(vm.MapViewModel);
-        vm.ActivitiesViewModel = new ActivitiesViewModel(vm.MapViewModel, vm.LocationsViewModel);
+        vm.ActivitiesViewModel = new ActivitiesViewModel(vm.MapViewModel, vm.LocationsViewModel, vm.GeolocationsViewModel);
 
     };
 

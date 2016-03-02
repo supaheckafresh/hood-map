@@ -3,7 +3,7 @@
 
     'use strict';
 
-    var ActivitiesViewModel = function (mapVm, locationsVm) {
+    var ActivitiesViewModel = function (mapVm, locationsVm, geolocationsVm) {
 
         /**
          *  Top-level variables and properties for `ActivitiesViewModel()`
@@ -30,6 +30,7 @@
         mapVm.readyState.subscribe(function () {
             if (mapVm.readyState() === true) {
                 vm.displayDefaultActivities();
+                console.log(ko.toJSON(geolocationsVm.currentGeolocation().activities()));
             }
         });
 
@@ -39,8 +40,10 @@
 
             _.each(vm.defaultActivities, function (activityName) {
                 var activity = ko.observable(new Activity(activityName));
+                geolocationsVm.currentGeolocation().activities.push(activityName);
                 locationsVm.searchLocations(activity);
             });
+
         };
 
 
