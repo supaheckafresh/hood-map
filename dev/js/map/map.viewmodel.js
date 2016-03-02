@@ -76,6 +76,11 @@
                         vm.readyState(true);
                         console.log('Google Maps has loaded successfully.');
 
+                        // Push default geographic location to `GeolocationsViewModel.geolocations` so that activities
+                        // and zoom (and perhaps other states/info to be added later) can be stored and recalled.
+                        var geoData = {locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true};
+                        geolocationsVm.geolocations.push(new Geolocation(geoData));
+
                     } else {
                         alert('There was a problem loading the map.');
                     }
@@ -89,10 +94,6 @@
             // providing any errors). Store the `map` into `vm.mapCopy` property so that other ViewModels can access the
             // map properties when needed.
             vm.mapCopy = map;
-
-            //var geoData = { locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true };
-            //console.log(geoData);
-
         };
 
 
