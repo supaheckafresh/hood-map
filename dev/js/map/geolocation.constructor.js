@@ -11,4 +11,6 @@
         this.zoom = ko.observable(data.zoom);
     }
 
+    window.Geolocation = Geolocation;
+
 }());
