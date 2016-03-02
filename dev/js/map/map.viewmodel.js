@@ -52,7 +52,7 @@
 
                 // Hard code downtown Long Beach, CA coordinates.
                 center: longBeachCA.center,
-                zoom: 15,
+                zoom: 16,
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
 

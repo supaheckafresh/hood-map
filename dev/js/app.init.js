@@ -9,13 +9,14 @@
 
 
     /**
-     *  Render the UI components, and apply data bindings
+     *  Render the UI components, and apply knockout data bindings
      */
     displayComponents(['searchbar', 'sidebar']);
 
-    // For this project, I decided to make this component loader in lieu of using something requirejs. I did attempt to
-    // implement requirejs, but the console errors didn't provide me with specific enough information to sort out what
-    // was wrong with my code. In any case, for the scope of this single-page-app, my solution seems to work fine.
+    // For this project, I decided to make this component loader in lieu of using something like requirejs. I did
+    // attempt to implement requirejs, but the console errors didn't provide me with specific enough information to
+    // sort out what was wrong with my code. In any case, for the scope of this single-page-app, my solution seems to
+    // work fine.
     function displayComponents(components) {
 
         var $component, templateUrl, id, html;

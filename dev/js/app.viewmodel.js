@@ -3,7 +3,9 @@
 
     'use strict';
 
-
+    /**
+     * Master ViewModel constructor
+     */
     var AppViewModel = function () {
         var vm = this;
 
