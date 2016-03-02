@@ -77,7 +77,6 @@
                         // Push default geographic location to `GeolocationsViewModel.geolocations` so that activities
                         // and zoom (and perhaps other states/info to be added later) can be stored and recalled.
                         vm.storeCurrentGeolocation();
-                        console.log(ko.toJSON(geolocationsVm.geolocations()));
 
                         vm.readyState(true);
                         console.log('Google Maps has loaded successfully.');
@@ -117,7 +116,7 @@
                     console.log('Location has been set to: ' + locationName);
 
                     vm.storeCurrentGeolocation();
-                    console.log(geolocationsVm.geolocations());
+                    console.log(ko.toJSON(geolocationsVm.currentGeolocation()));
 
                 } else {
                     alert("Geocoding was unsuccessful for the following reason: " + status);
@@ -135,6 +134,8 @@
             if (geo()){
                 geolocationsVm.currentGeolocation(geo());
                 geolocationsVm.geolocations.push(geo());
+
+                console.log(geolocationsVm.geolocations());
 
             } else {
                 console.log('There was an error storing the new geolocation');

@@ -5,7 +5,7 @@
 
     // A `Location` represents any place result of an activity query; not to be confused with a `Geolocation` which
     // represents a city or geographic region presented on the map.
-    var LocationsViewModel = function (mapVm) {
+    var LocationsViewModel = function (mapVm, geolocationsVm) {
 
         /**
          *  Top-level variables and properties for `LocationsViewModel()`
@@ -51,6 +51,8 @@
 
                         activity().visible(true);
                         vm.activities.push(activity);
+
+                        geolocationsVm.currentGeolocation().activities().push(activity);
 
                     } else {
                         alert('Sorry, there are no locations for that activity in the current map bounds.');
