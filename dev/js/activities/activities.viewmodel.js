@@ -40,7 +40,10 @@
 
             _.each(vm.defaultActivities, function (activityName) {
                 var activity = ko.observable(new Activity(activityName));
+
+                // Store the activity query strings in the `currentGeolocation` object.
                 geolocationsVm.currentGeolocation().activities.push(activityName);
+
                 locationsVm.searchLocations(activity);
             });
 
@@ -55,6 +58,12 @@
             // TODO: Decide whether to display the desired activity in the UI even if there are no location results
             // (todo cont...) at the current map zoom.
         vm.addActivity = function () {
+
+            // Store the new activity query in the `currentGeolocation` object.
+            geolocationsVm.currentGeolocation().activities.push(vm.activityQuery());
+            console.log(ko.toJSON(geolocationsVm.currentGeolocation().activities()));
+            console.log(ko.toJSON(geolocationsVm.geolocations()));
+
             var activity = ko.observable(new Activity(vm.activityQuery()));
             locationsVm.searchLocations(activity);
             vm.activityQuery('');
