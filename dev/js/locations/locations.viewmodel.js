@@ -3,6 +3,8 @@
 
     'use strict';
 
+    // A `Location` represents any place result of an activity query; not to be confused with a `Geolocation` which
+    // represents a city or geographic region presented on the map.
     var LocationsViewModel = function (mapVm) {
 
         /**
