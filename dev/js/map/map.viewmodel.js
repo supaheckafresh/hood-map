@@ -30,8 +30,8 @@
         // Initialize `locationName` observable with a default location text to appear in the location search input.
         vm.locationName = ko.observable(longBeachCA.searchStr);
 
-        // Initialize an empty object to store the current location.
-        vm.currentLocation = {};
+        // Initialize an empty ko.observable object to store the current location.
+        vm.currentLocation = ko.observable({});
 
 
         /***
@@ -52,7 +52,7 @@
 
                 // Hard code downtown Long Beach, CA coordinates.
                 center: longBeachCA.center,
-                zoom: 16,
+                zoom: 15,
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
 
@@ -106,17 +106,16 @@
                     vm.mapCopy = map;
 
                     // Store the successfully geocoded coordinates.
-                    vm.currentLocation = {
+                    vm.currentLocation({
                         center: {
                             lat: results[0].geometry.location.lat(),
                             lng: results[0].geometry.location.lng()
                         }
-                    };
+                    });
 
                     console.log('Location has been set to: ' + locationName);
 
                     vm.storeCurrentGeolocation();
-                    console.log(ko.toJSON(geolocationsVm.currentGeolocation()));
 
                 } else {
                     alert("Geocoding was unsuccessful for the following reason: " + status);
@@ -135,11 +134,13 @@
                 geolocationsVm.currentGeolocation(geo());
                 geolocationsVm.geolocations.push(geo());
 
-                console.log(geolocationsVm.geolocations());
-
             } else {
                 console.log('There was an error storing the new geolocation');
             }
+        };
+
+        vm.updateMap = function () {
+
         };
 
 

@@ -139,6 +139,17 @@
 
 
         /**
+         *  Update locations when Geolocation changes
+         */
+        mapVm.currentLocation.subscribe(function updateLocations() {
+
+            _.each(vm.activities(), function (activity) {
+                vm.searchLocations(activity);
+            });
+        });
+
+
+        /**
          *  Selected location functions
          */
 
