@@ -16,7 +16,7 @@
         var self = this;
 
         var firstLocation = _.head(this.results());
-        if ( firstLocation().marker.getMap() != null) {
+        if ( firstLocation().marker.getMap() !== null) {
             self.mapReference = firstLocation().marker.getMap();
         }
 
