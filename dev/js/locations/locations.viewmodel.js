@@ -49,7 +49,11 @@
                             activity().results.push(loc);
                         });
 
-                        activity().visible(true);
+                        if (activity().noResultsForLastGeolocation) {
+                            activity().noResultsForLastGeolocation = false;
+                            activity().visible(true);
+                        }
+
                         vm.activities.push(activity);
 
                         geolocationsVm.currentGeolocation().activities().push(activity);
@@ -57,6 +61,7 @@
                     } else {
 
                         activity().visible(false);
+                        activity().noResultsForLastGeolocation = true;
                         vm.activities.push(activity);
 
                         alert('Sorry, there are no locations for that activity in the current map bounds.');

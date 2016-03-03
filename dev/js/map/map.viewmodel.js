@@ -123,6 +123,7 @@
             });
         };
 
+
         /**
          *  Geolocation methods
          */
@@ -133,17 +134,9 @@
             if (geo()){
                 geolocationsVm.currentGeolocation(geo());
 
-                _.each(geolocationsVm.geolocations(), function (geolocation) {
-                    console.log(geolocation.locationName());
-                });
-
             } else {
                 console.log('There was an error storing the new geolocation');
             }
-        };
-
-        vm.updateMap = function () {
-
         };
 
 
