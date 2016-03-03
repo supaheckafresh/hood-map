@@ -11,6 +11,8 @@
 
         // We use `checked` to determine if an activity was initially visible when prior to applying the filter query.
         this.checked = ko.observable(true);
+
+        // We use `hasFilterResults` to determine if the activity checkbox should be disabled.
         this.hasFilterResults = ko.observable();
     };
 
