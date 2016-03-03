@@ -96,57 +96,62 @@
         /**
          *  Locations filter function
          */
-        vm.filterQuery.subscribe(function filterResults() {
+        vm.filterQuery.subscribe(function filterAlgorithm() {
 
-            // When there is no filter query input, set the UI back to it's initial state:
             if (filterInputIsEmpty()) {
                 vm.applyFilter(false);
                 unfilterResults();
                 mapVm.showAllMarkers(vm.activities);
 
-                // When there is filter query input, update the UI showing the filtered results:
             } else {
-
                 vm.applyFilter(true);
+                filterResults();
+            }
 
-                // We use `activityVis` to track whether or not to hide the `#activity-location-group` div. The element
-                // should be hidden if all of the member locations are filtered-out by the query.
-                var activityVis;
+            function filterResults() {
+                
+                var activityVisibilityDuringFilter;
 
                 _.each(vm.activities(), function (activity) {
 
                     if (activity().results().length > 0) {
 
-                        // Hide location the list items and map markers for filtered-out locations.
                         _.each(activity().results(), function (location) {
 
+                            // Hide the location list items and map markers for filtered-out locations.
                             if( !(location().contains(vm.filterQuery())) ) {
+
                                 location().visible(false);
                                 mapVm.hideMarker(location);
 
-                                activityVis = false;
-
+                                // The `activityVisibilityDuringFilter` and `hasFilterResults` states will only remain
+                                // false if there are zero location results within an activity containing the filter
+                                // query string.
+                                activityVisibilityDuringFilter = false;
                                 activity().hasFilterResults(false);
+
                             } else {
 
-                                // Re-display previously hidden markers (when `backspace` is pressed, for instance).
+                                // Re-display previously hidden locations and markers (when `backspace` is pressed,
+                                // for instance).
                                 location().visible(true);
                                 mapVm.showMarker(location);
-
                                 activity().hasFilterResults(true);
                             }
                         });
 
-                        // Check if any activity locations have become visible again, and if so set `activityVis` to true.
+                        // Check if any activity locations have are visible again, and if so set
+                        // `activityVisibilityDuringFilter` to true (so long as the activity was `checked` prior to
+                        // starting the filter query).
                         _.some(activity().results(), function (location) {
-                            if (location().visible()  && activity().checked() === true) {
-                                activityVis = true;
-
+                            if (location().visible() && activity().checked() === true) {
+                                activityVisibilityDuringFilter = true;
                                 activity().hasFilterResults(true);
                             }
                         });
 
-                        activity().visible(activityVis);
+                        // Update the UI after every keystroke.
+                        activity().visible(activityVisibilityDuringFilter);
                     }
                 });
             }
