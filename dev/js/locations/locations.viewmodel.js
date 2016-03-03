@@ -98,6 +98,7 @@
          */
         vm.filterQuery.subscribe(function filterResults() {
 
+            // When there is no filter query input, set the UI back to it's initial state:
             if (vm.filterQuery().trim() === '') {
 
                 vm.applyFilter(false);
@@ -126,6 +127,7 @@
                 });
                 mapVm.showAllMarkers(vm.activities);
 
+                // When there is filter query input, update the UI showing the filtered results:
             } else {
 
                 vm.applyFilter(true);
