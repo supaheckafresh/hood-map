@@ -108,7 +108,7 @@
                         location().visible(true);
                     });
 
-                    if (activity().checked == true) {
+                    if (activity().checked() == true) {
                         activity().visible(true);
                     }
 
@@ -143,7 +143,7 @@
 
                     // Check if any activity locations have become visible again, and if so set `activityVis` to true.
                     _.some(activity().results(), function (location) {
-                        if (location().visible()  && activity().checked === true) {
+                        if (location().visible()  && activity().checked() === true) {
                             activityVis = true;
                         }
                     });
