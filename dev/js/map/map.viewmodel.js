@@ -191,8 +191,10 @@
         };
 
         window.initMap = vm.initMap;
+        window.mapCopy = vm.mapCopy;
     };
 
     window.MapViewModel = MapViewModel;
+
 
 })();
