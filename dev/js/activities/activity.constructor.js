@@ -8,12 +8,15 @@
         this.title = activityQuery;
         this.results = ko.observableArray();
         this.visible = ko.observable(true);
+        this.checked = true;
     };
 
 
     Activity.prototype.toggleMarkersVisible = function () {
 
         var self = this;
+
+        self.toggleChecked();
 
         if (this.results().length > 0) {
 
@@ -30,6 +33,18 @@
                 }
             });
         }
+
+        return true;
+    };
+
+    Activity.prototype.toggleChecked = function () {
+
+        console.log('toggle checked');
+
+        var self = this;
+        self.checked = !(self.checked);
+
+        console.log(self.title + ' ' + self.checked);
 
         return true;
     };

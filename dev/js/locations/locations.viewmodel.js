@@ -15,8 +15,7 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
-        // Initialize an observable to store the `applyFilter` state which will be used to to toggle the css `display`
-        // property ("visible" or "hidden") of the "all-location-results" and "filtered-location-results" divs.
+
         vm.applyFilter = ko.observable(false);
 
 
@@ -99,14 +98,25 @@
          */
         vm.filterQuery.subscribe(function filterResults() {
 
-            // If there is no filter input, set the `applyFilter` state to false & display all of the markers again.
             if (vm.filterQuery().trim() === '') {
 
                 vm.applyFilter(false);
 
+                _.each(vm.activities(), function (activity) {
+
+                    _.each(activity().results(), function (location) {
+                        location().visible(true);
+                    });
+
+                    if (activity().checked == true) {
+                        activity().visible(true);
+                    }
+
+                });
                 mapVm.showAllMarkers(vm.activities);
 
             } else {
+
                 vm.applyFilter(true);
 
                 // We use `activityVis` to track whether or not to hide the `#activity-location-group` div. The element
@@ -133,7 +143,7 @@
 
                     // Check if any activity locations have become visible again, and if so set `activityVis` to true.
                     _.some(activity().results(), function (location) {
-                        if (location().visible()) {
+                        if (location().visible()  && activity().checked === true) {
                             activityVis = true;
                         }
                     });
