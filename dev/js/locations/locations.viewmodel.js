@@ -7,6 +7,7 @@
     // represents a city or geographic region presented on the map.
     var LocationsViewModel = function (mapVm) {
 
+        
         /**
          *  Top-level variables and properties for `LocationsViewModel()`
          */
@@ -15,8 +16,6 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
-
-        vm.applyFilter = ko.observable(false);
 
 
         /**
@@ -99,12 +98,10 @@
         vm.filterQuery.subscribe(function filterAlgorithm() {
 
             if (filterInputIsEmpty()) {
-                vm.applyFilter(false);
                 unfilterResults();
                 mapVm.showAllMarkers(vm.activities);
 
             } else {
-                vm.applyFilter(true);
                 filterResults();
             }
 
