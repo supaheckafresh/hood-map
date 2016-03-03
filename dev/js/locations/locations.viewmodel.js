@@ -156,10 +156,13 @@
 
             var copy = vm.activities();
 
-            // Clear currently stored Location results. Only clearing the entire `vm.activities()`, as below object
-            // does not update the UI in the way one would expect; without iterating over the activity results, the
-            // location results for the previous geolocation continue to appear.
+            // Clear currently displayed map markers, and clear stored Location results. Only clearing the entire
+            // `vm.activities()`, as below object does not update the UI in the way one would expect; without iterating
+            // over the activity results, the location results for the previous geolocation continue to appear.
             _.each(vm.activities(), function (activity) {
+                _.each(activity().results(), function (location){
+                    location().marker.setMap(null);
+                });
                 activity().results([]);
             });
 
