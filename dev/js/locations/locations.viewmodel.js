@@ -55,6 +55,10 @@
                         geolocationsVm.currentGeolocation().activities().push(activity);
 
                     } else {
+
+                        activity().visible(false);
+                        vm.activities.push(activity);
+
                         alert('Sorry, there are no locations for that activity in the current map bounds.');
                     }
 
