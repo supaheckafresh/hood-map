@@ -66,7 +66,7 @@
                         // We still want to save the activity so that it can be queried again for new geolocations.
                         vm.activities.push(activity);
 
-                        alert('Sorry, there are no locations for that activity in the current map bounds.');
+                        alert('Sorry, there are no locations for ' + activity().title + ' in the current map bounds.');
                     }
 
                 } else {
