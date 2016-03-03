@@ -9,9 +9,8 @@
     var AppViewModel = function () {
         var vm = this;
 
-        vm.GeolocationsViewModel = new GeolocationsViewModel();
-        vm.MapViewModel = new MapViewModel(vm.GeolocationsViewModel);
-        vm.LocationsViewModel = new LocationsViewModel(vm.MapViewModel, vm.GeolocationsViewModel);
+        vm.MapViewModel = new MapViewModel();
+        vm.LocationsViewModel = new LocationsViewModel(vm.MapViewModel);
         vm.ActivitiesViewModel = new ActivitiesViewModel(vm.MapViewModel, vm.LocationsViewModel);
 
     };

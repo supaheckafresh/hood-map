@@ -3,7 +3,7 @@
 
     'use strict';
 
-    var MapViewModel = function(geolocationsVm) {
+    var MapViewModel = function() {
 
         /**
          * Top-level variables and properties for `MapViewModel()`
@@ -74,10 +74,6 @@
                 google.maps.event.addListenerOnce(map, 'idle', function () {
                     if (map.center) {
 
-                        // Push default geographic location to `GeolocationsViewModel.geolocations` so that activities
-                        // and zoom (and perhaps other states/info to be added later) can be stored and recalled.
-                        vm.storeCurrentGeolocation();
-
                         vm.readyState(true);
                         console.log('Google Maps has loaded successfully.');
 
@@ -115,28 +111,10 @@
 
                     console.log('Location has been set to: ' + locationName);
 
-                    vm.storeCurrentGeolocation();
-
                 } else {
                     alert("Geocoding was unsuccessful for the following reason: " + status);
                 }
             });
-        };
-
-
-        /**
-         *  Geolocation methods
-         */
-        vm.storeCurrentGeolocation = function () {
-            var geoData = {locationName: vm.locationName, center: map.center, zoom: map.zoom, active: true};
-            var geo = ko.observable( new Geolocation(geoData) );
-
-            if (geo()){
-                geolocationsVm.currentGeolocation(geo());
-
-            } else {
-                console.log('There was an error storing the new geolocation');
-            }
         };
 
 

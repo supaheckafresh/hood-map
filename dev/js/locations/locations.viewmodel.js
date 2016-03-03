@@ -3,9 +3,9 @@
 
     'use strict';
 
-    // A `Location` represents any place result of an activity query; not to be confused with a `Geolocation` which
+    // A `Location` represents any place result of an activity query; not to be confused with a geolocation which
     // represents a city or geographic region presented on the map.
-    var LocationsViewModel = function (mapVm, geolocationsVm) {
+    var LocationsViewModel = function (mapVm) {
 
         /**
          *  Top-level variables and properties for `LocationsViewModel()`
@@ -57,8 +57,6 @@
                         }
 
                         vm.activities.push(activity);
-
-                        geolocationsVm.currentGeolocation().activities().push(activity);
 
                     } else {
 
