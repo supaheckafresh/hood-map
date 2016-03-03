@@ -143,7 +143,17 @@
          */
         mapVm.currentLocation.subscribe(function updateLocations() {
 
+            var copy = vm.activities();
+
+            // Clear currently stored Location results
             _.each(vm.activities(), function (activity) {
+                activity().results([]);
+            });
+
+            vm.activities([]);
+
+            // Update Location results for new Geolocation
+            _.each(copy, function (activity) {
                 vm.searchLocations(activity);
             });
         });
