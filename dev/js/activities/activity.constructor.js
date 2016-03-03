@@ -8,8 +8,10 @@
         this.title = activityQuery;
         this.results = ko.observableArray();
         this.visible = ko.observable(true);
+
+        // We use `checked` to determine if an activity was initially visible when prior to applying the filter query.
         this.checked = ko.observable(true);
-        this.hasResults = ko.observable();
+        this.hasFilterResults = ko.observable();
     };
 
 
@@ -41,7 +43,6 @@
     Activity.prototype.toggleChecked = function () {
         var self = this;
         self.checked( !(self.checked()));
-        console.log(self.title + ' ' + self.checked())
         return true;
     };
 

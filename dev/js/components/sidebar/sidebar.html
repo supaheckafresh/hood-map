@@ -25,10 +25,13 @@
         <!-- Reverse a copy of the array to display the newest activity search term at the top -->
         <ul data-bind="foreach: { data: activities().slice().reverse(), as: 'activity' }">
             <li>
-                <!--<input type="checkbox" data-bind="checked: (visible || (activity.hasResults() === true && $root.LocationsViewModel.applyFilter() === false)), click: toggleMarkersVisible,-->
-                                        <!--disable: (activity.visible() === false && activity.checked() === true) || ($root.LocationsViewModel.applyFilter() === true && activity.hasResults() === false)">-->
-                <input type="checkbox" data-bind="checked: visible, click: toggleMarkersVisible,
-                                        disable: (activity.visible() === false && activity.checked() === true) || (activity.results().length === 0)">
+                <input type="checkbox"
+                       data-bind="checked: visible,
+                                  click: toggleMarkersVisible,
+                                  disable: (activity.visible() === false && activity.checked() === true) ||
+                                            (activity.results().length === 0) ||
+                                            (activity.hasFilterResults() === false)">
+
                 <span data-bind="text: activity.title"></span>
             </li>
         </ul>

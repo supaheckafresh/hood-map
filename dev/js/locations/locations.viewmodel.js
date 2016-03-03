@@ -115,9 +115,14 @@
                     if (activity().checked() == true) {
                         if (activity().results().length > 0) {
                             activity().visible(true);
-                            activity().hasResults(true);
+                            activity().hasFilterResults(true);
+                        }
+                    } else {
+                        if (activity().results().length > 0) {
+                            activity().hasFilterResults(true);
                         }
                     }
+
                 });
                 mapVm.showAllMarkers(vm.activities);
 
@@ -142,14 +147,14 @@
 
                                 activityVis = false;
 
-                                activity().hasResults(false);
+                                activity().hasFilterResults(false);
                             } else {
 
                                 // Re-display previously hidden markers (when `backspace` is pressed, for instance).
                                 location().visible(true);
                                 mapVm.showMarker(location);
 
-                                activity().hasResults(true);
+                                activity().hasFilterResults(true);
                             }
                         });
 
@@ -158,7 +163,7 @@
                             if (location().visible()  && activity().checked() === true) {
                                 activityVis = true;
 
-                                activity().hasResults(true);
+                                activity().hasFilterResults(true);
                             }
                         });
 
