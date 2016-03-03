@@ -9,6 +9,7 @@
         this.results = ko.observableArray();
         this.visible = ko.observable(true);
         this.checked = ko.observable(true);
+        this.hasResults = ko.observable();
     };
 
 
@@ -39,7 +40,8 @@
 
     Activity.prototype.toggleChecked = function () {
         var self = this;
-        self.checked( !(self.checked));
+        self.checked( !(self.checked()));
+        console.log(self.title + ' ' + self.checked())
         return true;
     };
 

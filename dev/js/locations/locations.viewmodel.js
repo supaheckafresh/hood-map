@@ -108,10 +108,16 @@
                         location().visible(true);
                     });
 
-                    if (activity().checked() == true) {
-                        activity().visible(true);
+                    if (activity().results().length === 0) {
+                        activity().visible(false);
                     }
 
+                    if (activity().checked() == true) {
+                        if (activity().results().length > 0) {
+                            activity().visible(true);
+                            activity().hasResults(true);
+                        }
+                    }
                 });
                 mapVm.showAllMarkers(vm.activities);
 
@@ -125,30 +131,39 @@
 
                 _.each(vm.activities(), function (activity) {
 
-                    // Hide location the list items and map markers for filtered-out locations.
-                    _.each(activity().results(), function (location) {
+                    if (activity().results().length > 0) {
 
-                        if( !(location().contains(vm.filterQuery())) ) {
-                            location().visible(false);
-                            mapVm.hideMarker(location);
+                        // Hide location the list items and map markers for filtered-out locations.
+                        _.each(activity().results(), function (location) {
 
-                            activityVis = false;
-                        } else {
+                            if( !(location().contains(vm.filterQuery())) ) {
+                                location().visible(false);
+                                mapVm.hideMarker(location);
 
-                            // Re-display previously hidden markers (when `backspace` is pressed, for instance).
-                            location().visible(true);
-                            mapVm.showMarker(location);
-                        }
-                    });
+                                activityVis = false;
 
-                    // Check if any activity locations have become visible again, and if so set `activityVis` to true.
-                    _.some(activity().results(), function (location) {
-                        if (location().visible()  && activity().checked() === true) {
-                            activityVis = true;
-                        }
-                    });
+                                activity().hasResults(false);
+                            } else {
 
-                    activity().visible(activityVis);
+                                // Re-display previously hidden markers (when `backspace` is pressed, for instance).
+                                location().visible(true);
+                                mapVm.showMarker(location);
+
+                                activity().hasResults(true);
+                            }
+                        });
+
+                        // Check if any activity locations have become visible again, and if so set `activityVis` to true.
+                        _.some(activity().results(), function (location) {
+                            if (location().visible()  && activity().checked() === true) {
+                                activityVis = true;
+
+                                activity().hasResults(true);
+                            }
+                        });
+
+                        activity().visible(activityVis);
+                    }
                 });
             }
         });
