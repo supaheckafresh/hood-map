@@ -99,32 +99,9 @@
         vm.filterQuery.subscribe(function filterResults() {
 
             // When there is no filter query input, set the UI back to it's initial state:
-            if (vm.filterQuery().trim() === '') {
-
+            if (filterInputIsEmpty()) {
                 vm.applyFilter(false);
-
-                _.each(vm.activities(), function (activity) {
-
-                    _.each(activity().results(), function (location) {
-                        location().visible(true);
-                    });
-
-                    if (activity().results().length === 0) {
-                        activity().visible(false);
-                    }
-
-                    if (activity().checked() == true) {
-                        if (activity().results().length > 0) {
-                            activity().visible(true);
-                            activity().hasFilterResults(true);
-                        }
-                    } else {
-                        if (activity().results().length > 0) {
-                            activity().hasFilterResults(true);
-                        }
-                    }
-
-                });
+                unfilterResults();
                 mapVm.showAllMarkers(vm.activities);
 
                 // When there is filter query input, update the UI showing the filtered results:
@@ -173,6 +150,39 @@
                     }
                 });
             }
+
+            function filterInputIsEmpty() {
+                return vm.filterQuery().trim() === '';
+            }
+
+            function unfilterResults() {
+                _.each(vm.activities(), function (activity) {
+
+                    _.each(activity().results(), function (location) {
+                        location().visible(true);
+                    });
+
+                    resetInitialVisibility(activity);
+                });
+
+                function resetInitialVisibility(activity) {
+                    if (activity().results().length === 0) {
+                        activity().visible(false);
+                    }
+
+                    if (activity().checked() == true) {
+                        if (activity().results().length > 0) {
+                            activity().visible(true);
+                            activity().hasFilterResults(true);
+                        }
+                    } else {
+                        if (activity().results().length > 0) {
+                            activity().hasFilterResults(true);
+                        }
+                    }
+                }
+            }
+
         });
 
         // Hack to prevent page reload on the filter form submission.
