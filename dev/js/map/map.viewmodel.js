@@ -119,6 +119,18 @@
 
 
         /**
+         *  Map orientation methods
+         */
+        vm.centerMapAt = function (location) {
+            var latLng = new google.maps.LatLng(location.geometry().location.lat(),
+                                                location.geometry().location.lng());
+            map.panTo(latLng);
+
+            vm.mapCopy = map;
+        };
+
+
+        /**
          *  Map marker methods
          */
         vm.addMarker = function (location, activity) {

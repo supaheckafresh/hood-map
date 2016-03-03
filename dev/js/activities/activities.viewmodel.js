@@ -50,8 +50,6 @@
          */
 
             // TODO: Validate input and handle duplicates (also what do do after map is resized).
-            // TODO: Decide whether to display the desired activity in the UI even if there are no location results
-            // (todo cont...) at the current map zoom.
         vm.addActivity = function () {
             var activity = ko.observable(new Activity(vm.activityQuery()));
             locationsVm.searchLocations(activity);

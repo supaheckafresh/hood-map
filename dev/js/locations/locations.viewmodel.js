@@ -187,6 +187,7 @@
             // The `selected()` observable property is used to control the css `background-color` of the location element.
             location.selected(true);
 
+            mapVm.centerMapAt(location);
             mapVm.showInfoWindow(location, location.marker);
             mapVm.bounceAnimate(location.marker);
         };
