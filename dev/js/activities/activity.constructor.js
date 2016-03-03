@@ -30,7 +30,7 @@
         return true;
     };
 
-    
+
     window.Activity = Activity;
 
 })();

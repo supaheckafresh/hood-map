@@ -45,7 +45,7 @@
                         // Construct `Location` observables and push to `activity().results`.
                         _.each(inBoundLocations, function (locationData) {
                             var loc = ko.observable(new Location(locationData));
-                            loc().marker = mapVm.addMarker(locationData);
+                            loc().marker = mapVm.addMarker(locationData, activity);
                             activity().results.push(loc);
                         });
 

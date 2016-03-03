@@ -121,10 +121,12 @@
         /**
          *  Map marker methods
          */
-        vm.addMarker = function (location) {
+        vm.addMarker = function (location, activity) {
+
+            var visibleState = activity().visible() ? map : null;
 
             var marker = new google.maps.Marker({
-                map: map,
+                map: visibleState,
                 title: location.name,
                 position: location.geometry.location,
                 id: location.place_id,
