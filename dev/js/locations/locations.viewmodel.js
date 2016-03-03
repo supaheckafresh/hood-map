@@ -49,6 +49,8 @@
                             activity().results.push(loc);
                         });
 
+                        // If the activity was previously made invisible due to there being no location results for a
+                        // previous geolocation, set the visibility to true so that the results will be displayed.
                         if (activity().noResultsForLastGeolocation) {
                             activity().noResultsForLastGeolocation = false;
                             activity().visible(true);
@@ -62,6 +64,8 @@
 
                         activity().visible(false);
                         activity().noResultsForLastGeolocation = true;
+
+                        // We still want to save the activity so that it can be queried again for new geolocations.
                         vm.activities.push(activity);
 
                         alert('Sorry, there are no locations for that activity in the current map bounds.');
