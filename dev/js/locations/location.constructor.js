@@ -24,6 +24,12 @@
         }
     };
 
+    Location.prototype.shortLatLng = function () {
+        return (Math.round(this.geometry().location.lat() * 10) / 10) + ',' +
+                (Math.round(this.geometry().location.lng() * 10) / 10);
+
+    };
+
     window.Location = Location;
 
 })();
