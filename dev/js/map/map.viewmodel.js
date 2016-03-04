@@ -169,11 +169,13 @@
             infoWindow.open(map, location.marker);
         };
 
-        vm.showAllMarkers = function (activities) {
+        vm.showMarkersForVisibleActivities = function (activities) {
             _.each(activities(), function(activity) {
-                _.each(activity().results(), function(location) {
-                    vm.showMarker(location);
-                });
+                if (activity().visible() === true) {
+                    _.each(activity().results(), function(location) {
+                        vm.showMarker(location);
+                    });
+                }
             });
         };
 

@@ -7,7 +7,7 @@
     // represents a city or geographic region presented on the map.
     var LocationsViewModel = function (mapVm) {
 
-        
+
         /**
          *  Top-level variables and properties for `LocationsViewModel()`
          */
@@ -99,7 +99,7 @@
 
             if (filterInputIsEmpty()) {
                 unfilterResults();
-                mapVm.showAllMarkers(vm.activities);
+                mapVm.showMarkersForVisibleActivities(vm.activities);
 
             } else {
                 filterResults();
@@ -132,8 +132,11 @@
                                 // Re-display previously hidden locations and markers (when `backspace` is pressed,
                                 // for instance).
                                 location().visible(true);
-                                mapVm.showMarker(location);
                                 activity().hasFilterResults(true);
+
+                                if (activity().checked() === true) {
+                                    mapVm.showMarker(location);
+                                }
                             }
                         });
 
@@ -222,7 +225,6 @@
         /**
          *  Selected location functions
          */
-
         vm.selectLocation = function (location) {
 
             // Un-select all locations so that only one location appears selected at a time.
