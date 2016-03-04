@@ -13,6 +13,9 @@
         this.geometry = ko.observable(data.geometry);
         this.types = ko.observableArray(data.types);
         this.marker = null;
+
+        this.foursquareQueryUrl = ko.observable('');
+        this.foursquareResults = ko.observable({});
     };
 
 // TODO: Also search for `str` within `Location.types`.
@@ -25,8 +28,8 @@
     };
 
     Location.prototype.shortLatLng = function () {
-        return (Math.round(this.geometry().location.lat() * 10) / 10) + ',' +
-                (Math.round(this.geometry().location.lng() * 10) / 10);
+        return (Math.round(this.geometry().location.lat() * 1000) / 1000) + ',' +
+                (Math.round(this.geometry().location.lng() * 1000) / 1000);
 
     };
 

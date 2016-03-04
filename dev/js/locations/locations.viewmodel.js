@@ -5,7 +5,7 @@
 
     // A `Location` represents any place result of an activity query; not to be confused with a geolocation which
     // represents a city or geographic region presented on the map.
-    var LocationsViewModel = function (mapVm) {
+    var LocationsViewModel = function (mapVm, foursquareService) {
 
 
         /**
@@ -45,6 +45,8 @@
                             var loc = ko.observable(new Location(locationData));
                             loc().marker = mapVm.addMarker(locationData, activity);
                             activity().results.push(loc);
+
+                            foursquareService.makeQueryUrl(loc);
                         });
 
                         // If the activity was previously made invisible due to there being no location results for a
