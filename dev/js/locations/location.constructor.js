@@ -11,8 +11,6 @@
         this.place_id = ko.observable(data.place_id);
         this.formatted_address = ko.observable(data.formatted_address);
         this.geometry = ko.observable(data.geometry);
-
-        // TODO: filter types
         this.types = ko.observableArray(data.types);
         this.marker = null;
     };
