@@ -15,7 +15,7 @@
         // We use `hasFilterResults` to determine if the activity checkbox should be disabled.
         this.hasFilterResults = ko.observable();
     };
-    
+
     Activity.prototype.toggleMarkersVisible = function () {
 
         var self = this;

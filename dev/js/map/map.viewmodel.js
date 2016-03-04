@@ -212,5 +212,4 @@
 
     window.MapViewModel = MapViewModel;
 
-
 })();
