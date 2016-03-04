@@ -47,6 +47,7 @@
                             activity().results.push(loc);
 
                             foursquareService.makeQueryUrl(loc);
+                            foursquareService.getResults(loc);
                         });
 
                         // If the activity was previously made invisible due to there being no location results for a

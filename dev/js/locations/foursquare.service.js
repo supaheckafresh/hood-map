@@ -25,26 +25,35 @@
                 limit = '&limit=1';
 
 
-            location().foursquareQueryUrl(baseUrl + clientId + clientSecret + version + latLng + query + limit);
+            location().foursquareQueryUrl(  baseUrl +
+                                            clientId +
+                                            clientSecret +
+                                            version +
+                                            latLng +
+                                            query +
+                                            limit);
 
-            console.log(location().foursquareQueryUrl());
         };
 
 
         foursquare.getResults = function (location) {
 
-            ko.computed(function() {
-                // Whenever "pageIndex", "sortColumn", or "sortDirection" change, this function will re-run and issue
-                // an Ajax request. When the Ajax request completes, assign the resulting value to "queryResults"
-                $.ajax(location().foursquareQueryUrl(), {
-                    data: { pageNum: this.pageIndex, sortBy: this.sortColumn, sortDirection: this.sortOrder },
-                    success: location.foursquareResults()
-                });
+            ko.computed(function () {
+                $.getJSON(location().foursquareQueryUrl(), function (res) {})
+                    .success(function (res) {
+                        res = res.response.venues[0];
+                        location().foursquareResults(res);
+
+                        if ( _.isEmpty(res.contact) ) {
+                            console.log('No contact info for ' + location().name() + ' received from Foursquare.');
+                        }
+                    })
+                    .error(function () {
+                        console.log('There was an error retrieving foursquare info for ' + location().name());
+                    })
+
             }, this);
         };
-
-
-
     };
 
     window.foursquareService = foursquareService;
