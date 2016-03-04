@@ -49,7 +49,8 @@
                         }
                     })
                     .error(function () {
-                        console.log('There was an error retrieving foursquare info for ' + location().name());
+                        console.log('*****There was an error retrieving foursquare info for ' +
+                                        location().name() + '*****');
                     })
 
             }, this);

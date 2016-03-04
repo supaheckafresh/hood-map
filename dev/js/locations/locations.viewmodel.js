@@ -46,8 +46,8 @@
                             loc().marker = mapVm.addMarker(locationData, activity);
                             activity().results.push(loc);
 
-                            foursquareService.makeQueryUrl(loc);
-                            foursquareService.getResults(loc);
+                            // Request foursquare data for each location & save the results as a location property.
+                            vm.requestFoursquareData(loc);
                         });
 
                         // If the activity was previously made invisible due to there being no location results for a
@@ -92,6 +92,15 @@
 
                 return inBoundLocations;
             }
+        };
+
+        
+        /**
+         *  Retrieve foursquare data
+         */
+        vm.requestFoursquareData = function (location) {
+            foursquareService.makeQueryUrl(location);
+            foursquareService.getResults(location);
         };
 
 
