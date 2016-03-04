@@ -1,7 +1,7 @@
 
 (function () {
-    'use strict';
 
+    'use strict';
 
     var Activity = function Activity(activityQuery) {
 
@@ -15,22 +15,20 @@
         // We use `hasFilterResults` to determine if the activity checkbox should be disabled.
         this.hasFilterResults = ko.observable();
     };
-
-
+    
     Activity.prototype.toggleMarkersVisible = function () {
 
         var self = this;
-
         self.toggleChecked();
 
-        if (this.results().length > 0) {
+        if (self.results().length > 0) {
 
-            var firstLocation = _.head(this.results());
+            var firstLocation = _.head(self.results());
             if ( firstLocation().marker.getMap() !== null) {
                 self.mapReference = firstLocation().marker.getMap();
             }
 
-            _.each(this.results(), function (location) {
+            _.each(self.results(), function (location) {
                 if (location().marker.getMap() === null) {
                     location().marker.setMap(self.mapReference);
                 } else {
@@ -38,7 +36,6 @@
                 }
             });
         }
-
         return true;
     };
 
@@ -47,7 +44,6 @@
         self.checked( !(self.checked()));
         return true;
     };
-
 
     window.Activity = Activity;
 
