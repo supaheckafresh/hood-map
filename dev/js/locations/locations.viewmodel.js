@@ -175,7 +175,7 @@
                         activity().visible(false);
                     }
 
-                    if (activity().checked() == true) {
+                    if (activity().checked() === true) {
                         if (activity().results().length > 0) {
                             activity().visible(true);
                             activity().hasFilterResults(true);
