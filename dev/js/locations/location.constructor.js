@@ -30,7 +30,6 @@
     Location.prototype.shortLatLng = function () {
         return (Math.round(this.geometry().location.lat() * 1000) / 1000) + ',' +
                 (Math.round(this.geometry().location.lng() * 1000) / 1000);
-
     };
 
     window.Location = Location;

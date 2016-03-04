@@ -94,7 +94,7 @@
             }
         };
 
-        
+
         /**
          *  Retrieve foursquare data
          */
