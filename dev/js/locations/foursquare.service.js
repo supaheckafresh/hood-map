@@ -39,16 +39,14 @@
         foursquare.getResults = function (location) {
 
             ko.computed(function () {
-                $.getJSON(location().foursquareQueryUrl(), function (res) {})
-                    .success(function (res) {
+
+                $.getJSON(location().foursquareQueryUrl())
+                    .then(function (res) {
+                        console.log(res);
                         res = res.response.venues[0];
                         location().foursquareResults(res);
-
-                        if ( _.isEmpty(res.contact) ) {
-                            console.log('No contact info for ' + location().name() + ' received from Foursquare.');
-                        }
                     })
-                    .error(function () {
+                    .fail(function () {
                         console.log('*****There was an error retrieving foursquare info for ' +
                                         location().name() + '*****');
                     })

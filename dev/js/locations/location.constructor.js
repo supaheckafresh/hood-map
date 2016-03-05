@@ -33,6 +33,7 @@
                 (Math.round(this.geometry().location.lng() * 1000) / 1000);
     };
 
+    // Using ko.applyBindings on infoWindows may be more trouble than it's worth.
     Location.prototype.loadInfoWindowContents = function () {
         var self = this;
         var data = self.foursquareResults();

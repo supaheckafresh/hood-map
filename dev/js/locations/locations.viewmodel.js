@@ -43,11 +43,12 @@
                         // Construct `Location` observables and push to `activity().results`.
                         _.each(inBoundLocations, function (locationData) {
                             var loc = ko.observable(new Location(locationData));
-                            loc().marker = mapVm.addMarker(loc, activity);
-                            activity().results.push(loc);
 
                             // Request foursquare data for each location & save the results as a location property.
                             vm.requestFoursquareData(loc);
+
+                            loc().marker = mapVm.addMarker(loc, activity);
+                            activity().results.push(loc);
                         });
 
                         // If the activity was previously made invisible due to there being no location results for a
@@ -98,7 +99,7 @@
         /**
          *  Retrieve foursquare data
          */
-        vm.requestFoursquareData = function (location) {
+        vm.requestFoursquareData = function (location, callback) {
             foursquareService.makeQueryUrl(location);
             foursquareService.getResults(location);
         };
