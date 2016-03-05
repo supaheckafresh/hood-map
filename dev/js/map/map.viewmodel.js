@@ -162,7 +162,6 @@
         // TODO: use template
         vm.showInfoWindow = function (location) {
             location.loadInfoWindowContents();
-            console.log(location.infoWindowTemplate());
             infoWindow.setContent(location.infoWindowTemplate());
             infoWindow.open(map, location.marker);
         };

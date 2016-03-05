@@ -35,10 +35,16 @@
 
     Location.prototype.loadInfoWindowContents = function () {
         var self = this;
+        var data = self.foursquareResults();
         var $template = $('<div>');
         $template.load('./build/components/infowindow/infowindow.html #infowindow', function () {
-            self.infoWindowTemplate($(this).prop('outerHTML'));
-            console.log(self.infoWindowTemplate());
+            var html = $(this).prop('outerHTML');
+            html = html.replace('%name%', data.name)
+                        .replace('%phone%', data.contact.formattedPhone)
+                        .replace('%address%', self.formatted_address());
+
+
+            self.infoWindowTemplate(html);
         });
     };
 
