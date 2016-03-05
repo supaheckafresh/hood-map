@@ -139,9 +139,9 @@
 
             var marker = new google.maps.Marker({
                 map: visibleState,
-                title: location.name,
-                position: location.geometry.location,
-                id: location.place_id,
+                title: location().name(),
+                position: location().geometry().location,
+                id: location().place_id(),
                 animation: google.maps.Animation.DROP});
 
             var thatMarker;
@@ -151,17 +151,12 @@
 
                     thatMarker = this;
 
-                    vm.addInfoWindow(location, markerCopy);
+                    vm.showInfoWindow(location(), markerCopy);
                     vm.bounceAnimate(thatMarker);
                 });
             })(marker);
 
             return marker;
-        };
-
-        vm.addInfoWindow = function (location, marker) {
-            infoWindow.setContent(location.name);
-            infoWindow.open(map, marker);
         };
 
         vm.showInfoWindow = function (location) {
