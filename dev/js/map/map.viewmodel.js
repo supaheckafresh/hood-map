@@ -159,8 +159,11 @@
             return marker;
         };
 
+        // TODO: use template
         vm.showInfoWindow = function (location) {
-            infoWindow.setContent(location.name());
+            location.loadInfoWindowContents();
+            console.log(location.infoWindowTemplate());
+            infoWindow.setContent(location.infoWindowTemplate());
             infoWindow.open(map, location.marker);
         };
 

@@ -246,7 +246,7 @@
             location.selected(true);
 
             mapVm.centerMapAt(location);
-            mapVm.showInfoWindow(location, location.marker);
+            mapVm.showInfoWindow(location);
             mapVm.bounceAnimate(location.marker);
         };
 

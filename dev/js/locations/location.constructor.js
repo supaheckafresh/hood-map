@@ -16,6 +16,7 @@
 
         this.foursquareQueryUrl = ko.observable('');
         this.foursquareResults = ko.observable({});
+        this.infoWindowTemplate = ko.observable('');
     };
 
 // TODO: Also search for `str` within `Location.types`.
@@ -30,6 +31,15 @@
     Location.prototype.shortLatLng = function () {
         return (Math.round(this.geometry().location.lat() * 1000) / 1000) + ',' +
                 (Math.round(this.geometry().location.lng() * 1000) / 1000);
+    };
+
+    Location.prototype.loadInfoWindowContents = function () {
+        var self = this;
+        var $template = $('<div>');
+        $template.load('./build/components/infowindow/infowindow.html #infowindow', function () {
+            self.infoWindowTemplate($(this).prop('outerHTML'));
+            console.log(self.infoWindowTemplate());
+        });
     };
 
     window.Location = Location;
