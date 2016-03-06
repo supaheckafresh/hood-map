@@ -31,7 +31,9 @@
         vm.locationName = ko.observable(longBeachCA.searchStr);
 
         // Initialize an empty ko.observable object to store the current location.
-        vm.currentGeolocation = ko.observable({});
+        vm.currentGeolocation = ko.observable();
+
+        vm.selectedLocation = ko.observable();
 
 
         /***
@@ -67,10 +69,15 @@
                 .done(function (template) {
                     infoWindow.setContent(template);
                     infoWindow.open(map);
+
+                    var koBound = false;
                     google.maps.event.addListener(infoWindow, 'domready', function () {
                         console.log(document.getElementById('infowindow-overlay'));
                         console.log(infoWindow.getContent());
-                        ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
+                        if (koBound === false) {
+                            ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
+                            koBound = true;
+                        }
                     });
                 });
 
@@ -158,7 +165,8 @@
 
             (function (markerCopy) {
                 google.maps.event.addListener(markerCopy, 'click', function() {
-                    infoWindow.open(map, this);
+                    vm.selectedLocation(location);
+                    vm.showInfoWindow(location());
                     vm.bounceAnimate(this);
                 });
             })(marker);

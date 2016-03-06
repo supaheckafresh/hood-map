@@ -16,7 +16,7 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
-        vm.currentLocation = ko.observable('hello');
+        vm.selectedLocation = ko.observable('hello');
 
 
         /**
@@ -246,7 +246,7 @@
 
             // The `selected()` observable property is used to control the css `background-color` of the location element.
             location.selected(true);
-            vm.currentLocation(location);
+            vm.selectedLocation(location);
 
             mapVm.centerMapAt(location);
             mapVm.showInfoWindow(location);
@@ -264,6 +264,14 @@
         vm.getReferenceToActivitiesObject = function (activities) {
             vm.activities = activities;
         };
+
+        vm.passSelectedLocationToMapVm = function () {
+            mapVm.selectedLocation(vm.selectedLocation)
+        };
+
+        vm.selectedLocation.subscribe(function () {
+           vm.passSelectedLocationToMapVm();
+        });
     };
 
     window.LocationsViewModel = LocationsViewModel;

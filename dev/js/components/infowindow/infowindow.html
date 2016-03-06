@@ -1,5 +1,5 @@
 <div id="infowindow-overlay">
-    <p data-bind="text: locationName"></p>
-    <h2 data-bind="text: console.log($data)"></h2>
-TESTING
+    <div data-bind="with: selectedLocation">
+        <h3 data-bind="text: name"></h3>
+    </div>
 </div>
