@@ -248,8 +248,8 @@
             location.selected(true);
             vm.selectedLocation(location);
 
-            mapVm.centerMapAt(location);
             mapVm.showInfoWindow(location);
+            mapVm.centerMapAt(location);
             mapVm.bounceAnimate(location.marker);
         };
 
@@ -264,6 +264,11 @@
         vm.getReferenceToActivitiesObject = function (activities) {
             vm.activities = activities;
         };
+
+        vm.passSelfToMapVm = function () {
+            mapVm.locationsVm = vm;
+        };
+        vm.passSelfToMapVm();
 
         vm.passSelectedLocationToMapVm = function () {
             mapVm.selectedLocation(vm.selectedLocation)

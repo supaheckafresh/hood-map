@@ -35,6 +35,9 @@
 
         vm.selectedLocation = ko.observable();
 
+        // We will use this property as a reference to LocationsViewModel()
+        vm.locationsVm = {};
+
 
         /***
          * Google Maps API calls
@@ -165,7 +168,11 @@
 
             (function (markerCopy) {
                 google.maps.event.addListener(markerCopy, 'click', function() {
-                    vm.selectedLocation(location);
+
+                    console.log(vm.locationsVm);
+
+                    vm.locationsVm.selectLocation(location());
+
                     vm.showInfoWindow(location());
                     vm.bounceAnimate(this);
                 });
