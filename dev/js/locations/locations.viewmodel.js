@@ -16,6 +16,8 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
+        vm.currentLocation = ko.observable();
+
 
 
         /**
@@ -212,7 +214,7 @@
         /**
          *  Update locations when Geolocation changes
          */
-        mapVm.currentLocation.subscribe(function updateLocations() {
+        mapVm.currentGeolocation.subscribe(function updateLocations() {
 
             var copy = vm.activities();
 
@@ -245,6 +247,7 @@
 
             // The `selected()` observable property is used to control the css `background-color` of the location element.
             location.selected(true);
+            vm.currentLocation(location);
 
             mapVm.centerMapAt(location);
             mapVm.showInfoWindow(location);
