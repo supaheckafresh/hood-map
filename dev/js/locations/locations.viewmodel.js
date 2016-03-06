@@ -271,7 +271,7 @@
         vm.passSelfToMapVm();
 
         vm.passSelectedLocationToMapVm = function () {
-            mapVm.selectedLocation(vm.selectedLocation)
+            mapVm.selectedLocation(vm.selectedLocation);
         };
 
         vm.selectedLocation.subscribe(function () {

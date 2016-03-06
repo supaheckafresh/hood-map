@@ -33,17 +33,17 @@
         // Initialize an empty ko.observable object to store the current location.
         vm.currentGeolocation = ko.observable();
 
-        vm.selectedLocation = ko.observable();
-
-        // We will use this property as a reference to LocationsViewModel()
+        // We will use this property as a reference to `LocationsViewModel()`. These properties are used for data binding
+        // inside of location info windows.
         vm.locationsVm = {};
+        vm.selectedLocation = ko.observable();
 
 
         /***
          * Google Maps API calls
          */
 
-            // Update the map when a new location query is performed successfully.
+        // `updateLocation()` is the submit function called from the location form in 'searchbar.html.'
         vm.updateLocation = function () {
             // TODO: Validate input
             vm.geo(vm.locationName());
@@ -70,13 +70,16 @@
             infoWindow = new google.maps.InfoWindow();
             $.ajax('./build/components/infowindow/infowindow.html')
                 .done(function (template) {
+
                     infoWindow.setContent(template);
-                    infoWindow.open(map);
+
+                    // Opening the info window with the `map` param set to `null` still allows us to perform knockout
+                    // data binding (if we had set to `map` we would see an empty info window in the upper-left when the
+                    // app starts).
+                    infoWindow.open(null);
 
                     var koBound = false;
                     google.maps.event.addListener(infoWindow, 'domready', function () {
-                        console.log(document.getElementById('infowindow-overlay'));
-                        console.log(infoWindow.getContent());
                         if (koBound === false) {
                             ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
                             koBound = true;
@@ -168,8 +171,6 @@
 
             (function (markerCopy) {
                 google.maps.event.addListener(markerCopy, 'click', function() {
-
-                    console.log(vm.locationsVm);
 
                     vm.locationsVm.selectLocation(location());
 
