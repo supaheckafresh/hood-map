@@ -31,7 +31,7 @@
         vm.locationName = ko.observable(longBeachCA.searchStr);
 
         // Initialize an empty ko.observable object to store the current location.
-        vm.currentLocation = ko.observable({});
+        vm.currentGeolocation = ko.observable({});
 
 
         /***
@@ -78,7 +78,8 @@
                         console.log('Google Maps has loaded successfully.');
 
                         // Try adding hidden infoWindow to dom so that ko bindings can be applied.
-                        infoWindow.setContent('ready');
+                        infoWindow.setContent('<div id="infowindow-overlay" data-bind="template: {name: \'infowindow\', data: currentLocation}"></div>');
+                        console.log(infoWindow.getContent());
                         infoWindow.open(map);
 
                     } else {
@@ -105,8 +106,9 @@
                     // Update mapCopy.
                     vm.mapCopy = map;
 
+                    // TODO: probably need to store actual location object.
                     // Store the successfully geocoded coordinates.
-                    vm.currentLocation({
+                    vm.currentGeolocation({
                         center: {
                             lat: results[0].geometry.location.lat(),
                             lng: results[0].geometry.location.lng()
