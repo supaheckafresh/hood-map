@@ -29,12 +29,13 @@
 
         // Initialize `locationName` observable with a default location text to appear in the location search input.
         vm.locationName = ko.observable(longBeachCA.searchStr);
+        vm.cachedLocationName = ko.observable(longBeachCA.searchStr);
 
         // Initialize an empty ko.observable object to store the current location.
         vm.currentGeolocation = ko.observable();
 
-        // We will use this property as a reference to `LocationsViewModel()`. These properties are used for data binding
-        // inside of location info windows.
+        // We will use `locationsVm` as a reference to `LocationsViewModel()`. These properties are used for data
+        // binding inside of location info windows.
         vm.locationsVm = {};
         vm.selectedLocation = ko.observable();
 
@@ -45,8 +46,11 @@
 
         // `updateLocation()` is the submit function called from the location form in 'searchbar.html.'
         vm.updateLocation = function () {
-            // TODO: Validate input
-            vm.geo(vm.locationName());
+            if (vm.locationName().trim() !== '') {
+                vm.geo(vm.locationName());
+            } else {
+                vm.locationName(vm.cachedLocationName());
+            }
         };
 
         // Initialize our map. This is the callback function parameter in our Google Maps API request in 'index.html'.
@@ -88,7 +92,6 @@
                 });
 
 
-
             // Initialize Places Service.
             vm.placesService = new google.maps.places.PlacesService(map);
 
@@ -120,6 +123,9 @@
         vm.geo = function (locationName) {
             geocoder.geocode( { 'address': locationName }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
+
+                    vm.cachedLocationName(locationName);
+
                     map.setCenter(results[0].geometry.location);
 
                     // Update mapCopy.
@@ -137,6 +143,7 @@
                     console.log('Location has been set to: ' + locationName);
 
                 } else {
+                    vm.locationName(vm.cachedLocationName());
                     alert("Geocoding was unsuccessful for the following reason: " + status);
                 }
             });
