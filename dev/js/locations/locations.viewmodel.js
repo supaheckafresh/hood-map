@@ -99,7 +99,7 @@
         /**
          *  Retrieve foursquare data
          */
-        vm.requestFoursquareData = function (location, callback) {
+        vm.requestFoursquareData = function (location) {
             foursquareService.makeQueryUrl(location);
             foursquareService.getResults(location);
         };
