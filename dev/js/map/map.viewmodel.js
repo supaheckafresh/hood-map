@@ -44,8 +44,8 @@
          * Google Maps API calls
          */
 
-        // `updateLocation()` is the submit function called from the location form in 'searchbar.html.'
-        vm.updateLocation = function () {
+        // `updateGeolocation()` is the submit function called from the location form in 'searchbar.html.'
+        vm.updateGeolocation = function () {
             if (vm.geolocationName().trim() !== '') {
                 vm.geo(vm.geolocationName());
             } else {
@@ -69,6 +69,9 @@
 
             // Initialize the `geocoder`.
             geocoder = new google.maps.Geocoder();
+
+            // Initialize the marker info windows.
+            vm.initInfoWindow();
 
             // Initialize Places Service.
             vm.placesService = new google.maps.places.PlacesService(map);
@@ -115,6 +118,9 @@
                         }
                     });
 
+                    // Reload marker info windows whenever the geolocation changes.
+                    vm.initInfoWindow();
+
                     // Update mapCopy.
                     vm.mapCopy = map;
 
@@ -128,7 +134,6 @@
         };
 
 
-        // Currently, infoWindow is invoked inside of `LocationsViewModel.searchLocations`.
         vm.initInfoWindow = function () {
 
             // Initialize infoWindow, load the template and apply bindings.

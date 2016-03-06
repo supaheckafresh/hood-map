@@ -51,8 +51,6 @@
                             loc().marker = mapVm.addMarker(loc, activity);
                             activity().results.push(loc);
 
-                            mapVm.initInfoWindow();
-
                         });
 
                         // If the activity was previously made invisible due to there being no location results for a
