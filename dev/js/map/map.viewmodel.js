@@ -67,7 +67,9 @@
                 .done(function (template) {
                     infoWindow.setContent(template);
                     infoWindow.open(map);
-                    google.maps.event.addListener(infoWindow, 'domReady', function () {
+                    google.maps.event.addListener(infoWindow, 'domready', function () {
+                        console.log(document.getElementById('infowindow-overlay'));
+                        console.log(infoWindow.getContent());
                         ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
                     });
                 });
@@ -154,23 +156,15 @@
                 id: location().place_id(),
                 animation: google.maps.Animation.DROP});
 
-            var thatMarker;
-            // TODO: figure out why infoWindows aren't working for all of the markers.
             (function (markerCopy) {
                 google.maps.event.addListener(markerCopy, 'click', function() {
-
-                    thatMarker = this;
-
-                    infoWindow.open(map, thatMarker);
-                    infoWindow.open(map);
-
-                    vm.bounceAnimate(thatMarker);
+                    infoWindow.open(map, this);
+                    vm.bounceAnimate(this);
                 });
             })(marker);
 
             return marker;
         };
-
 
         vm.showInfoWindow = function (location) {
             infoWindow.open(map, location.marker);

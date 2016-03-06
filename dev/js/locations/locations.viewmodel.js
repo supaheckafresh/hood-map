@@ -19,7 +19,6 @@
         vm.currentLocation = ko.observable('hello');
 
 
-
         /**
          *  Activity locations search function
          */
