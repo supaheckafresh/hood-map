@@ -16,7 +16,6 @@
 
         this.foursquareQueryUrl = ko.observable('');
         this.foursquareResults = ko.observable({});
-        this.infoWindowTemplate = ko.observable('');
     };
 
 // TODO: Also search for `str` within `Location.types`.
