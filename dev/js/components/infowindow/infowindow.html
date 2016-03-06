@@ -6,7 +6,7 @@
             <p data-bind="text: formatted_address"></p>
         </section>
 
-        <section class="foursquare-data">
+        <section data-bind="if: foursquareResults()" class="foursquare-data">
             <p data-bind="text: foursquareResults().name"></p>
         </section>
 

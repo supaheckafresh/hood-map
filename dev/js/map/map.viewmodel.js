@@ -11,9 +11,9 @@
         var vm = this;
 
         // Initialize `map`, `infoWindow`, and `geocoder` variables which are needed in our `initMap()` callback function.
-        var map;
-        var geocoder;
-        var infoWindow;
+        var map,
+            infoWindow,
+            geocoder;
 
         // `readyState` is set to `true` inside the `initMap()` function only when the map is in `idle` state (indicating
         // that it has successfully loaded), and also once Google Places Service is initialized. `ActivitiesViewModel`
@@ -70,28 +70,6 @@
             // Initialize the `geocoder`.
             geocoder = new google.maps.Geocoder();
 
-            // Initialize infoWindow, load the template and apply bindings.
-            infoWindow = new google.maps.InfoWindow();
-            $.ajax('./build/components/infowindow/infowindow.html')
-                .done(function (template) {
-
-                    infoWindow.setContent(template);
-
-                    // Opening the info window with the `map` param set to `null` still allows us to perform knockout
-                    // data binding (if we had set to `map` we would see an empty info window in the upper-left when the
-                    // app starts).
-                    infoWindow.open(null);
-
-                    var koBound = false;
-                    google.maps.event.addListener(infoWindow, 'domready', function () {
-                        if (koBound === false) {
-                            ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
-                            koBound = true;
-                        }
-                    });
-                });
-
-
             // Initialize Places Service.
             vm.placesService = new google.maps.places.PlacesService(map);
 
@@ -147,6 +125,34 @@
                     alert("Geocoding was unsuccessful for the following reason: " + status);
                 }
             });
+        };
+
+
+        // Currently, infoWindow is invoked inside of `LocationsViewModel.searchLocations`.
+        vm.initInfoWindow = function () {
+
+            // Initialize infoWindow, load the template and apply bindings.
+            infoWindow = new google.maps.InfoWindow();
+            $.ajax('./build/components/infowindow/infowindow.html')
+                .done(function (template) {
+
+                    infoWindow.setContent(template);
+
+                    // Opening the info window with the `map` param set to `null` still allows us to perform knockout
+                    // data binding (if we had set to `map` we would see an empty info window in the upper-left when the
+                    // app starts).
+                    infoWindow.open(null);
+
+                    var koBound = false;
+                    google.maps.event.addListener(infoWindow, 'domready', function () {
+                        if (koBound === false) {
+                            ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
+                            koBound = true;
+                        }
+                    });
+                });
+
+            return infoWindow;
         };
 
 
