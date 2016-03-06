@@ -42,14 +42,13 @@
 
                 $.getJSON(location().foursquareQueryUrl())
                     .then(function (res) {
-                        console.log(res);
                         res = res.response.venues[0];
                         location().foursquareResults(res);
                     })
                     .fail(function () {
                         console.log('*****There was an error retrieving foursquare info for ' +
                                         location().name() + '*****');
-                    })
+                    });
 
             }, this);
         };
