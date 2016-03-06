@@ -61,8 +61,18 @@
             // Initialize the `geocoder`.
             geocoder = new google.maps.Geocoder();
 
-            // Initialize infoWindow.
+            // Initialize infoWindow, load the template and apply bindings.
             infoWindow = new google.maps.InfoWindow();
+            $.ajax('./build/components/infowindow/infowindow.html')
+                .done(function (template) {
+                    infoWindow.setContent(template);
+                    infoWindow.open(map);
+                    google.maps.event.addListener(infoWindow, 'domReady', function () {
+                        ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
+                    });
+                });
+
+
 
             // Initialize Places Service.
             vm.placesService = new google.maps.places.PlacesService(map);
@@ -73,14 +83,8 @@
                 // Set `readyState` property to `true` once Places Service is available and the map has loaded successfully.
                 google.maps.event.addListenerOnce(map, 'idle', function () {
                     if (map.center) {
-
                         vm.readyState(true);
                         console.log('Google Maps has loaded successfully.');
-
-                        // Try adding hidden infoWindow to dom so that ko bindings can be applied.
-                        infoWindow.setContent('<div id="infowindow-overlay" data-bind="template: {name: \'infowindow\', data: currentLocation}"></div>');
-                        console.log(infoWindow.getContent());
-                        infoWindow.open(map);
 
                     } else {
                         alert('There was a problem loading the map.');
@@ -157,8 +161,9 @@
 
                     thatMarker = this;
 
-                    location().loadInfoWindowContents();
-                    vm.showInfoWindow(location());
+                    infoWindow.open(map, thatMarker);
+                    infoWindow.open(map);
+
                     vm.bounceAnimate(thatMarker);
                 });
             })(marker);
@@ -166,20 +171,8 @@
             return marker;
         };
 
-        vm.infoWindowTemplate = function () {
-            var $template = $('<div>');
-            $template.load('./build/components/infowindow/infowindow.html #infowindow', function () {
-                return $(this).prop('outerHTML');
-            });
-        };
 
         vm.showInfoWindow = function (location) {
-
-            if ( !( _.isEmpty(location.infoWindowTemplate()))) {
-                infoWindow.setContent(location.infoWindowTemplate());
-            } else {
-                infoWindow.setContent(location.name() + '<br/>API content loading...');
-            }
             infoWindow.open(map, location.marker);
         };
 

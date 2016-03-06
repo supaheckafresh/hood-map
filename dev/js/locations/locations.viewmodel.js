@@ -16,7 +16,7 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
-        vm.currentLocation = ko.observable();
+        vm.currentLocation = ko.observable('hello');
 
 
 
