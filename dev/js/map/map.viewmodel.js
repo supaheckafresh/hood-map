@@ -77,6 +77,10 @@
                         vm.readyState(true);
                         console.log('Google Maps has loaded successfully.');
 
+                        // Try adding hidden infoWindow to dom so that ko bindings can be applied.
+                        infoWindow.setContent('ready');
+                        infoWindow.open(map);
+
                     } else {
                         alert('There was a problem loading the map.');
                     }
@@ -160,7 +164,13 @@
             return marker;
         };
 
-        // TODO: use template
+        vm.infoWindowTemplate = function () {
+            var $template = $('<div>');
+            $template.load('./build/components/infowindow/infowindow.html #infowindow', function () {
+                return $(this).prop('outerHTML');
+            });
+        };
+
         vm.showInfoWindow = function (location) {
 
             if ( !( _.isEmpty(location.infoWindowTemplate()))) {

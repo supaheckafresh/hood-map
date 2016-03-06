@@ -33,22 +33,6 @@
                 (Math.round(this.geometry().location.lng() * 1000) / 1000);
     };
 
-    // Using ko.applyBindings on infoWindows may be more trouble than it's worth.
-    Location.prototype.loadInfoWindowContents = function () {
-        var self = this;
-        var data = self.foursquareResults();
-        var $template = $('<div>');
-        $template.load('./build/components/infowindow/infowindow.html #infowindow', function () {
-            var html = $(this).prop('outerHTML');
-            html = html.replace('%name%', data.name)
-                        .replace('%phone%', data.contact.formattedPhone)
-                        .replace('%address%', self.formatted_address());
-
-
-            self.infoWindowTemplate(html);
-        });
-    };
-
     window.Location = Location;
 
 })();
