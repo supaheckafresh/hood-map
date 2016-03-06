@@ -211,9 +211,9 @@
 
 
         /**
-         *  Update locations when geolocationName changes
+         *  Update locations when the geolocation changes
          */
-        mapVm.geolocationName.subscribe(function updateLocations() {
+        mapVm.currentGeolocation.subscribe(function updateLocations() {
 
             var copy = vm.activities();
 

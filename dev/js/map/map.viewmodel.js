@@ -31,6 +31,9 @@
         vm.geolocationName = ko.observable(longBeachCA.searchStr);
         vm.cachedgeolocationName = ko.observable(longBeachCA.searchStr);
 
+        // Initialize an empty ko.observable object to store the current location.
+        vm.currentGeolocation = ko.observable();
+
         // We will use `locationsVm` as a reference to `LocationsViewModel()`. These properties are used for data
         // binding inside of location info windows.
         vm.locationsVm = {};
@@ -124,6 +127,15 @@
                     vm.cachedgeolocationName(geolocationName);
 
                     map.setCenter(results[0].geometry.location);
+
+                    // TODO: probably need to store actual location object.
+                    // Store the successfully geocoded coordinates.
+                    vm.currentGeolocation({
+                        center: {
+                            lat: results[0].geometry.location.lat(),
+                            lng: results[0].geometry.location.lng()
+                        }
+                    });
 
                     // Update mapCopy.
                     vm.mapCopy = map;
