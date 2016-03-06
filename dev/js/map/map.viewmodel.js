@@ -27,12 +27,9 @@
             center: {lat: 33.770, lng: -118.194}
         };
 
-        // Initialize `locationName` observable with a default location text to appear in the location search input.
-        vm.locationName = ko.observable(longBeachCA.searchStr);
-        vm.cachedLocationName = ko.observable(longBeachCA.searchStr);
-
-        // Initialize an empty ko.observable object to store the current location.
-        vm.currentGeolocation = ko.observable();
+        // Initialize `geolocationName` observable with a default location text to appear in the location search input.
+        vm.geolocationName = ko.observable(longBeachCA.searchStr);
+        vm.cachedgeolocationName = ko.observable(longBeachCA.searchStr);
 
         // We will use `locationsVm` as a reference to `LocationsViewModel()`. These properties are used for data
         // binding inside of location info windows.
@@ -46,10 +43,10 @@
 
         // `updateLocation()` is the submit function called from the location form in 'searchbar.html.'
         vm.updateLocation = function () {
-            if (vm.locationName().trim() !== '') {
-                vm.geo(vm.locationName());
+            if (vm.geolocationName().trim() !== '') {
+                vm.geo(vm.geolocationName());
             } else {
-                vm.locationName(vm.cachedLocationName());
+                vm.geolocationName(vm.cachedgeolocationName());
             }
         };
 
@@ -120,30 +117,21 @@
         };
 
 
-        vm.geo = function (locationName) {
-            geocoder.geocode( { 'address': locationName }, function (results, status) {
+        vm.geo = function (geolocationName) {
+            geocoder.geocode( { 'address': geolocationName }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
 
-                    vm.cachedLocationName(locationName);
+                    vm.cachedgeolocationName(geolocationName);
 
                     map.setCenter(results[0].geometry.location);
 
                     // Update mapCopy.
                     vm.mapCopy = map;
 
-                    // TODO: probably need to store actual location object.
-                    // Store the successfully geocoded coordinates.
-                    vm.currentGeolocation({
-                        center: {
-                            lat: results[0].geometry.location.lat(),
-                            lng: results[0].geometry.location.lng()
-                        }
-                    });
-
-                    console.log('Location has been set to: ' + locationName);
+                    console.log('Location has been set to: ' + geolocationName);
 
                 } else {
-                    vm.locationName(vm.cachedLocationName());
+                    vm.geolocationName(vm.cachedgeolocationName());
                     alert("Geocoding was unsuccessful for the following reason: " + status);
                 }
             });
