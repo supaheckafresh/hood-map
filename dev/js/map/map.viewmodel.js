@@ -128,8 +128,8 @@
 
                     map.setCenter(results[0].geometry.location);
 
-                    // TODO: probably need to store actual location object.
-                    // Store the successfully geocoded coordinates.
+                    // Store the successfully geocoded coordinates. LocationsViewModel subscribes to this property in
+                    // order to search for new activity locations whenever the map geolocation changes.
                     vm.currentGeolocation({
                         center: {
                             lat: results[0].geometry.location.lat(),
