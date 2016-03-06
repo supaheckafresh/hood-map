@@ -151,7 +151,8 @@
 
                     thatMarker = this;
 
-                    vm.showInfoWindow(location(), markerCopy);
+                    location().loadInfoWindowContents();
+                    vm.showInfoWindow(location());
                     vm.bounceAnimate(thatMarker);
                 });
             })(marker);
@@ -161,8 +162,12 @@
 
         // TODO: use template
         vm.showInfoWindow = function (location) {
-            location.loadInfoWindowContents();
-            infoWindow.setContent(location.infoWindowTemplate());
+
+            if ( !( _.isEmpty(location.infoWindowTemplate()))) {
+                infoWindow.setContent(location.infoWindowTemplate());
+            } else {
+                infoWindow.setContent(location.name() + '<br/>API content loading...');
+            }
             infoWindow.open(map, location.marker);
         };
 
