@@ -28,7 +28,7 @@
                 <input type="checkbox"
                        data-bind="checked: visible,
                                   click: function () {  toggleMarkersVisible();
-                                                        $parent.resetInfoWindowWhenSelectedLocationUnchecked();
+                                                        $parent.resetInfoWindowWhenSelectedLocationToggledVisible(activity);
                                                          return true; },
                                   disable: (activity.results().length === 0) ||
                                            (activity.hasFilterResults() === false)">

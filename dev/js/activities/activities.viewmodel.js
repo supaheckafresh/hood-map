@@ -63,20 +63,17 @@
             vm.passReferenceToLocationsVm();
         });
 
-        vm.resetInfoWindowWhenSelectedLocationUnchecked = function () {
-            _.each(vm.activities(), function (activity) {
-                if (activity().checked() === false) {
-                    _.each(activity().results(), function (location) {
-                        if (location().selected() === true) {
+        vm.resetInfoWindowWhenSelectedLocationToggledVisible = function (activity) {
+
+            _.each(activity.results(), function (location) {
+                if (location().selected() === true) {
+                    switch (activity.checked()) {
+                        case false:
                             mapVm.resetInfoWindow();
-                        }
-                    })
-                } else if (activity().checked() === true) {
-                    _.each(activity().results(), function (location) {
-                        if (location().selected() === true) {
+                            break;
+                        case true:
                             mapVm.infoWindow().open(mapVm.mapCopy, location().marker);
-                        }
-                    })
+                    }
                 }
             });
             return true;
