@@ -71,6 +71,12 @@
                             mapVm.resetInfoWindow();
                         }
                     })
+                } else if (activity().checked() === true) {
+                    _.each(activity().results(), function (location) {
+                        if (location().selected() === true) {
+                            mapVm.infoWindow().open(mapVm.mapCopy, location().marker);
+                        }
+                    })
                 }
             });
             return true;
