@@ -155,6 +155,11 @@
 
                                 if (activity().checked() === true) {
                                     mapVm.showMarker(location);
+
+                                    // Reopen info window for selected location.
+                                    if (location().selected() === true) {
+                                        mapVm.infoWindow().open(mapVm.mapCopy, location().marker);
+                                    }
                                 }
                             }
                         });
