@@ -120,6 +120,7 @@
                 filterResults();
             }
 
+            // TODO: redisplay selected location info window after filter.
             function filterResults() {
                 
                 var activityVisibilityDuringFilter;
