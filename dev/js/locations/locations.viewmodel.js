@@ -136,6 +136,10 @@
                                 location().visible(false);
                                 mapVm.hideMarker(location);
 
+                                if (location().selected() === true) {
+                                    mapVm.resetInfoWindow();
+                                }
+
                                 // The `activityVisibilityDuringFilter` and `hasFilterResults` states will only remain
                                 // false if there are zero location results within an activity containing the filter
                                 // query string.

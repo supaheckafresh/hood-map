@@ -41,7 +41,6 @@
                 var activity = ko.observable(new Activity(activityName));
                 locationsVm.searchLocations(activity);
             });
-
         };
 
 
@@ -64,6 +63,18 @@
             vm.passReferenceToLocationsVm();
         });
 
+        vm.resetInfoWindowWhenSelectedLocationUnchecked = function () {
+            _.each(vm.activities(), function (activity) {
+                if (activity().checked() === false) {
+                    _.each(activity().results(), function (location) {
+                        if (location().selected() === true) {
+                            mapVm.resetInfoWindow();
+                        }
+                    })
+                }
+            });
+            return true;
+        };
     };
 
     window.ActivitiesViewModel = ActivitiesViewModel;

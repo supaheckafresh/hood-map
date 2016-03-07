@@ -15,7 +15,7 @@
             geocoder;
 
         // Initialize empty property to hold the marker info window.
-        vm.infoWindow = {};
+        vm.infoWindow = ko.observable();
 
         // `readyState` is set to `true` inside the `initMap()` function only when the map is in `idle` state (indicating
         // that it has successfully loaded), and also once Google Places Service is initialized. `ActivitiesViewModel`
@@ -139,35 +139,42 @@
         vm.initInfoWindow = function () {
 
             // Initialize infoWindow, load the template and apply bindings.
-            vm.infoWindow = new google.maps.InfoWindow();
-            console.log('initInfoWindow called');
+            vm.infoWindow(new google.maps.InfoWindow());
+
             $.ajax('./build/components/infowindow/infowindow.html')
                 .done(function (template) {
 
-                    vm.infoWindow.setContent(template);
+                    vm.infoWindow().setContent(template);
 
                     // Opening the info window with the `map` param set to `null` still allows us to perform knockout
                     // data binding (if we had set to `map` we would see an empty info window in the upper-left when the
                     // app starts).
-                    vm.infoWindow.open(null);
+                    vm.infoWindow().open(null);
 
                     var koBound = false;
-                    google.maps.event.addListener(vm.infoWindow, 'domready', function () {
+                    google.maps.event.addListener(vm.infoWindow(), 'domready', function () {
                         if (koBound === false) {
                             ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
-                            console.log('info window ko bindings applied');
                             koBound = true;
                         }
                     });
 
-                    google.maps.event.addListener(vm.infoWindow, 'closeclick', function () {
-                        console.log('info window closed');
+                    // When the info window is clicked closed, we lose its knockout binding. When this happens, invoke
+                    // `initInfoWindow()` again to make it work upon reopening.
+                    google.maps.event.addListener(vm.infoWindow(), 'closeclick', function () {
                         koBound = false;
                         vm.initInfoWindow();
                     });
                 });
+        };
 
-            return vm.infoWindow;
+        // It would be nice if there was an `onclose` event for info windows. Since we sometimes need to close the
+        // info window programmatically, as is the case when the selected location is hidden via the filter, or when
+        // the activity containing the selected location is unchecked, we need to reset the info window for knockout
+        // bindings to work properly.
+        vm.resetInfoWindow = function () {
+            vm.infoWindow().open(null); // hack. infoWindow.close() was not working for me here.
+            vm.initInfoWindow();
         };
 
 
@@ -213,7 +220,7 @@
         };
 
         vm.showInfoWindow = function (location) {
-            vm.infoWindow.open(map, location.marker);
+            vm.infoWindow().open(map, location.marker);
         };
 
         vm.showMarkersForVisibleActivities = function (activities) {
