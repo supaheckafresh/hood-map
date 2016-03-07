@@ -15,6 +15,8 @@
             infoWindow,
             geocoder;
 
+        vm.infoWindowUnbound = ko.observable(false);
+
         // `readyState` is set to `true` inside the `initMap()` function only when the map is in `idle` state (indicating
         // that it has successfully loaded), and also once Google Places Service is initialized. `ActivitiesViewModel`
         // listens for a change to `readyState` in order to execute the default activities Google Places query (otherwise
@@ -202,6 +204,7 @@
 
         vm.showInfoWindow = function (location) {
             infoWindow.open(map, location.marker);
+            return infoWindow;
         };
 
         vm.showMarkersForVisibleActivities = function (activities) {
@@ -218,6 +221,7 @@
             location().marker.setMap(null);
         };
 
+        // TODO: info windows not working after filter performed. I think this may happen when info window is open & gets hidden during filter.
         vm.showMarker = function (location) {
             var marker = location().marker;
 

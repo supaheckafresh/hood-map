@@ -31,6 +31,7 @@
             _.each(self.results(), function (location) {
                 if (location().marker.getMap() === null) {
                     location().marker.setMap(self.mapReference);
+
                 } else {
                     location().marker.setMap(null);
                 }
