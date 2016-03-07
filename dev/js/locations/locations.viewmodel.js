@@ -136,10 +136,6 @@
                                 location().visible(false);
                                 mapVm.hideMarker(location);
 
-                                if (location().selected() === true) {
-                                    mapVm.infoWindowUnbound(true);
-                                }
-
                                 // The `activityVisibilityDuringFilter` and `hasFilterResults` states will only remain
                                 // false if there are zero location results within an activity containing the filter
                                 // query string.
@@ -252,10 +248,6 @@
             // The `selected()` observable property is used to control the css `background-color` of the location element.
             location.selected(true);
             vm.selectedLocation(location);
-
-            if (mapVm.infoWindowUnbound() === true) {
-                mapVm.initInfoWindow();
-            }
 
             mapVm.showInfoWindow(location);
             mapVm.centerMapAt(location);

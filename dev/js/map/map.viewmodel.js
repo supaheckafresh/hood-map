@@ -12,10 +12,10 @@
 
         // Initialize `map`, `infoWindow`, and `geocoder` variables which are needed in our `initMap()` callback function.
         var map,
-            infoWindow,
             geocoder;
 
-        vm.infoWindowUnbound = ko.observable(false);
+        // Initialize empty property to hold the marker info window.
+        vm.infoWindow = {};
 
         // `readyState` is set to `true` inside the `initMap()` function only when the map is in `idle` state (indicating
         // that it has successfully loaded), and also once Google Places Service is initialized. `ActivitiesViewModel`
@@ -139,27 +139,35 @@
         vm.initInfoWindow = function () {
 
             // Initialize infoWindow, load the template and apply bindings.
-            infoWindow = new google.maps.InfoWindow();
+            vm.infoWindow = new google.maps.InfoWindow();
+            console.log('initInfoWindow called');
             $.ajax('./build/components/infowindow/infowindow.html')
                 .done(function (template) {
 
-                    infoWindow.setContent(template);
+                    vm.infoWindow.setContent(template);
 
                     // Opening the info window with the `map` param set to `null` still allows us to perform knockout
                     // data binding (if we had set to `map` we would see an empty info window in the upper-left when the
                     // app starts).
-                    infoWindow.open(null);
+                    vm.infoWindow.open(null);
 
                     var koBound = false;
-                    google.maps.event.addListener(infoWindow, 'domready', function () {
+                    google.maps.event.addListener(vm.infoWindow, 'domready', function () {
                         if (koBound === false) {
                             ko.applyBindings(vm, document.getElementById('infowindow-overlay'));
+                            console.log('info window ko bindings applied');
                             koBound = true;
                         }
                     });
+
+                    google.maps.event.addListener(vm.infoWindow, 'closeclick', function () {
+                        console.log('info window closed');
+                        koBound = false;
+                        vm.initInfoWindow();
+                    });
                 });
 
-            return infoWindow;
+            return vm.infoWindow;
         };
 
 
@@ -175,6 +183,8 @@
         };
 
 
+
+        // TODO: info window ko binding is lost if info window is closed.
         /**
          *  Map marker methods
          */
@@ -203,8 +213,7 @@
         };
 
         vm.showInfoWindow = function (location) {
-            infoWindow.open(map, location.marker);
-            return infoWindow;
+            vm.infoWindow.open(map, location.marker);
         };
 
         vm.showMarkersForVisibleActivities = function (activities) {
@@ -223,11 +232,9 @@
 
         // TODO: info windows not working after filter performed. I think this may happen when info window is open & gets hidden during filter.
         vm.showMarker = function (location) {
-            var marker = location().marker;
-
             // Only display the marker if it is not already visible.
-            if (marker.getMap() != map) {
-                vm.dropAnimate(marker);
+            if (location().marker.getMap() != map) {
+                vm.dropAnimate(location().marker);
             }
         };
 
