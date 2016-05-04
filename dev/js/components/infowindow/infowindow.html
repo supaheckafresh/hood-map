@@ -6,12 +6,12 @@
             <p data-bind="text: formatted_address"></p>
         </section>
 
-        <section data-bind="if: foursquareResults()" class="foursquare-data">
-            <p data-bind="text: foursquareResults().name"></p>
+        <section data-bind="if: checkins()" class="foursquare-data">
+            <p><span data-bind="text: checkins()"></span> check-ins on Foursquare.</p>
         </section>
 
-        <section data-bind="visible: !foursquareResults().name" class="data-loading">
-            <p>Foursquare data loading...</p>
+        <section data-bind="visible: !checkins()" class="data-loading">
+            <p>No check-ins on Foursquare.</p>
         </section>
 
     </div>

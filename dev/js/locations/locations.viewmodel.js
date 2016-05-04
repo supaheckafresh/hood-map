@@ -16,7 +16,7 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
-        vm.selectedLocation = ko.observable('');
+        vm.selectedLocation = ko.observable('hello');
 
 
         /**
@@ -25,7 +25,6 @@
         vm.searchLocations = function (activity) {
 
             var mapBounds = mapVm.mapCopy.getBounds();
-            console.log(mapBounds);
 
             mapVm.placesService.textSearch({
                 bounds: mapBounds,
@@ -47,9 +46,8 @@
                             var loc = ko.observable(new Location(locationData));
 
                             // Request foursquare data for each location & save the results as a location property.
-                            vm.requestFoursquareData(loc);
+                            vm.requestFoursquareData(loc, activity, mapVm.addMarker);
 
-                            loc().marker = mapVm.addMarker(loc, activity);
                             activity().results.push(loc);
 
                         });
@@ -80,7 +78,6 @@
             }
 
             function suppressOutOfBoundsLocations(locations) {
-                console.log(locations);
                 var locLat, locLng;
                 var inBoundLocations = [];
                 _.each(locations, function (location) {
@@ -103,9 +100,9 @@
         /**
          *  Retrieve foursquare data
          */
-        vm.requestFoursquareData = function (location) {
+        vm.requestFoursquareData = function (location, activity, callback) {
             foursquareService.makeQueryUrl(location);
-            foursquareService.getResults(location);
+            foursquareService.getCheckinsCountFor(location, activity, callback);
         };
 
 
@@ -272,6 +269,10 @@
                     location().selected(false);
                 });
             });
+        };
+
+        vm.assignColorsToLocations = function () {
+
         };
 
         vm.getReferenceToActivitiesObject = function (activities) {

@@ -6,8 +6,6 @@
 
         var foursquare = this;
 
-        //%20
-
         foursquare.makeQueryUrl = function (location) {
 
             // per API docs, '/search' is probably better for finding specific location, whereas '/explore' might be used to
@@ -36,14 +34,25 @@
         };
 
 
-        foursquare.getResults = function (location) {
+        foursquare.getCheckinsCountFor = function (location, activity, callback) {
 
             ko.computed(function () {
 
                 $.getJSON(location().foursquareQueryUrl())
                     .then(function (res) {
-                        res = res.response.venues[0];
-                        location().foursquareResults(res);
+
+                        if (res.response.venues.length > 0) {
+
+                            var locationCheckins = res.response.venues[0].stats.checkinsCount;
+
+                            locationCheckins ? location().checkins(locationCheckins) : location().checkins(0);
+                        } else {
+                            location().checkins(0);
+                        }
+
+                        var color = location().getColor();
+
+                        location().marker = callback(location, activity, color);
                     })
                     .fail(function () {
                         console.log('*****There was an error retrieving foursquare info for ' +

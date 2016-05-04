@@ -3,7 +3,7 @@
 
     'use strict';
 
-    var MapViewModel = function() {
+    var MapViewModel = function(foursquareService) {
 
         /**
          * Top-level variables and properties for `MapViewModel()`
@@ -119,7 +119,7 @@
                             lng: results[0].geometry.location.lng()
                         }
                     });
-
+                    
                     // Reload marker info windows whenever the geolocation changes.
                     vm.initInfoWindow();
 
@@ -195,13 +195,17 @@
         /**
          *  Map marker methods
          */
-        vm.addMarker = function (location, activity) {
+        // Changing color of the markers based on foursquare checkins was a bit of an afterthought. Rather than
+        // overhaul my code, I opted to get a little messy with passing too many parameters & callback function in
+        // order to make this work. Sorry it's a hacky!!
+        vm.addMarker = function (location, activity, color) {
 
             var visibleState = activity().visible() ? map : null;
 
             var marker = new google.maps.Marker({
                 map: visibleState,
                 title: location().name(),
+                icon: 'build/images/markers/marker_' + color + '.png',
                 position: location().geometry().location,
                 id: location().place_id(),
                 animation: google.maps.Animation.DROP});

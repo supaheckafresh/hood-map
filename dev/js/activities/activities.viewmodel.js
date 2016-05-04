@@ -78,6 +78,8 @@
             });
             return true;
         };
+
+        
     };
 
     window.ActivitiesViewModel = ActivitiesViewModel;

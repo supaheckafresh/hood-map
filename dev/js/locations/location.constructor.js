@@ -15,7 +15,8 @@
         this.marker = null;
 
         this.foursquareQueryUrl = ko.observable('');
-        this.foursquareResults = ko.observable({});
+
+        this.checkins = ko.observable();
     };
 
 // TODO: Also search for `str` within `Location.types`.
@@ -30,6 +31,30 @@
     Location.prototype.shortLatLng = function () {
         return (Math.round(this.geometry().location.lat() * 1000) / 1000) + ',' +
                 (Math.round(this.geometry().location.lng() * 1000) / 1000);
+    };
+
+    // I know this switch is terrible, but I used in place of a formula because I wanted to be able to easily tweak the
+    // thresholds (these are arbitrary) where different marker colors are used.
+    Location.prototype.getColor = function () {
+        var checkins = this.checkins();
+        switch (true) {
+            case (checkins > 1000):
+                return '1';
+            case (checkins > 600):
+                return '2';
+            case (checkins > 350):
+                return '3';
+            case (checkins > 120):
+                return '4';
+            case (checkins > 60):
+                return '5';
+            case (checkins > 30):
+                return '6';
+            case (checkins > 16):
+                return '7';
+            default:
+                return '7';
+        }
     };
 
     window.Location = Location;
