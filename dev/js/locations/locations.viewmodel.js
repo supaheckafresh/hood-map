@@ -16,7 +16,7 @@
         // Initialize `filterQuery` observable to bind to user input in the locations filter form.
         vm.filterQuery = ko.observable('');
 
-        vm.selectedLocation = ko.observable('hello');
+        vm.selectedLocation = ko.observable('');
 
 
         /**
@@ -25,6 +25,7 @@
         vm.searchLocations = function (activity) {
 
             var mapBounds = mapVm.mapCopy.getBounds();
+            console.log(mapBounds);
 
             mapVm.placesService.textSearch({
                 bounds: mapBounds,
@@ -79,6 +80,7 @@
             }
 
             function suppressOutOfBoundsLocations(locations) {
+                console.log(locations);
                 var locLat, locLng;
                 var inBoundLocations = [];
                 _.each(locations, function (location) {
@@ -86,8 +88,8 @@
                     locLng = location.geometry.location.lng();
 
                     // Store each `location` only if it is contained within the map boundaries at current zoom level.
-                    if (mapBounds.R.R < locLat && locLat < mapBounds.R.j &&
-                        mapBounds.j.R > locLng && locLng > mapBounds.j.j) {
+                    if (mapBounds.H.H < locLat && locLat < mapBounds.H.j &&
+                        mapBounds.j.H > locLng && locLng > mapBounds.j.j) {
 
                         inBoundLocations.push(location);
                     }
