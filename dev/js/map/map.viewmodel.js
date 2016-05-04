@@ -119,7 +119,7 @@
                             lng: results[0].geometry.location.lng()
                         }
                     });
-                    
+
                     // Reload marker info windows whenever the geolocation changes.
                     vm.initInfoWindow();
 
