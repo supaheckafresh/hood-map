@@ -1,16 +1,17 @@
 
 <section id="searchbar" class="row">
 
+    <!-- DESKTOP -->
     <!-- Location searchActivityLocations form -->
     <section data-bind="with: MapViewModel" id="search-location" class="col-xs-6">
         <form data-bind="submit: updateGeolocation" class="form-inline">
-            <fieldset class="form-group">
+            <fieldset class="form-group col-xs-12">
                 <input data-bind="value: geolocationName"
-                       class="form-control"
+                       class="form-control col-xs-8"
                        type="text"
                        placeholder="Hey, I need a location!"/>
                 <button type="submit" class="btn btn-info search-form">Go</button>
-                <div><small class="text-muted search-form">Where do you want to go?</small></div>
+                <div><small class="text-muted search-form col-xs-12">Where do you want to go?</small></div>
             </fieldset>
         </form>
     </section>
@@ -18,14 +19,34 @@
     <!-- Activities searchActivityLocations form -->
     <section data-bind="with: ActivitiesViewModel" id="search-activities" class="col-xs-6">
         <form data-bind="submit: addActivity" class="form-inline">
-            <fieldset class="form-group">
+            <fieldset class="form-group col-xs-12">
                 <input data-bind="value: activityQuery"
-                       class="form-control"
+                       class="form-control col-xs-8"
                        type="text"
                        placeholder="Let's go out!"/>
                 <button type="submit" class="btn btn-success btn-search">Do</button>
-                <div><small class="text-muted">What do you want to do?</small></div>
+                <div><small class="text-muted col-xs-12">What do you want to do?</small></div>
             </fieldset>
+        </form>
+    </section>
+
+
+    <!-- MOBILE -->
+    <section data-bind="with: MapViewModel" id="search-location-mobile" class="row">
+        <form data-bind="submit: updateGeolocation" class="form-inline">
+            <div class="form-group">
+                <input data-bind="value: geolocationName" type="text" placeholder="Hey, I need a location!">
+                <button type="submit" class="btn btn-info">Go</button>
+            </div>
+        </form>
+    </section>
+
+    <section data-bind="with: ActivitiesViewModel" id="search-activities-mobile" class="row">
+        <form data-bind="submit: addActivity" class="form-inline">
+            <div class="form-group">
+                <input data-bind="value: activityQuery" type="text" placeholder="Let's go out!">
+                <button type="submit" class="btn btn-success">Do</button>
+            </div>
         </form>
     </section>
 

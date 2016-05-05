@@ -41,11 +41,17 @@
     /**
      *  Make the UI components draggable
      */
+    // Sorry! I still had to slang a little bit of jQuery up in this app.
     $(document).ready(
         function() {
 
             $('#overlay-searchbar').draggable();
             $('#overlay-sidebar').draggable();
+
+            $(document).on('click', '#toggle-minimize-sidebar', function() {
+                $(this).parent().toggleClass('show');
+            });
+
         });
 
 }());

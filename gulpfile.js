@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    util = require('gulp-util'),
     less = require('gulp-less'),
     autoprefixer = require('gulp-autoprefixer'),
     plumber = require('gulp-plumber'),
@@ -62,8 +63,8 @@ gulp.task('js', function () {
         baseDir + '/**/*service.js',
         baseDir + '/app.init.js'
     ])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
+        // .pipe(jshint())
+        // .pipe(jshint.reporter('default'))
         .pipe(sourcemaps.init())
         .pipe(concat(outputFilename))
         .pipe(uglify())
@@ -86,8 +87,8 @@ gulp.task('less', function () {
 
 gulp.task('images', function () {
    gulp.src(['./dev/images/**/*.png', './dev/images/**/*.png'])
-        .pipe(gulp.dest('./build/images'))
-        .pipe(livereload());
+       .pipe(gulp.dest('./build/images'))
+       .pipe(livereload());
 });
 
 
@@ -110,4 +111,6 @@ gulp.task('watch', function () {
 });
 
 
-gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'watch', 'serve']);
+// gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'watch', 'serve']);
+
+gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'serve']);
