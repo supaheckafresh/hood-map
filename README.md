@@ -14,7 +14,9 @@ upon Foursquare check-ins.
 4. Wait for the build script to run; once your console displays 
    `Server started at http://:::3000`, you may use the application at
    http://localhost:3000
-
+5. For your convenience, a demo of the project is also hosted on 
+   gh-pages at http://supaheckafresh.github.io/hood-map/
+   
 
 ## Contributors
 
