@@ -95,22 +95,22 @@ gulp.task('images', function () {
 gulp.task('serve', serve('.'));
 
 
-// gulp.task('watch', function () {
-//     livereload.listen({port: 35736});
-//     watch(['./dev/js/*.js', './dev/js/**/*.js'], function () {
-//         gulp.start('js');
-//     });
-//
-//     watch('./dev/less/*.less', function () {
-//         gulp.start('less');
-//     });
-//
-//     watch(['./dev/js/*.html', './dev/js/**/*.html'], function () {
-//         gulp.start('components');
-//     });
-// });
+gulp.task('watch', function () {
+    livereload.listen({port: 35736});
+    watch(['./dev/js/*.js', './dev/js/**/*.js'], function () {
+        gulp.start('js');
+    });
+
+    watch('./dev/less/*.less', function () {
+        gulp.start('less');
+    });
+
+    watch(['./dev/js/*.html', './dev/js/**/*.html'], function () {
+        gulp.start('components');
+    });
+});
 
 
-// gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'watch', 'serve', 'finished']);
+gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'watch', 'serve']);
 
-gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'serve']);
+// gulp.task('default', ['js-deps', 'components', 'css-deps', 'js', 'less', 'images', 'serve']);
