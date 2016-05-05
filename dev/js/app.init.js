@@ -49,7 +49,6 @@
             $('#overlay-sidebar').draggable();
 
             $(document).on('click', '#toggle-minimize-sidebar', function() {
-                console.log('hi');
                 $(this).parent().toggleClass('show');
             });
 
