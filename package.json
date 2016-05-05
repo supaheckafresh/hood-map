@@ -33,5 +33,8 @@
     "knockout": "^3.4.0",
     "knockout-bootstrap": "^0.2.0",
     "pagerjs": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp-util": "^3.0.7"
   }
 }
