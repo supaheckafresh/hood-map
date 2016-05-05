@@ -46,6 +46,7 @@
                             var locationCheckins = res.response.venues[0].stats.checkinsCount;
 
                             locationCheckins ? location().checkins(locationCheckins) : location().checkins(0);
+
                         } else {
                             location().checkins(0);
                         }

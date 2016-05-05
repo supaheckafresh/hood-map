@@ -18,6 +18,8 @@
 
         vm.selectedLocation = ko.observable('hello');
 
+        vm.activities = ko.observableArray([]);
+
 
         /**
          *  Activity locations search function
@@ -225,7 +227,10 @@
          */
         mapVm.currentGeolocation.subscribe(function updateLocations() {
 
-            var copy = vm.activities();
+            var copy;
+
+            if (vm.activities())
+                copy = vm.activities();
 
             // Clear currently displayed map markers, and clear stored Location results. Only clearing the entire
             // `vm.activities()`, as below object does not update the UI in the way one would expect; without iterating

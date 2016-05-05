@@ -60,9 +60,6 @@
 
             // Initialize the `map`.
             map = new google.maps.Map(document.getElementById('map'), {
-
-                // Hard code downtown Long Beach, CA coordinates.
-                center: longBeachCA.center,
                 zoom: 15,
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
@@ -71,6 +68,7 @@
 
             // Initialize the `geocoder`.
             geocoder = new google.maps.Geocoder();
+            vm.geo(vm.geolocationName());
 
             // Initialize the marker info windows.
             vm.initInfoWindow();
@@ -95,12 +93,12 @@
             } else {
                 alert('There was an error initializing Google Places service.');
             }
-
-            // Setting the `map` object to `vm.map` doesn't work well as the map fails to display occasionally (without
-            // providing any errors). Store the `map` into `vm.mapCopy` property so that other ViewModels can access the
-            // map properties when needed.
-            vm.mapCopy = map;
         };
+
+        // Setting the `map` object to `vm.map` doesn't work well as the map fails to display occasionally (without
+        // providing any errors). Store the `map` into `vm.mapCopy` property so that other ViewModels can access the
+        // map properties when needed.
+        vm.mapCopy = map;
 
 
         vm.geo = function (geolocationName) {
