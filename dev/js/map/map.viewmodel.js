@@ -11,8 +11,8 @@
         var vm = this;
 
         // Initialize `map`, `infoWindow`, and `geocoder` variables which are needed in our `initMap()` callback function.
-        var map,
-            geocoder;
+        window.map = null;
+        var geocoder;
 
         // Initialize empty property to hold the marker info window.
         vm.infoWindow = ko.observable();
@@ -56,13 +56,10 @@
         };
 
         // Initialize our map. This is the callback function parameter in our Google Maps API request in 'index.html'.
-        vm.initMap = function() {
+        window.initMap = function() {
 
             // Initialize the `map`.
-            map = new google.maps.Map(document.getElementById('map'), {
-
-                // Hard code downtown Long Beach, CA coordinates.
-                center: longBeachCA.center,
+            window.map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
@@ -71,6 +68,7 @@
 
             // Initialize the `geocoder`.
             geocoder = new google.maps.Geocoder();
+            vm.geo(vm.geolocationName());
 
             // Initialize the marker info windows.
             vm.initInfoWindow();
@@ -95,11 +93,6 @@
             } else {
                 alert('There was an error initializing Google Places service.');
             }
-
-            // Setting the `map` object to `vm.map` doesn't work well as the map fails to display occasionally (without
-            // providing any errors). Store the `map` into `vm.mapCopy` property so that other ViewModels can access the
-            // map properties when needed.
-            vm.mapCopy = map;
         };
 
 
@@ -122,9 +115,6 @@
 
                     // Reload marker info windows whenever the geolocation changes.
                     vm.initInfoWindow();
-
-                    // Update mapCopy.
-                    vm.mapCopy = map;
 
                     console.log('Location has been set to: ' + geolocationName);
 
@@ -185,8 +175,6 @@
             var latLng = new google.maps.LatLng(location.geometry().location.lat(),
                                                 location.geometry().location.lng());
             map.panTo(latLng);
-
-            vm.mapCopy = map;
         };
 
 
@@ -262,9 +250,6 @@
                 marker.setAnimation(null);
             }, 2125);
         };
-
-        window.initMap = vm.initMap;
-        window.mapCopy = vm.mapCopy;
     };
 
     window.MapViewModel = MapViewModel;

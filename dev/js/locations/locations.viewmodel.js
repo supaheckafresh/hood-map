@@ -18,13 +18,15 @@
 
         vm.selectedLocation = ko.observable('hello');
 
+        vm.activities = ko.observableArray([]);
+
 
         /**
          *  Activity locations search function
          */
         vm.searchLocations = function (activity) {
 
-            var mapBounds = mapVm.mapCopy.getBounds();
+            var mapBounds = window.map.getBounds();
 
             mapVm.placesService.textSearch({
                 bounds: mapBounds,
@@ -158,7 +160,7 @@
 
                                     // Reopen info window for selected location.
                                     if (location().selected() === true) {
-                                        mapVm.infoWindow().open(mapVm.mapCopy, location().marker);
+                                        mapVm.infoWindow().open(window.map, location().marker);
                                     }
                                 }
                             }
@@ -225,7 +227,10 @@
          */
         mapVm.currentGeolocation.subscribe(function updateLocations() {
 
-            var copy = vm.activities();
+            var copy;
+
+            if (vm.activities())
+                copy = vm.activities();
 
             // Clear currently displayed map markers, and clear stored Location results. Only clearing the entire
             // `vm.activities()`, as below object does not update the UI in the way one would expect; without iterating
