@@ -72,7 +72,7 @@
                             mapVm.resetInfoWindow();
                             break;
                         case true:
-                            mapVm.infoWindow().open(mapVm.mapCopy, location().marker);
+                            mapVm.infoWindow().open(window.map, location().marker);
                     }
                 }
             });

@@ -26,7 +26,7 @@
          */
         vm.searchLocations = function (activity) {
 
-            var mapBounds = mapVm.mapCopy.getBounds();
+            var mapBounds = window.map.getBounds();
 
             mapVm.placesService.textSearch({
                 bounds: mapBounds,
@@ -160,7 +160,7 @@
 
                                     // Reopen info window for selected location.
                                     if (location().selected() === true) {
-                                        mapVm.infoWindow().open(mapVm.mapCopy, location().marker);
+                                        mapVm.infoWindow().open(window.map, location().marker);
                                     }
                                 }
                             }
