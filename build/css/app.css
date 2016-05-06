@@ -1,0 +1,171 @@
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html body {
+  background-color: #5f5aff;
+}
+html input[type="text"] {
+  background-color: #f1f1e2;
+}
+html ul {
+  list-style: none;
+  max-height: 180px;
+  overflow: auto;
+}
+#map {
+  height: 100vh;
+  position: relative;
+}
+#key {
+  z-index: 9999;
+  position: fixed;
+  bottom: 24px;
+  right: 42px;
+  height: 20px;
+  width: 300px;
+  background-image: url('/build/images/key.png');
+}
+#key span {
+  color: white;
+}
+#overlay-searchbar {
+  position: absolute;
+  top: 8px;
+  left: 108px;
+}
+#overlay-searchbar #searchbar {
+  background-color: rgba(255, 239, 241, 0.82);
+  border-radius: 4px;
+  border: solid 1px #0d3349;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+  padding-top: 8px;
+  max-width: 650px;
+}
+#overlay-searchbar #searchbar input {
+  border-radius: 0;
+  padding: 8px;
+  height: 31px;
+  border: none;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+#overlay-searchbar #searchbar .text-muted {
+  color: #ff29d5;
+}
+.show {
+  height: 24px;
+  width: 36px;
+  overflow: hidden;
+}
+#overlay-sidebar {
+  position: absolute;
+  top: 100px;
+}
+#overlay-sidebar .btn-control {
+  height: 24px;
+  margin: auto;
+  vertical-align: middle;
+  line-height: 10px;
+  font-weight: bold;
+}
+#overlay-sidebar #sidebar {
+  background-color: rgba(255, 239, 241, 0.82);
+  border-radius: 4px;
+  border: solid 1px #0d3349;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+  padding: 0;
+}
+#overlay-sidebar #sidebar #location-overview-view {
+  margin: 0;
+  padding: 6px;
+}
+#overlay-sidebar #sidebar #filter {
+  padding-left: 36px;
+}
+#overlay-sidebar #sidebar #activities-list-view ul {
+  max-height: 16vh;
+}
+#overlay-sidebar #sidebar #activity-location-results {
+  padding: 0 8px;
+  max-height: 60vh;
+  overflow: auto;
+  direction: rtl;
+  text-align: left;
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups {
+  direction: ltr;
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .activity-title {
+  margin: 0;
+  font-weight: bold;
+  padding: 6px;
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .activity-location-group {
+  background-color: rgba(115, 226, 144, 0.32);
+  border-radius: 4px;
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .activity-location-group .selected {
+  background-color: rgba(115, 226, 144, 0.76);
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .activity-location-group:nth-child(2n) {
+  background-color: rgba(67, 63, 226, 0.32);
+  border-radius: 4px;
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .activity-location-group:nth-child(2n) .selected {
+  background-color: rgba(255, 188, 233, 0.75);
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .locations {
+  padding: 0;
+}
+#overlay-sidebar #sidebar #activity-location-results .location-groups .location {
+  padding: 0 8px;
+}
+@media screen and (max-width: 799px) {
+  #overlay-searchbar {
+    position: fixed;
+    top: 0;
+    right: 40px;
+    width: 100%;
+  }
+  #overlay-searchbar #searchbar {
+    background-color: transparent;
+    border-radius: 4px;
+    border: none;
+    box-shadow: none;
+    padding-top: 4px;
+  }
+  #overlay-searchbar #searchbar .form-group {
+    float: right;
+    margin-right: 120px;
+    padding-right: 8px;
+  }
+  #overlay-searchbar #searchbar input {
+    position: relative;
+    border-radius: 0;
+    padding: 8px;
+    height: 31px;
+    border: none;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  #overlay-searchbar #searchbar button {
+    position: relative;
+  }
+  #overlay-sidebar input {
+    float: left;
+    max-width: 180px;
+  }
+  #search-location,
+  #search-activities {
+    display: none;
+  }
+}
+@media screen and (min-width: 800px) {
+  #overlay-sidebar {
+    width: 400px;
+  }
+  #search-activities-mobile,
+  #search-location-mobile {
+    display: none;
+  }
+}

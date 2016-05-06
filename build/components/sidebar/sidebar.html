@@ -1,0 +1,75 @@
+
+<section id="sidebar" class="col-xs-12">
+
+
+   <button id="toggle-minimize-sidebar" class="btn btn-default btn-control">&minus;</button>
+
+    <!-- Location overview header -->
+    <section data-bind="with: MapViewModel" id="location-overview-view" class="row">
+        <section id="location-overview" class="col-xs-12">
+            <h3>Explore <span data-bind="text: geolocationName"></span></h3>
+        </section>
+    </section>
+
+    <!-- Filter results -->
+    <section id="filter" data-bind="with: LocationsViewModel">
+        <form data-bind="submit: preventDefault" class="form-inline">
+            <fieldset class="form-group" data-bind="if: ( $root.ActivitiesViewModel.activities().length > 0 )">
+                <input data-bind="value: filterQuery, valueUpdate: 'afterkeydown'"
+                       class="form-control"
+                       type="text"
+                       placeholder="Filter results"/>
+            </fieldset>
+        </form>
+    </section>
+
+    <!-- Activities list -->
+    <section data-bind="with: ActivitiesViewModel" id="activities-list-view">
+        <!-- Reverse a copy of the array to display the newest activity search term at the top -->
+        <ul data-bind="foreach: { data: activities().slice().reverse(), as: 'activity' }">
+            <li>
+                <input type="checkbox"
+                       data-bind="checked: visible,
+                                  click: function () {  toggleMarkersVisible();
+                                                        $parent.resetInfoWindowWhenSelectedLocationToggledVisible(activity);
+                                                         return true; },
+                                  disable: (activity.results().length === 0) ||
+                                           (activity.hasFilterResults() === false)">
+
+                <span data-bind="text: activity.title"></span>
+            </li>
+        </ul>
+    </section>
+
+
+    <section data-bind="with: ActivitiesViewModel" id="activity-location-results">
+
+        <!-- If the filter input is empty, display all of the results -->
+        <div id="all-location-results">
+
+            <!-- Reverse a copy of the observable array display the newest activity locations a the top -->
+            <div data-bind="foreach: { data: activities.slice().reverse(), as: 'activity' }"
+                 class="location-groups">
+
+                <div data-bind="if: visible" class="activity-location-group">
+                    <h4 data-bind="text: activity.title" class="activity-title"></h4>
+                    <ul data-bind="foreach: { data: results, as: 'location' }" class="locations">
+
+                        <li class="location"
+                            data-bind="visible: location.visible,
+                                    click: function () { return $root.LocationsViewModel.selectLocation($data) },
+                                    css: { 'selected': location.selected }">
+
+                            <span data-bind="text: ($index() + 1) + '. '"></span>
+                            <a href="#"><span data-bind="text: location.name"></span></a>
+                            <small data-bind="text: location.formatted_address" class="text-muted"></small>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</section>
