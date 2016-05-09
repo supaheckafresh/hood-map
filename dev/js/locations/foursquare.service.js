@@ -6,6 +6,7 @@
 
         var foursquare = this;
 
+
         foursquare.makeQueryUrl = function (location) {
 
             // per API docs, '/search' is probably better for finding specific location, whereas '/explore' might be used to
@@ -56,8 +57,7 @@
                         location().marker = callback(location, activity, color);
                     })
                     .fail(function () {
-                        console.log('*****There was an error retrieving foursquare info for ' +
-                                        location().name() + '*****');
+                        alert('There was a problem retrieving Foursquare check-ins for ' + location().name());
                     });
 
             }, this);
