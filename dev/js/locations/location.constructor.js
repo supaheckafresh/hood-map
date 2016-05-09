@@ -13,6 +13,7 @@
         this.geometry = ko.observable(data.geometry);
         this.types = ko.observableArray(data.types);
         this.marker = null;
+        this.foursquare_id = '';
 
         this.foursquareQueryUrl = ko.observable('');
 
@@ -55,6 +56,11 @@
             default:
                 return '7';
         }
+    };
+
+    Location.prototype.foursquareVenueUrl = function () {
+        if (this.foursquare_id)
+            return 'http://foursquare.com/v/' + this.foursquare_id;
     };
 
     window.Location = Location;

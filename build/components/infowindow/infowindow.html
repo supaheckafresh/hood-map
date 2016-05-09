@@ -8,6 +8,7 @@
 
         <section data-bind="if: checkins()" class="foursquare-data">
             <p><span data-bind="text: checkins()"></span> check-ins on Foursquare.</p>
+            <a data-bind="attr: { href: foursquareVenueUrl() }, text: foursquareVenueUrl()"></a></p>
         </section>
 
         <section data-bind="visible: !checkins()" class="data-loading">

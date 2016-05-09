@@ -66,6 +66,8 @@
 
             console.log('Google Maps API has been called.');
 
+            console.log(google.maps);
+
             // Initialize the `geocoder`.
             geocoder = new google.maps.Geocoder();
             vm.geo(vm.geolocationName());
@@ -93,6 +95,11 @@
             } else {
                 alert('There was an error initializing Google Places service.');
             }
+        };
+
+        window.mapInitErrorHandler = function () {
+            console.log();
+            alert('There was a problem loading Google Maps.');
         };
 
 
