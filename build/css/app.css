@@ -89,7 +89,6 @@ html ul {
   padding: 0 8px;
   max-height: 60vh;
   overflow: auto;
-  direction: rtl;
   text-align: left;
 }
 #overlay-sidebar #sidebar #activity-location-results .location-groups {
