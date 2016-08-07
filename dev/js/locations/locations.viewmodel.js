@@ -82,19 +82,25 @@
             function suppressOutOfBoundsLocations(locations) {
                 var locLat, locLng;
                 var inBoundLocations = [];
+
                 _.each(locations, function (location) {
                     locLat = location.geometry.location.lat();
                     locLng = location.geometry.location.lng();
 
-                    // Store each `location` only if it is contained within the map boundaries at current zoom level.
-                    if (mapBounds.H.H < locLat && locLat < mapBounds.H.j &&
-                        mapBounds.j.H > locLng && locLng > mapBounds.j.j) {
+                    if (isInsideCurrentMapBoundaries(locLat, locLng)) {
 
                         inBoundLocations.push(location);
                     }
                 });
-
                 return inBoundLocations;
+            }
+
+            function isInsideCurrentMapBoundaries(locLat, locLng) {
+                // Dammit Google.
+                return mapBounds[Object.keys(mapBounds)[0]][Object.keys(mapBounds)[0]] < locLat &&
+                  locLat < mapBounds[Object.keys(mapBounds)[0]][Object.keys(mapBounds)[1]] &&
+                  mapBounds[Object.keys(mapBounds)[1]][Object.keys(mapBounds)[0]] > locLng &&
+                  locLng > mapBounds[Object.keys(mapBounds)[1]][Object.keys(mapBounds)[1]]
             }
         };
 

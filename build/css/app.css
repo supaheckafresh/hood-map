@@ -11,6 +11,7 @@ html input[type="text"] {
 }
 html ul {
   list-style: none;
+  max-height: 180px;
   overflow: auto;
 }
 #map {
@@ -24,7 +25,6 @@ html ul {
   right: 42px;
   height: 20px;
   width: 300px;
-  background-image: url('/build/images/key.png');
 }
 #key span {
   color: white;
@@ -89,6 +89,7 @@ html ul {
   padding: 0 8px;
   max-height: 60vh;
   overflow: auto;
+  direction: rtl;
   text-align: left;
 }
 #overlay-sidebar #sidebar #activity-location-results .location-groups {
